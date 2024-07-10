@@ -1,4 +1,2 @@
-package use_case;
-
-public class UserSignupInputData {
+package use_case;public class UserSignupInputData {
 }
