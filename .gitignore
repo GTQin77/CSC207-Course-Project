@@ -1,5 +1,6 @@
 #IntelliJ
 .idea/compiler.xml
+.idea/workspace.xml
 
 #API tokens
 api_keys.txt
