@@ -1,4 +1,4 @@
-package use_case.dayplan;
+package use_case.dayplanList;
 
 public class UserDayPlanInteractor {
 }
