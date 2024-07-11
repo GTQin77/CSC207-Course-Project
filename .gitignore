@@ -1,6 +1,6 @@
 #IntelliJ
-.idea/compiler.xml
-.idea/workspace.xml
+# I do not know what we should be ignorning in this but this seems to work
+.idea
 
 #API tokens
 api_keys.txt
