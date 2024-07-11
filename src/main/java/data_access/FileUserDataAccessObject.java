@@ -8,14 +8,14 @@ import java.io.*;
 // Records new Users and existing day lists associated with their account into the file.
 public class FileUserDataAccessObject implements UserSignupDataAccessInterface{
 
-    private final File csvFile;
+//    private final File csvFile;
 
-    @Override
+//    @Override
     public boolean existsByName(String identifier) {
         return false;
     }
 
-    @Override
+//    @Override
     public void save(User user) {
 
     }
