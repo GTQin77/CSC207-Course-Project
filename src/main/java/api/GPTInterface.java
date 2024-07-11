@@ -4,7 +4,11 @@ import org.json.JSONException;
 
 public interface GPTInterface {
 
-    String pickCategory(String prompt) throws JSONException;
+    String pickCategory(String prompt);
 
-    String getVibe(String location) throws  JSONException;
+    String getVibe(String location);
+
+    String getPrompt() throws JSONException;
+
+    String setPrompt(String prompt) throws JSONException;
 }
