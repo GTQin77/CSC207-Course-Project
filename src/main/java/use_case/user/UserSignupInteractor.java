@@ -1,4 +1,4 @@
-package use_case;
+package use_case.user;
 
 import data_access.UserSignupDataAccessInterface;
 import entity.User;
