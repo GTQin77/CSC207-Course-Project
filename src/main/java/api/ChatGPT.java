@@ -12,17 +12,11 @@ public class ChatGPT implements GPTInterface{
     String category;
     String location;
 
-    /**
-     * Returns the prompt the user inputted
-     * */
     @Override
     public String getPrompt() {
         return prompt;
     }
-    /**
-     * Setter method for the desired userPrompt
-     * @param userPrompt The user chat input
-     * */
+
     @Override
     public void setPrompt(String userPrompt) {
         this.prompt = userPrompt;
