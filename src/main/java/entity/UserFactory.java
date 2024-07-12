@@ -13,9 +13,9 @@ public interface UserFactory {
      * @param userID the unique ID of the user
      * @param userName the name of the user
      * @param location the location coordinates of the user
-     * @param mood the current mood of the user
-     * @param numActivities the number of activities the user has participated in
-     * @param numMeals the number of meals the user has had
+     * @param mood the mood the user wants to set for the dayplan
+     * @param numActivities the number of activities the user wants for the day
+     * @param numMeals the number of meals the user wants for the day
      * @return a new User instance
      */
     User create(int userID, String userName, ArrayList<Float> location, String mood,
