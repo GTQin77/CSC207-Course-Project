@@ -1,7 +1,9 @@
 package api;
 import entity.Events;
 
-public interface YelpInterface {
-    Events getEvents(String businessID);
+import java.util.ArrayList;
 
+public interface YelpInterface {
+    String getBusinessID(String keyword, ArrayList<Float> location);
+    Events getEvents(String businessID);
 }
