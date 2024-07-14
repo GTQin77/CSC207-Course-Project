@@ -4,16 +4,16 @@ package use_case.business_detail;
 // (eg. location, name, image, and review highlights), so that I can
 // decide whether the suggested business is somewhere that I would like to go.
 
-import entity.Events;
+import entity.Business;
 
 public class BusinessInputData {
-    final private Events event;
+    final private Business event;
 
-    public BusinessInputData(Events event) {
+    public BusinessInputData(Business event) {
         this.event = event;
     }
 
-    public Events getEvent() {
+    public Business getEvent() {
         return event;
     }
 }

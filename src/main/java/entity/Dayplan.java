@@ -1,13 +1,11 @@
 package entity;
 
-import com.theokanning.openai.billing.Plan;
-
 import java.util.ArrayList;
 
 public class Dayplan {
     private String vibe;
     private User user;
-    private ArrayList<Events> plan;
+    private ArrayList<Business> plan;
 
     public Dayplan() {
         plan = new ArrayList<>();
@@ -24,7 +22,7 @@ public class Dayplan {
     public void setUser(User user) {
         this.user = user;
     }
-    public ArrayList<Events> getPlan() {
+    public ArrayList<Business> getPlan() {
         return plan;
 
     }
