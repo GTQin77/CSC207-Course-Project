@@ -2,6 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 
+// I think we need to go through this Entity again, seems too cluttered.
 public class Events {
         private String location;
         private float distance;
