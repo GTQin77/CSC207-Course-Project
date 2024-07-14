@@ -1,17 +1,17 @@
 package use_case.distance;
 
-import entity.Events;
+import entity.Business;
 
 import java.util.ArrayList;
 
 public class DistanceOutputData {
-    private final ArrayList<Events> events;
+    private final ArrayList<Business> events;
 
-    public DistanceOutputData(ArrayList<Events> events) {
+    public DistanceOutputData(ArrayList<Business> events) {
         this.events = events;
     }
 
-    public ArrayList<Events> getEvents() {return events;}
+    public ArrayList<Business> getEvents() {return events;}
 
 
 }
