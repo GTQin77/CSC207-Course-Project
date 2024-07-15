@@ -1,11 +1,11 @@
 package api;
-import entity.Events;
+import entity.Business;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
 
 public interface YelpInterface {
-    String getBusinessID(String category, ArrayList<Float> location, int i);
-    Events getEvents(String businessID);
-    JSONArray getEventsReviews(String businessID);
+    String getBusinessID(String category, ArrayList<Float> location);
+    Business getBusiness(String businessID);
+    JSONArray getBusinessReviews(String businessID);
 }
