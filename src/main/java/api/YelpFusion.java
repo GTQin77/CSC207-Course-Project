@@ -1,13 +1,12 @@
 package api;
 
-import entity.Business;
 import java.util.ArrayList;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
+
 
 public class YelpFusion implements YelpInterface{
     private static final String URL = "https://api.yelp.com/v3";
@@ -17,18 +16,20 @@ public class YelpFusion implements YelpInterface{
     }
 
     /**
-     * Get the id of a business within a specified category and near the user's location.
+     * Get the ids of businesses within a specified category and near the user's location.
      * <p>
      * This implementation closely follows the grade-api in Tutorial 3 on
      * <a href="https://github.com/Yasamanro/grade-api">github.com</a>.
      * </p>
+     *
      * @param category Category chosen by ChatGPT.
      * @param location Location of the user.
-     * @return the id of the business.
+     * @param i        Number of business ID that you want.
+     * @return the ids of the businesses.
      * @throws RuntimeException If API call failed or failed to extract businessID.
      */
     @Override
-    public String getBusinessID(String category, ArrayList<Float> location) {
+    public ArrayList<String> getBusinessID(String category, ArrayList<Float> location, Integer i) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -37,6 +38,7 @@ public class YelpFusion implements YelpInterface{
                 .addHeader("Authorization", API_TOKEN)
                 .addHeader("Content-Type", "application/json")
                 .build();
+
         try {
             Response response = client.newCall(request).execute();
             System.out.println(response);
@@ -45,9 +47,13 @@ public class YelpFusion implements YelpInterface{
 
             if (responseBody.getInt("status_code") == 200) {
                 JSONArray businesses = responseBody.getJSONArray("businesses");
-                JSONObject business = businesses.getJSONObject(0);
 
-                return business.getString("business_id");
+                ArrayList<String> businessIds = new ArrayList<>();
+                for (int ind = 0; ind < businesses.length() && ind != i; ind++) {
+                    JSONObject business = businesses.getJSONObject(ind);
+                    businessIds.add(business.getString("business_id"));
+                }
+                return businessIds;
 
             } else {
                 throw new RuntimeException(responseBody.getString("message"));
@@ -63,12 +69,13 @@ public class YelpFusion implements YelpInterface{
      * This implementation closely follows the grade-api in Tutorial 3 on
      * <a href="https://github.com/Yasamanro/grade-api">github.com</a>.
      * </p>
+     *
      * @param businessID ID of the business.
-     * @return the nate, rating, price, location of the business.
+     * @return the nate, rating, price, contact number, distance to user and location of the business.
      * @throws RuntimeException If API call failed or failed to extract business details.
      */
     @Override
-    public Business getBusiness(String businessID) {
+    public ArrayList<Object> getBusiness(String businessID) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -85,18 +92,28 @@ public class YelpFusion implements YelpInterface{
 
             if (responseBody.getInt("status_code") == 200) {
                 String name = responseBody.getString("name");
-                int rating = responseBody.getInt("rating");
+                Integer rating = responseBody.getInt("rating");
                 String price = responseBody.getString("price");
+                String contactNum = responseBody.getString("phone");
+                Double distance = responseBody.getDouble("distance");
 
                 JSONObject coordinates = responseBody.getJSONObject("coordinates");
                 double latitude = coordinates.getDouble("latitude");
                 double longitude = coordinates.getDouble("longitude");
 
-                ArrayList<Float> location = new ArrayList<>();
-                location.add((float) latitude);
-                location.add((float) longitude);
+                ArrayList<Float> locationBusiness = new ArrayList<>();
+                locationBusiness.add((float) latitude);
+                locationBusiness.add((float) longitude);
 
-                return new Business(name, rating, price, location);
+                ArrayList<Object> details = new ArrayList<>();
+                details.add(name);
+                details.add(rating);
+                details.add(price);
+                details.add(contactNum);
+                details.add(distance);
+                details.add(locationBusiness);
+
+                return details;
 
             } else {
                 throw new RuntimeException(responseBody.getString("message"));
@@ -142,8 +159,4 @@ public class YelpFusion implements YelpInterface{
             throw new RuntimeException(e);
         }
     }
-
 }
-
-
-
