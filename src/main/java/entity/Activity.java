@@ -1,34 +1,15 @@
 package entity;
 
+import java.util.ArrayList;
+
+// Public class Activity that inherits from Business and implements Timeblock
 public class Activity extends Business implements Timeblock {
-    private String activityName;
-    private int reviews;
-
-    public Activity(String activityName, String location, float distance,
-                    int reviews, String contactNum, String price) {
-        super(location, distance, contactNum, price);
-        this.activityName = activityName;
-        this.reviews = reviews;
+    public Activity(String name, ArrayList<Float> location, float distance, String contactNum,
+                    String price, String rating) {
+        super(name, location, distance, contactNum, price, rating);
     }
 
-    // Getters and Setters
-    public String getActivityName() {
-        return activityName;
-    }
-
-    public void setActivityName(String activityName) {
-        this.activityName = activityName;
-    }
-
-    public int getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(int reviews) {
-        this.reviews = reviews;
-    }
-
-    // Implementing the Timeblock interface method
+    // Implementing the Timeblock interface method to get duration of activity
     @Override
     public int getDuration() {
         return 0; // Replace this with implementation

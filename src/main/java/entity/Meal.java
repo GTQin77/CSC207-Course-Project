@@ -2,45 +2,14 @@ package entity;
 
 import java.util.ArrayList;
 
+// Public class Meal that inherits from Business and implements Timeblock
 public class Meal extends Business implements Timeblock {
-    private String restaurant;
-    private ArrayList<Float> coordinates;
-    private float rating;
-
-    public Meal(String restaurant, ArrayList<Float> coordinates, float distance, float rating,
-                String contactNum, String price) {
-        super("Coordinates: " + coordinates.toString(), distance, contactNum, price);
-        this.restaurant = restaurant;
-        this.coordinates = coordinates;
-        this.rating = rating;
+    public Meal(String name, ArrayList<Float> location, float distance, String contactNum,
+                String price, String rating) {
+        super(name, location, distance, contactNum, price, rating);
     }
 
-    //Getters and Setters
-    public String getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(String restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public ArrayList<Float> getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(ArrayList<Float> coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
-    }
-
-    // Implementing the Timeblock interface method
+    // Implementing the Timeblock interface method to get duration of meal
     @Override
     public int getDuration() {
         return 0; // Replace this with implementation
