@@ -17,7 +17,7 @@ public class DayplanViewModel extends ViewModel {
     /**
      * Gets String userPrompt from DayplanViewModel
      * */
-    public String getPrompt() {
+    public String getUserInput() {
         return this.userInput;
     }
 
