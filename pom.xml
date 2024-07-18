@@ -28,7 +28,7 @@
             <version>0.18.2</version>
         </dependency>
 
-    </dependencies>>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
