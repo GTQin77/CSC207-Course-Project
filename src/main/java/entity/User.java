@@ -10,7 +10,7 @@ public class User {
     private int numActivities;
     private int numMeals;
 
-    public User(int userID, String userName, String mood, int numActivities, int numMeals) {
+    public User(int userID, String userName, ArrayList<Float> location, String mood, int numActivities, int numMeals) {
         this.userID = userID;
         this.userName = userName;
         this.mood = mood;
