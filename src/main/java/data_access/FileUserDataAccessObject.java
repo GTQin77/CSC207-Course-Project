@@ -4,8 +4,10 @@ import entity.User;
 
 import java.io.*;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,9 +21,7 @@ public class FileUserDataAccessObject implements UserSignupDataAccessInterface {
     private User user;
 
     // csvFile attribute has no individual setter
-    public File getcsvFile(){
-        return this.csvFile;
-    }
+    public File getcsvFile(){return this.csvFile;}
 
     // Method is a setter for both csvPath and csvFile
     public void setcsvPathAndcsvFile(String csvPath){
@@ -29,17 +29,11 @@ public class FileUserDataAccessObject implements UserSignupDataAccessInterface {
         this.csvFile = new File(csvPath);
     }
 
-    public String getcsvPath(){
-        return this.csvPath;
-    }
+    public String getcsvPath(){return this.csvPath;}
 
-    public void setUser(User user){
-        this.user = user;
-    }
+    public void setUser(User user){this.user = user;}
 
-    public User getUser(){
-        return this.user;
-    }
+    public User getUser(){return this.user;}
 
     /**
      * Check to see if a user
@@ -89,8 +83,17 @@ public class FileUserDataAccessObject implements UserSignupDataAccessInterface {
      * @param user a User object that contains info like id, username, etc.
      */
     @Override
-    public void saveUser(User user) {
+    public void saveUser(User user){
+        // Same structure as existsByName, using try/catch block
+        // Here, we use BufferedWriter class
+        try (BufferedWriter bwr = new BufferedWriter(new FileWriter(this.getcsvFile()))) {
+            bwr.write(user.getUserID());
+            }
+        // "Catch" block to accompany "Try" block
+        catch (IOException e){
+            throw new RuntimeException(e);
+        }
 
+        }
 
     }
-}
