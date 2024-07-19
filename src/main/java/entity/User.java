@@ -9,6 +9,7 @@ public class User {
     private String mood;
     private int numActivities;
     private int numMeals;
+    private ArrayList<Dayplan> dayPlans;
 
     public User(int userID, String userName, ArrayList<Float> location, String mood, int numActivities, int numMeals) {
         this.userID = userID;
@@ -65,4 +66,9 @@ public class User {
     public void setNumMeals(int numMeals) {
         this.numMeals = numMeals;
     }
+
+    public ArrayList<Dayplan> getDayPlans(){return this.dayPlans;}
+
+    public void setDayPlans(ArrayList<Dayplan> dayPlans) {this.dayPlans = dayPlans;}
 }
+
