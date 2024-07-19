@@ -10,6 +10,7 @@ public class UserDayPlanOutputData {
     }
 
     public Dayplan getDayplan() {
+        
         return dayplan;
     }
 }
