@@ -18,20 +18,19 @@ public class FileUserDataAccessObject implements UserSignupDataAccessInterface {
     private String csvPath;
     private User user;
 
-    public void setcsvFile(File csvFile) {
-        this.csvFile = csvFile;
-    }
-
+    // csvFile attribute has no individual setter
     public File getcsvFile(){
-        return csvFile;
+        return this.csvFile;
     }
 
-    public void setcsvPath(String csvPath){
+    // Method is a setter for both csvPath and csvFile
+    public void setcsvPathAndcsvFile(String csvPath){
         this.csvPath = csvPath;
+        this.csvFile = new File(csvPath);
     }
 
     public String getcsvPath(){
-        return csvPath;
+        return this.csvPath;
     }
 
     public void setUser(User user){
@@ -49,10 +48,38 @@ public class FileUserDataAccessObject implements UserSignupDataAccessInterface {
      */
     @Override
     public boolean existsByName(String identifier) {
+        // Creating a loop variable
+        boolean exists = false;
+        // Create variable used to track where to split values in single line
+        String value = ",";
 
-
-
-
+        // "Try" block is necessary for BufferedReader objects
+        try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
+            String line = br.readLine();
+            // Mutate line to refer to 2nd row... where actual values begin(skipping past row names)
+            line = br.readLine();
+            // While loop that keeps reading file until it's empty
+            while (line != null) {
+                // Create an array of Strings that stores each value separated by comma as a new object in array
+                assert line != null;
+                String[] row = line.split(value);
+                // Early return if the userID we put in is equal to the userID in the row
+                if (identifier.equals(row[0])){
+                    System.out.println(true);
+                    // Need to close the BufferedReader object
+                    // Normally, the "Try" block will do this for you, but not in case of early return
+                    br.close();
+                    return true;
+                }
+                line = br.readLine();
+            }
+        }
+        // "Catch" block is necessary with any try block
+        catch (IOException e){
+            throw new RuntimeException(e);
+        }
+        System.out.println(exists);
+        return exists;
     }
 
     /**
@@ -63,6 +90,7 @@ public class FileUserDataAccessObject implements UserSignupDataAccessInterface {
      */
     @Override
     public void saveUser(User user) {
+
 
     }
 }
