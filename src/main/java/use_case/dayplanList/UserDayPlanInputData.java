@@ -4,22 +4,23 @@ import entity.Dayplan;
 import entity.User;
 
 public class UserDayPlanInputData {
-//    final private String vibe;
-//    final private Dayplan dayplan;
-    final private User user;
 
-    public UserDayPlanInputData(User user) {
-//        this.vibe = vibe;
-//        this.dayplan = dayplan;
-        this.user = user;
+
+    // commented out code for now, to get my stuff done - josh
+//    final private User user;
+    final private String userInput;
+
+    public UserDayPlanInputData(String userInput) {
+//        this.user = user;
+        this.userInput = userInput;
     }
 
-//    public Dayplan getDayplan() {
-//        return dayplan;
+//    public User getUser() {
+//        return this.user;
 //    }
 
-    public User getUser() {
-        return user;
+    public String getUserInput() {
+        return this.userInput;
     }
 
 }
