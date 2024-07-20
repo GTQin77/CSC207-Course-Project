@@ -2,15 +2,11 @@ package data_access;
 
 import entity.User;
 
-import java.io.*;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
 
 // A DAO object that writes to a Microsoft Excel .csv file.
 // Records new Users and existing day lists associated with their account into the file.
@@ -29,23 +25,25 @@ public class FileUserDataAccessObject implements UserSignupDataAccessInterface {
         this.csvFile = new File(csvPath);
     }
 
-    public String getcsvPath(){return this.csvPath;}
+    // public String getcsvPath(){return this.csvPath;}
 
     public void setUser(User user){this.user = user;}
 
     public User getUser(){return this.user;}
 
+
     /**
-     * Check to see if a user
-     * @param identifier a User object's userID.
-     * @return  boolean that is false if user doesn't exist in DB.
+     * Method that checks if a user already exists in the UserDatabase csv file.
+     * Each attribute of the User class is saved into a column in the csv file, starting with userID.
+     * @param user a User object meant to be checked for existence.
+     * @return  boolean that is true if user is already in DB.
      */
     @Override
-    public boolean existsByName(String identifier) {
-        // Creating a loop variable
-        boolean exists = false;
+    public boolean userExists(User user) {
         // Create variable used to track where to split values in single line
         String value = ",";
+        // Access user.userID attribute
+        String identifier = String.valueOf(user.getUserID());
 
         // "Try" block is necessary for BufferedReader objects
         try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
@@ -55,7 +53,6 @@ public class FileUserDataAccessObject implements UserSignupDataAccessInterface {
             // While loop that keeps reading file until it's empty
             while (line != null) {
                 // Create an array of Strings that stores each value separated by comma as a new object in array
-                assert line != null;
                 String[] row = line.split(value);
                 // Early return if the userID we put in is equal to the userID in the row
                 if (identifier.equals(row[0])){
@@ -63,37 +60,53 @@ public class FileUserDataAccessObject implements UserSignupDataAccessInterface {
                     // Need to close the BufferedReader object
                     // Normally, the "Try" block will do this for you, but not in case of early return
                     br.close();
+                    // Do not save the user to database, return false
                     return true;
                 }
                 line = br.readLine();
             }
         }
+
         // "Catch" block is necessary with any try block
         catch (IOException e){
             throw new RuntimeException(e);
         }
-        System.out.println(exists);
-        return exists;
+        System.out.println(false);
+        return false;
     }
+
 
     /**
      * Save a user into the csv file UserDB that acts as a database.
-     * Each attribute of the User class is saved into a column in the csv file,
-     * Starting with userID.
+     * Each attribute of the User class is saved into a column in the csv file, starting with userID.
+     * Writes the user to the first available row at the end of the DB.
      * @param user a User object that contains info like id, username, etc.
      */
     @Override
     public void saveUser(User user){
         // Same structure as existsByName, using try/catch block
-        // Here, we use BufferedWriter class
-        try (BufferedWriter bwr = new BufferedWriter(new FileWriter(this.getcsvFile()))) {
-            bwr.write(user.getUserID());
+        // Here, we use FileWriter class
+        try (FileWriter fw = new FileWriter(this.getcsvFile(), true)) {
+            fw.write(this.userToString(user));
+            System.out.println("User saved successfully!");
             }
+
         // "Catch" block to accompany "Try" block
         catch (IOException e){
             throw new RuntimeException(e);
         }
-
         }
 
+
+    /**
+     * Helper method that converts a user into a String form for writing into a csv.
+     * @param user a User object that contains info like id, username, etc.
+     * @return String that contains all of user's info separated by commas
+     */
+    public String userToString(User user){
+        return user.getUserID() + ", " + user.getUserName() + ", " + user.getMood() +
+                ", " + user.getNumActivities() + ", " + user.getNumMeals() + ", " +
+                user.getLocation().toString();
     }
+
+}

@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class User {
     private int userID;
     private String userName;
-    private ArrayList<Float> location;
+    private ArrayList<Double> location;
     private String mood;
     private int numActivities;
     private int numMeals;
     private ArrayList<Dayplan> dayPlans;
 
-    public User(int userID, String userName, ArrayList<Float> location, String mood, int numActivities, int numMeals) {
+    public User(int userID, String userName, ArrayList<Double> location, String mood, int numActivities, int numMeals) {
         this.userID = userID;
         this.userName = userName;
         this.mood = mood;
@@ -35,11 +35,11 @@ public class User {
         this.userName = userName;
     }
 
-    public ArrayList<Float> getLocation() {
+    public ArrayList<Double> getLocation() {
         return location;
     }
 
-    public void setLocation(ArrayList<Float> location) {
+    public void setLocation(ArrayList<Double> location) {
         this.location = location;
     }
 
