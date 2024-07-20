@@ -70,7 +70,7 @@ public class YelpFusion implements YelpInterface{
      * </p>
      *
      * @param businessID ID of the business.
-     * @return the nate, rating, price, contact number, distance to user and location of the business.
+     * @return the name, rating, price, contact number, distance to user and location of the business.
      * @throws RuntimeException If API call failed or failed to extract business details.
      */
     @Override
