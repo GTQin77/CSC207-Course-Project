@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ActivityTest {
+class CommonUserFactoryTest {
 
     @BeforeEach
     void setUp() {
@@ -17,6 +17,6 @@ class ActivityTest {
     }
 
     @Test
-    void getDuration() {
+    void create() {
     }
 }

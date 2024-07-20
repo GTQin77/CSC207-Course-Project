@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ActivityTest {
+class DayplanTest {
 
     @BeforeEach
     void setUp() {
@@ -17,6 +17,22 @@ class ActivityTest {
     }
 
     @Test
-    void getDuration() {
+    void getVibe() {
+    }
+
+    @Test
+    void setVibe() {
+    }
+
+    @Test
+    void getUser() {
+    }
+
+    @Test
+    void setUser() {
+    }
+
+    @Test
+    void getPlan() {
     }
 }
