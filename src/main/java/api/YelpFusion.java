@@ -23,40 +23,39 @@ public class YelpFusion implements YelpInterface{
      * </p>
      *
      * @param category Category chosen by ChatGPT.
-     * @param location Location of the user.
+     * @param city The city's name of where the user is at.
      * @param i        Number of business ID that you want.
      * @return the ids of the businesses.
      * @throws RuntimeException If API call failed or failed to extract businessID.
      */
     @Override
-    public ArrayList<String> getBusinessID(String category, ArrayList<Float> location, Integer i) {
+    public ArrayList<String> getBusinessID(String category, String city, Integer i) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("https://api.yelp.com/v3/businesses/search?categories=%s&latitude=%s&longitude=%s",
-                        category, location.get(0), location.get(1)))
-                .addHeader("Authorization", API_TOKEN)
-                .addHeader("Content-Type", "application/json")
+                .url(String.format("https://api.yelp.com/v3/businesses/search?categories=%s&location=%s",
+                        category, city))
+                .addHeader("Authorization", "Bearer " + API_TOKEN)
+                .addHeader("accept", "application/json")
                 .build();
 
         try {
             Response response = client.newCall(request).execute();
-            System.out.println(response);
             assert response.body() != null;
             JSONObject responseBody = new JSONObject(response.body().string());
 
-            if (responseBody.getInt("status_code") == 200) {
-                JSONArray businesses = responseBody.getJSONArray("businesses");
+            if (response.isSuccessful()) {
+                JSONArray businessList = responseBody.getJSONArray("businesses");
 
                 ArrayList<String> businessIds = new ArrayList<>();
-                for (int ind = 0; ind < businesses.length() && ind != i; ind++) {
-                    JSONObject business = businesses.getJSONObject(ind);
-                    businessIds.add(business.getString("business_id"));
+                for (int ind = 0; ind < i; ind++) {
+                    JSONObject business = businessList.getJSONObject(ind);
+                    businessIds.add(business.getString("id"));
                 }
                 return businessIds;
 
             } else {
-                throw new RuntimeException(responseBody.getString("message"));
+                throw new RuntimeException(responseBody.getString("code"));
             }
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
@@ -81,21 +80,19 @@ public class YelpFusion implements YelpInterface{
         Request request = new Request.Builder()
                 .url(String.format("https://api.yelp.com/v3/businesses/%s",
                         businessID))
-                .addHeader("Authorization", API_TOKEN)
-                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer " + API_TOKEN)
+                .addHeader("accept", "application/json")
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            System.out.println(response);
             assert response.body() != null;
             JSONObject responseBody = new JSONObject(response.body().string());
 
-            if (responseBody.getInt("status_code") == 200) {
+            if (response.isSuccessful()) {
                 String name = responseBody.getString("name");
-                Integer rating = responseBody.getInt("rating");
+                Float rating = responseBody.getFloat("rating");
                 String price = responseBody.getString("price");
                 String contactNum = responseBody.getString("phone");
-                Double distance = responseBody.getDouble("distance");
 
                 JSONObject coordinates = responseBody.getJSONObject("coordinates");
                 double latitude = coordinates.getDouble("latitude");
@@ -110,7 +107,6 @@ public class YelpFusion implements YelpInterface{
                 details.add(rating);
                 details.add(price);
                 details.add(contactNum);
-                details.add(distance);
                 details.add(locationBusiness);
 
                 return details;
@@ -140,16 +136,15 @@ public class YelpFusion implements YelpInterface{
         Request request = new Request.Builder()
                 .url(String.format("https://api.yelp.com/v3/businesses/%s/reviews",
                         businessID))
-                .addHeader("Authorization", API_TOKEN)
-                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer " + API_TOKEN)
+                .addHeader("accept", "application/json")
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            System.out.println(response);
             assert response.body() != null;
             JSONObject responseBody = new JSONObject(response.body().string());
 
-            if (responseBody.getInt("status_code") == 200) {
+            if (response.isSuccessful()) {
                 return responseBody.getJSONArray("reviews");
 
             } else {
