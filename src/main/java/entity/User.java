@@ -59,9 +59,7 @@ public class User {
         this.numActivities = numActivities;
     }
 
-    public int getNumMeals() {
-        return numMeals;
-    }
+    public int getNumMeals() { return numMeals; }
 
     public void setNumMeals(int numMeals) {
         this.numMeals = numMeals;
