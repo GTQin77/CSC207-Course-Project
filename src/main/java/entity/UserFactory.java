@@ -21,6 +21,6 @@ public interface UserFactory {
      * @param numMeals the number of meals the user wants for the day
      * @return a new User instance
      */
-    User create(int userID, String userName, ArrayList<Float> location, String mood,
+    User create(int userID, String userName, ArrayList<Double> location, String mood,
                 int numActivities, int numMeals);
 }
