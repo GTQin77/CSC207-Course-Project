@@ -87,6 +87,7 @@ public class FileUserDataAccessObject implements UserSignupDataAccessInterface {
         // Same structure as existsByName, using try/catch block
         // Here, we use FileWriter class
         try (FileWriter fw = new FileWriter(this.getcsvFile(), true)) {
+            fw.write("\n");
             fw.write(this.userToString(user));
             System.out.println("User saved successfully!");
             }

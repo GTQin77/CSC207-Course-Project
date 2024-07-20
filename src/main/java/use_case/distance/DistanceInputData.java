@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class DistanceInputData {
     final private User user;
-    final private ArrayList<Float> location;
+    final private ArrayList<Double> location;
     final private Float distanceCap;
     public DistanceInputData(User user, ArrayList<Float> location, Float distanceCap) {
         this.user = user;
@@ -15,7 +15,7 @@ public class DistanceInputData {
 
     User getUser() {return user;}
 
-    ArrayList<Float> getLocation() {return location;}
+    ArrayList<Double> getLocation() {return location;}
 
     Float getDistanceCap() {return distanceCap;}
 }
