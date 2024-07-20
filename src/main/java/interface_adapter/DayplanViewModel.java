@@ -1,8 +1,6 @@
 package interface_adapter;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+import java.util.Scanner;
 
 public class DayplanViewModel extends ViewModel {
     public final String titleLabel = "Prompt Input";
@@ -25,11 +23,8 @@ public class DayplanViewModel extends ViewModel {
      * Set the userInput from console
      * */
     public void setUserInput() {
-        try {
-            BufferedReader inputData = new BufferedReader(new InputStreamReader(System.in));
-            this.userInput = inputData.readLine();
-        } catch (IOException reader) {
-            System.out.println("Something went wrong!");
-        }
+        System.out.println(prompt);
+        Scanner input = new Scanner(System.in);
+        this.userInput = input.nextLine();
     }
 }

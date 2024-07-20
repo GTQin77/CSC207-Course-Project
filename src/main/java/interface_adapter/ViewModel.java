@@ -2,7 +2,7 @@ package interface_adapter;
 
 public abstract class ViewModel {
 
-    private String modelName;
+    private final String modelName;
 
     public ViewModel(String modelName) {
         this.modelName = modelName;
