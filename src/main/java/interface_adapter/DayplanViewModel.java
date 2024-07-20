@@ -18,4 +18,20 @@ public class DayplanViewModel extends ViewModel {
     public String getPrompt() {
         return this.prompt;
     }
+
+    /**
+     * Gets String userInput from DayplanViewModel
+     * */
+    public String getUserInput() {
+        return this.userInput;
+    }
+
+    /**
+     * Get userInput from the console
+     * */
+    public void setUserInput() {
+        System.out.println(prompt);
+        Scanner input = new Scanner(System.in);
+        this.userInput = input.nextLine();
+    }
 }
