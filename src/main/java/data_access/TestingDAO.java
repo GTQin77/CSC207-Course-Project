@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class TestingDAO {
     public static void main(String[] args) {
-        FileUserDataAccessObject fileUserDAO = new FileUserDataAccessObject();
+        UserSignupDataAccessObject fileUserDAO = new UserSignupDataAccessObject();
         fileUserDAO.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
         ArrayList<Double> location = new ArrayList<Double>(3);
         location.add(3.145);

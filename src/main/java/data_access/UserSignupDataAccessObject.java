@@ -10,7 +10,7 @@ import java.io.IOException;
 
 // A DAO object that writes to a Microsoft Excel .csv file.
 // Records new Users and existing day lists associated with their account into the file.
-public class FileUserDataAccessObject implements UserSignupDataAccessInterface {
+public class UserSignupDataAccessObject implements UserSignupDataAccessInterface {
 
     private File csvFile;
     private String csvPath;
