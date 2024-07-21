@@ -1,5 +1,6 @@
 package data_access;
 
+import entity.Business;
 import entity.Dayplan;
 import entity.User;
 
@@ -52,18 +53,14 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
         }
     }
 
-
     /**
-     *
+     * Method that returns a String version of a Business object.
+     * @param business Business object, example of Liskov Substitution Principle
+     * @return String version of a Business, with attributes separated by commas
      */
-    public String dayplanToString(Dayplan dayplan){
-        //String stringDayplan =
-
-
-        //return user.getUserID() + stringDayplan;
-        return "hELLO";
+    public String businessToString(Business business){
+        return "\n" + business.getName() + "," + business.getLocation().toString() + "," +
+                business.getDistance() + "," + business.getContactNum() + "," + business.getPrice() + ","
+                + business.getRatings() + "\n";
     }
-
-
-
 }
