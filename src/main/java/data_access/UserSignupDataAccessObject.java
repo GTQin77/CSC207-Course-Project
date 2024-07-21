@@ -26,7 +26,7 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
         this.csvFile = new File(csvPath);
     }
 
-    // public String getcsvPath(){return this.csvPath;}
+    public String getcsvPath(){return this.csvPath;}
 
     public void setUser(User user){this.user = user;}
 
