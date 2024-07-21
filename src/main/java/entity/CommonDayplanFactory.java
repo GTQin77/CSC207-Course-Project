@@ -2,6 +2,9 @@ package entity;
 
 import entity.DayplanFactory;
 import entity.BusinessFactory;
+import entity.Business;
+import entity.Meal;
+import entity.Activity;
 import api.OpenInterface;
 import api.YelpInterface;
 
@@ -30,13 +33,10 @@ public class CommonDayplanFactory implements DayplanFactory{
         dayplan.setDescription(description);
 
         // 1. Call OpenAI API, receive category from description
-        String userMessage = "Given the following prompt:" + "\"" + description + "\"" + ", pick 1 category from" +
-                "\"active, \"." + "Respond with just the category.";
+        String userMessage = "Given the following prompt:" + "\"" + description + "\"" + ", pick 1 category from: " +
+                "\"active, arts, beautysvc, localflavor, nightlife, shopping\"." + " Respond with just the category.";
 
-
-
-
-        for (int i = 0; i < numMeals; i++){
+        for (int i = 0; i < numActivities; i++){
             Business business = BusinessFactory.createBusiness();
             dayplan.getPlan().add(business);
         }
