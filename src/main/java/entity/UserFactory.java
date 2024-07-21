@@ -10,7 +10,7 @@ public interface UserFactory {
     /**
      * Creates a new User instance with the specified attributes.
      * <p>
-     * This implementation referenced the Pualgries' Clean Architecture code for UserFactory on
+     * This implementation referenced the Paulgries' Clean Architecture code for UserFactory on
      * <a href="https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/entity/UserFactory.java">github.com</a>.
      * </p>
      * @param userName the name of the user
