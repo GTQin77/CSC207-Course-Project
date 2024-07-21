@@ -5,5 +5,5 @@ import entity.Dayplan;
 
 public interface DayPlanDataAccessInterface {
 
-    void saveDayPlan(User user, Dayplan dayplan);
+    void saveDayPlan(Dayplan dayplan);
 }
