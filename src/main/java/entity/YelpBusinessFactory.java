@@ -14,7 +14,7 @@ public class YelpBusinessFactory implements BusinessFactory {
     /**
      * Creating a business object based on the provided businessID.
      * @param businessID The id of the business.
-     * @return a business object associated with the businessID.
+     * @return a business object by providing the businessID.
      */
     @Override
     public Business createBusiness(String businessID) {
