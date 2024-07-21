@@ -19,7 +19,7 @@ class YelpFusionTest {
         int numIDs = 2;
 
         YelpFusion yelpFusion = new YelpFusion();
-        ArrayList<String> businessIDs = yelpFusion.getBusinessID(category, cityName, numIDs);
+        ArrayList<String> businessIDs = yelpFusion.getBusinessIDs(category, cityName, numIDs);
 
         assertNotNull(businessIDs);
         assertEquals(numIDs, businessIDs.size());

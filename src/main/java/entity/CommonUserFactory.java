@@ -8,7 +8,7 @@ public class CommonUserFactory implements UserFactory {
     /**
      * Creates a new User instance with the specified attributes.
      * <p>
-     * This implementation referenced the Pualgries' Clean Architecture code for CommonUserFactory on
+     * This implementation referenced the Paulgries' Clean Architecture code for CommonUserFactory on
      * <a href="https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/entity/CommonUserFactory.java">github.com</a>.
      * </p>
      * @param userName the name of the user

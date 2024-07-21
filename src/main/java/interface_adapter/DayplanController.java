@@ -11,8 +11,8 @@ public class DayplanController {
         this.userDayPlanUseCaseInteractor = userDayPlanUseCaseInteractor;
     }
 
-    public void execute(String username, String location, int numMeals, int numActivities, String description) {
-        UserDayPlanInputData inputData = new UserDayPlanInputData(username, location, numMeals, numActivities, description);
+    public void execute(String username, String location, String city, int numMeals, int numActivities, String description) {
+        UserDayPlanInputData inputData = new UserDayPlanInputData(username, location, city, numMeals, numActivities, description);
 
         userDayPlanUseCaseInteractor.execute(inputData);
     }
