@@ -1,11 +1,15 @@
 package use_case.user;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserSignupInputData {
 
     final private String username;
     final private String password;
     final private String repeatPassword;
+    final private ArrayList<String> location;
 
 
     /**
@@ -18,22 +22,20 @@ public class UserSignupInputData {
      * @param username Username of the account.
      * @param password Password of the account.
      * @param repeatPassword Repeated password of the account.
+     * @param location String representation of 2 coordinates, separated by a comma.
      */
-    public UserSignupInputData(String username, String password, String repeatPassword) {
+    public UserSignupInputData(String username, String password, String repeatPassword, String location) {
         this.username = username;
         this.password = password;
         this.repeatPassword = repeatPassword;
+        this.location = new ArrayList<String>((List.of(location.split(","))));
     }
 
-    String getUsername() {
-        return username;
-    }
+    public String getUsername() { return this.username;}
 
-    String getPassword() {
-        return password;
-    }
+    public String getPassword() { return this.password;}
 
-    public String getRepeatPassword() {
-        return repeatPassword;
-    }
+    public String getRepeatPassword() {return this.repeatPassword;}
+
+    public ArrayList<String> getLocation() {return this.location;}
 }

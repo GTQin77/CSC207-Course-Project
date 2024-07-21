@@ -3,7 +3,6 @@ package entity;
 import java.util.ArrayList;
 
 public class User {
-    private int userID;
     private String userName;
     private ArrayList<Double> location;
     private String mood;
@@ -11,20 +10,12 @@ public class User {
     private int numMeals;
     private ArrayList<Dayplan> dayPlans;
 
-    public User(int userID, String userName, ArrayList<Double> location, String mood, int numActivities, int numMeals) {
-        this.userID = userID;
+    public User(String userName, ArrayList<Double> location, String mood, int numActivities, int numMeals) {
         this.userName = userName;
         this.mood = mood;
         this.numActivities = numActivities;
         this.numMeals = numMeals;
         this.location = location;
-    }
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     public String getUserName() {

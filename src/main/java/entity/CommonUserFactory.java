@@ -20,8 +20,8 @@ public class CommonUserFactory implements UserFactory {
      * @return a new User instance
      */
     @Override
-    public User create(int userID, String userName, ArrayList<Double> location, String mood,
+    public User create(String userName, ArrayList<Double> location, String mood,
                        int numActivities, int numMeals) {
-        return new User(userID, userName, location, mood, numActivities, numMeals);
+        return new User(userName, location, mood, numActivities, numMeals);
     }
 }
