@@ -15,7 +15,7 @@ public class TestingDAO {
         System.out.println(location);
 
 
-        User testUser = new User("D-man", location);
+        User testUser = new User("D-man", "pompom", location);
         System.out.println(testUser.getLocation());
 
         fileUserDAO.userExists(testUser);

@@ -1,5 +1,5 @@
 package use_case.dayplanList;
 
-public interface UserDayPlanInputBoundary {
+public abstract interface UserDayPlanInputBoundary {
     void execute(UserDayPlanInputData userDayPlanInputData);
 }
