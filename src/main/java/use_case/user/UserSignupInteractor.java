@@ -14,6 +14,16 @@ public class UserSignupInteractor implements UserSignupInputBoundary {
     final UserSignupOutputBoundary userPresenter;
     final UserFactory userFactory;
 
+    /**
+     * Interactor of the user sign up use case.
+     * <p>
+     * This implementation referenced the Pualgries' Clean Architecture code for SignupInteractor on
+     * <a href="https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/use_case/SignupInteractor.java">github.com</a>.
+     * </p>
+     * @param signupOutputBoundary Output boundary of the signup use case.
+     * @param userFactory Factory for user.
+     * @param userSignupDataAccessInterface Data access interface of the user signup use case.
+     */
     public UserSignupInteractor(UserSignupDataAccessInterface userSignupDataAccessInterface,
                             UserSignupOutputBoundary signupOutputBoundary,
                             UserFactory userFactory) {

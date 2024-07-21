@@ -9,10 +9,10 @@ public class Business {
     private float distance;
     private String contactNum;
     private String price;
-    private String ratings;
+    private Float ratings;
 
     public Business(String name, ArrayList<Float> location, float distance, String contactNum,
-                    String price, String rating) {
+                    String price, Float rating) {
         this.name = name;
         this.location = location;
         this.distance = distance;
@@ -57,9 +57,9 @@ public class Business {
         this.price = price;
     }
 
-    public String getRatings() { return ratings; }
+    public Float getRatings() { return ratings; }
 
-    public void setRatings(String ratings) { this.ratings = ratings; }
+    public void setRatings(Float ratings) { this.ratings = ratings; }
 }
 
 
