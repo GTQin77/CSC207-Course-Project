@@ -11,17 +11,13 @@ public class CommonUserFactory implements UserFactory {
      * This implementation referenced the Pualgries' Clean Architecture code for CommonUserFactory on
      * <a href="https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/entity/CommonUserFactory.java">github.com</a>.
      * </p>
-     * @param userID the unique ID of the user
      * @param userName the name of the user
+     * @param password the password associated with the account
      * @param location the location coordinates of the user
-     * @param mood the mood the user wants for the day
-     * @param numActivities the number of activities the user wants for the day
-     * @param numMeals the number of meals the user wants for the day
      * @return a new User instance
      */
     @Override
-    public User create(String userName, ArrayList<Double> location, String mood,
-                       int numActivities, int numMeals) {
-        return new User(userName, location, mood, numActivities, numMeals);
+    public User create(String userName, String password, ArrayList<Double> location) {
+        return new User(userName, password, location);
     }
 }
