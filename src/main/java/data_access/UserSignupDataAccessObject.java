@@ -106,8 +106,7 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
      * @return String that contains all of user's info separated by commas
      */
     public String userToString(User user){
-        String stringUser = user.getUserName() + "," + user.getMood() + "," + user.getNumActivities() +
-                "," + user.getNumMeals() + ",";
+        String stringUser = user.getUserName() + "," + user.getPassword() + ",";
 
         String location = user.getLocation().toString();
 

@@ -14,8 +14,9 @@ public interface UserFactory {
      * <a href="https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/entity/UserFactory.java">github.com</a>.
      * </p>
      * @param userName the name of the user
-     * @param location the location coordinates of the user
+     * @param password the password associated with user account
+     * @param location the latitude and longitude specified by user.
      * @return a new User instance
      */
-    User create(String userName, ArrayList<Double> location);
+    User create(String userName, String password, ArrayList<Double> location);
 }

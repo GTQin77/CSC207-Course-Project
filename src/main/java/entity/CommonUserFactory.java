@@ -12,11 +12,12 @@ public class CommonUserFactory implements UserFactory {
      * <a href="https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/entity/CommonUserFactory.java">github.com</a>.
      * </p>
      * @param userName the name of the user
+     * @param password the password associated with the account
      * @param location the location coordinates of the user
      * @return a new User instance
      */
     @Override
-    public User create(String userName, ArrayList<Double> location) {
-        return new User(userName, location);
+    public User create(String userName, String password, ArrayList<Double> location) {
+        return new User(userName, password, location);
     }
 }
