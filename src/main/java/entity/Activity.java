@@ -5,7 +5,7 @@ import java.util.ArrayList;
 // Public class Activity that inherits from Business and implements Timeblock
 public class Activity extends Business implements Timeblock {
     public Activity(String name, ArrayList<Float> location, float distance, String contactNum,
-                    String price, String rating) {
+                    String price, Float rating) {
         super(name, location, distance, contactNum, price, rating);
     }
 
