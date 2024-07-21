@@ -10,11 +10,11 @@ public class User {
     private int numMeals;
     private ArrayList<Dayplan> dayPlans;
 
-    public User(String userName, ArrayList<Double> location, String mood, int numActivities, int numMeals) {
+    public User(String userName, ArrayList<Double> location) {
         this.userName = userName;
-        this.mood = mood;
-        this.numActivities = numActivities;
-        this.numMeals = numMeals;
+        this.mood = "";
+        this.numActivities = 0;
+        this.numMeals = 0;
         this.location = location;
     }
 
