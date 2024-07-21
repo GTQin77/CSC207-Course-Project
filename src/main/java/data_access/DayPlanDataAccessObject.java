@@ -30,36 +30,38 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
 
     public User getUser(){return this.user;}
 
-    public void saveDayPlan(User user, Dayplan dayplan){
-        // Create variable used to track where to split values in single line
-        String value = ",";
-        // Access user.userID attribute
-        String identifier = String.valueOf(user.getUserID());
+    /**
+     * Method that writes a newly created Dayplan to the DayplanDatabase csv.
+     * Each row in the csv refers to 1 Dayplan object.
+     * Each cell corresponds to 1 Business object within Dayplan.
+     * @param dayplan a Dayplan object that we want to save to a csv with an associated User.
+     */
+    public void saveDayPlan(Dayplan dayplan){
+        // Same structure as existsByName, using try/catch block
+        // Use FileWriter class
+        // Try block automatically closes FileWriter class
+        try (FileWriter fw = new FileWriter(this.getcsvFile(), true)) {
+            fw.write("\n");
+            fw.write(user.getUserID() + "," + dayplan);
+            System.out.println("User saved successfully!");
+        }
 
-        // "Try" block is necessary for BufferedReader objects
-        try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
-            String line = br.readLine();
-            // Mutate line to refer to 2nd row... where actual values begin(skipping past row names)
-            line = br.readLine();
-            // Create an array of Strings that stores each value separated by comma as a new object in array
-            String[] row = line.split(value);
-            // While loop that keeps reading file until it's empty
-            while (!row[0].equals(identifier)) {
-                // Keep iterating through rows until we get to the row where our user is stored
-                line = br.readLine();
-                row = line.split(value);
-                }
-            // Currently, variable line holds the info of the user we need
-
-            }
-
-        // "Catch" block is necessary with any try block
+        // "Catch" block to accompany "Try" block
         catch (IOException e){
             throw new RuntimeException(e);
         }
-        System.out.println(false);
-        return false;
     }
+
+
+    /**
+     *
+     */
+    public String dayplanToString(Dayplan dayplan){
+        //String stringDayplan =
+
+
+        //return user.getUserID() + stringDayplan;
+        return "hELLO";
     }
 
 

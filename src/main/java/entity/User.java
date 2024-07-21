@@ -17,7 +17,7 @@ public class User {
         this.mood = mood;
         this.numActivities = numActivities;
         this.numMeals = numMeals;
-        this.location = new ArrayList<>();
+        this.location = location;
     }
     public int getUserID() {
         return userID;

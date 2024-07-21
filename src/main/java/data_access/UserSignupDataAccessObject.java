@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 // A DAO object that writes to a Microsoft Excel .csv file.
 // Records new Users and existing day lists associated with their account into the file.
@@ -43,7 +44,7 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
         // Create variable used to track where to split values in single line
         String value = ",";
         // Access user.userID attribute
-        String identifier = String.valueOf(user.getUserID());
+        String identifier = user.getUserName();
 
         // "Try" block is necessary for BufferedReader objects
         try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
@@ -105,9 +106,12 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
      * @return String that contains all of user's info separated by commas
      */
     public String userToString(User user){
-        return user.getUserID() + ", " + user.getUserName() + ", " + user.getMood() +
-                ", " + user.getNumActivities() + ", " + user.getNumMeals() + ", " +
-                user.getLocation().toString();
+        String stringUser = user.getUserName() + "," + user.getMood() + "," + user.getNumActivities() +
+                "," + user.getNumMeals() + ",";
+
+        String location = user.getLocation().toString();
+
+        return stringUser + "\"" + location.substring(1, location.length() - 2) + "\"";
     }
 
 }
