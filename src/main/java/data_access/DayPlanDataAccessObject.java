@@ -1,5 +1,6 @@
 package data_access;
 
+import entity.Business;
 import entity.Dayplan;
 import entity.User;
 
@@ -24,7 +25,7 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
         this.csvFile = new File(csvPath);
     }
 
-    // public String getcsvPath(){return this.csvPath;}
+    public String getcsvPath(){return this.csvPath;}
 
     public void setUser(User user){this.user = user;}
 
@@ -41,9 +42,16 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
         // Use FileWriter class
         // Try block automatically closes FileWriter class
         try (FileWriter fw = new FileWriter(this.getcsvFile(), true)) {
+            // Switching to new line
             fw.write("\n");
-            fw.write(user.getUserID() + "," + dayplan);
-            System.out.println("User saved successfully!");
+            fw.write(dayplan.getUser().getUserName());
+            // Iterate through Businesses in Dayplan and write them to csv
+            // Each new Business goes in individual cell
+            for (int i = 0; i < dayplan.getPlan().size(); i++){
+                Business business = dayplan.getPlan().get(i);
+                fw.write("," + this.businessToString(business));
+            }
+            System.out.println("Dayplan saved successfully!");
         }
 
         // "Catch" block to accompany "Try" block
@@ -52,18 +60,14 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
         }
     }
 
-
     /**
-     *
+     * Method that returns a String version of a Business object.
+     * @param business Business object, example of Liskov Substitution Principle
+     * @return String version of a Business, with attributes separated by commas
      */
-    public String dayplanToString(Dayplan dayplan){
-        //String stringDayplan =
-
-
-        //return user.getUserID() + stringDayplan;
-        return "hELLO";
+    public String businessToString(Business business){
+        return "\n" + business.getName() + "," + business.getLocation().toString() + "," +
+                business.getDistance() + "," + business.getContactNum() + "," + business.getPrice() + ","
+                + business.getRatings() + "\n";
     }
-
-
-
 }
