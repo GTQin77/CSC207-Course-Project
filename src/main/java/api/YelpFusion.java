@@ -29,7 +29,7 @@ public class YelpFusion implements YelpInterface{
      * @throws RuntimeException If API call failed or failed to extract businessID.
      */
     @Override
-    public ArrayList<String> getBusinessID(String category, String city, Integer i) {
+    public ArrayList<String> getBusinessIDs(String category, String city, Integer i) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()

@@ -1,8 +1,9 @@
 package use_case.dayplanList;
 
 import data_access.DayPlanDataAccessInterface;
-import data_access.UserSignupDataAccessInterface;
-import entity.Dayplan;
+import data_access.DayPlanDataAccessInterface;
+import entity.DayplanFactory;
+import entity.BusinessFactory;
 import entity.UserFactory;
 import use_case.user.UserSignupOutputBoundary;
 // NOTE TO SELF: Should import a DayplanFactory interface instead, no time :(
@@ -15,14 +16,14 @@ import java.util.List;
 public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
     final DayPlanDataAccessInterface dayPlanDataAccessObject;
     final UserDayPlanOutputBoundary dayplanPresenter;
-    final Dayplan dayplan;
+    final DayplanFactory dayplanFactory;
 
     public UserDayPlanInteractor(DayPlanDataAccessInterface dayPlanDataAccessInterface,
                                 UserDayPlanOutputBoundary userDayPlanOutputBoundary,
-                                Dayplan dayplan) {
+                                DayplanFactory dayplanFactory) {
         this.dayPlanDataAccessObject = dayPlanDataAccessInterface;
         this.dayplanPresenter = userDayPlanOutputBoundary;
-        this.dayplan = dayplan;
+        this.dayplanFactory = dayplanFactory;
     }
 
     @Override
