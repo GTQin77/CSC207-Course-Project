@@ -1,7 +1,7 @@
 package interface_adapter;
 
 import java.util.Scanner;
-import entity.User
+import entity.User;
 import use_case.user.UserSignupOutputData;
 
 public class DayplanViewModel extends ViewModel {
