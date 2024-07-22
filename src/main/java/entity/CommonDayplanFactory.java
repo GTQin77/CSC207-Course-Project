@@ -23,6 +23,8 @@ public class CommonDayplanFactory implements DayplanFactory{
     public void setYelpApi(YelpInterface yelpApi){this.yelpApi = yelpApi;}
     public YelpInterface getYelpApi(){return this.yelpApi;}
 
+    public void setBusinessFactory(BusinessFactory businessFactory){this.businessFactory = businessFactory;}
+
 
     /**
      * A method that holds implementation for creation of new Dayplan object.
@@ -57,14 +59,14 @@ public class CommonDayplanFactory implements DayplanFactory{
         for (int i = 0; i < numActivities; i++){
             String businessID = activityIDs.get(i);
             // NOTE TO SELF: Do we need to pass in the api??
-            Activity activity = (Activity) this.businessFactory.createBusiness(businessID);  // Casting Business to Activity
+            Business activity = this.businessFactory.createBusiness(businessID);  // Casting Business to Activity
             // Adding the Activity object to ArrayList
             plan.add(activity);
         }
         // For MEALS
         for (int i = 0; i < numMeals; i++){
             String businessID = mealsIDs.get(i);
-            Meal meal = (Meal) this.businessFactory.createBusiness(businessID);
+            Business meal = this.businessFactory.createBusiness(businessID);
             plan.add(meal);
         }
         dayplan.setPlan(plan);

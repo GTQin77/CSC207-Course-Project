@@ -51,12 +51,17 @@ public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
 
         // 3. Initialize our DayplanFactory trait using the API objects we made previously
         CommonDayplanFactory commonDayplanFactory = new CommonDayplanFactory();
+        BusinessFactory businessFactory = new YelpBusinessFactory(yelpFusion);
         commonDayplanFactory.setOpenApi(openAI);
         commonDayplanFactory.setYelpApi(yelpFusion);
+        commonDayplanFactory.setBusinessFactory(businessFactory);
 
         // 4. Create a new Dayplan object using factories
-        Dayplan dayplan = this.dayplanFactory.create(input.getUser(), location, input.getCity(), input.getNumMeals(),
+        Dayplan dayplan = commonDayplanFactory.create(input.getUser(), location, input.getCity(), input.getNumMeals(),
                 input.getNumActivities(), input.getDescription());
+
+
+
 
 
         // 5. Write new Dayplan to database using DAO
