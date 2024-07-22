@@ -57,7 +57,6 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
                 String[] row = line.split(value);
                 // Early return if the userID we put in is equal to the userID in the row
                 if (identifier.equals(row[0])){
-                    System.out.println(true);
                     // Need to close the BufferedReader object
                     // Normally, the "Try" block will do this for you, but not in case of early return
                     br.close();
@@ -72,7 +71,6 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
         catch (IOException e){
             throw new RuntimeException(e);
         }
-        System.out.println(false);
         return false;
     }
 

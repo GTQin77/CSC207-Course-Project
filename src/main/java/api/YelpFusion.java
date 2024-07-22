@@ -91,7 +91,7 @@ public class YelpFusion implements YelpInterface{
             if (response.isSuccessful()) {
                 String name = responseBody.getString("name");
                 Float rating = responseBody.getFloat("rating");
-                String price = responseBody.getString("price");
+                // String price = responseBody.getString("price");
                 String contactNum = responseBody.getString("phone");
 
                 JSONObject coordinates = responseBody.getJSONObject("coordinates");
@@ -105,7 +105,7 @@ public class YelpFusion implements YelpInterface{
                 ArrayList<Object> details = new ArrayList<>();
                 details.add(name);
                 details.add(rating);
-                details.add(price);
+                //details.add(price);
                 details.add(contactNum);
                 details.add(locationBusiness);
 
