@@ -3,6 +3,7 @@ package app;
 import data_access.UserSignupDataAccessInterface;
 import data_access.UserSignupDataAccessObject;
 import entity.CommonUserFactory;
+import entity.User;
 import entity.UserFactory;
 import interface_adapter.SignupController;
 import interface_adapter.SignupPresenter;
@@ -23,7 +24,9 @@ public class UserSignUpUseCaseFactory {
 
     public static UserSignupView create(SignupViewModel signupViewModel) {
         SignupController controller = createUserSignUpCase(signupViewModel);
-        return new UserSignupView(signupViewModel, controller);
+        UserSignupView userSignupView = new UserSignupView(signupViewModel, controller);
+        userSignupView.setUser(controller.getUser());
+        return userSignupView;
     }
 
     private static SignupController createUserSignUpCase(SignupViewModel signupViewModel) {
@@ -37,6 +40,7 @@ public class UserSignUpUseCaseFactory {
         UserSignupInputBoundary userSignupInteractor = new UserSignupInteractor(
                 userDataAccessObject, signupOutputBoundary, userFactory
         );
-        return new SignupController(userSignupInteractor);
+        SignupController signupController = new SignupController(userSignupInteractor);
+        return signupController;
     }
 }

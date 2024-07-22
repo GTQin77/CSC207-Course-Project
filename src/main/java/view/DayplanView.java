@@ -12,7 +12,7 @@ public class DayplanView {
     private final DayplanController dayplanController;
     private final DayplanViewModel dayplanViewModel;
 
-    public DayplanView(DayplanController dayplanController, DayplanViewModel dayplanViewModel, UserSignupOutputData user) {
+    public DayplanView(DayplanController dayplanController, DayplanViewModel dayplanViewModel, User user) {
         this.dayplanController = dayplanController;
         this.dayplanViewModel = dayplanViewModel;
 
@@ -20,8 +20,8 @@ public class DayplanView {
 
         dayplanViewModel.setUser(user);
         User userObject = dayplanViewModel.getUser();
-        String userName = userObject.getUserName();
-        ArrayList<Double> userLocation = userObject.getLocation();
+        String userName = user.getUserName();
+        ArrayList<Double> userLocation = user.getLocation();
 
         //input user city
         dayplanViewModel.setUserCity();
@@ -39,6 +39,6 @@ public class DayplanView {
         dayplanViewModel.setUserDescription();
         String userDescription = dayplanViewModel.getUserDescription();
 
-        dayplanController.execute(userName, userLocation.toString(), userCity, userNumMeals, userNumActivities, userDescription);
+        dayplanController.execute(user, userLocation.toString(), userCity, userNumMeals, userNumActivities, userDescription);
     }
 }

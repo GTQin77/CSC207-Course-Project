@@ -1,5 +1,6 @@
 package view;
 
+import entity.User;
 import interface_adapter.SignupController;
 import interface_adapter.SignupViewModel;
 
@@ -8,6 +9,18 @@ import java.util.Scanner;
 public class UserSignupView {
     private final SignupViewModel signupViewModel;
     private final SignupController signupController;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    private User user;
+
+
 
     public UserSignupView(SignupViewModel signupViewModel, SignupController signupController) {
         this.signupViewModel = signupViewModel;

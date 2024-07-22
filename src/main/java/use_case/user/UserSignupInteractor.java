@@ -6,13 +6,12 @@ import entity.UserFactory;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class UserSignupInteractor implements UserSignupInputBoundary {
     final UserSignupDataAccessInterface userDataAccessObject;
     final UserSignupOutputBoundary userPresenter;
     final UserFactory userFactory;
+    private User user;
 
     /**
      * Interactor of the user sign up use case.
@@ -33,7 +32,7 @@ public class UserSignupInteractor implements UserSignupInputBoundary {
     }
 
     @Override
-    public void execute(UserSignupInputData input) {
+    public User execute(UserSignupInputData input) {
         // 1. Process InputData into correct data types
         ArrayList<Double> location = new ArrayList<Double>();
         for (int i = 0; i < input.getLocation().size(); i++){
@@ -46,13 +45,16 @@ public class UserSignupInteractor implements UserSignupInputBoundary {
             // NOTE TO SELF: CHANGE DAO implementation to only take username!!!
             // So that we avoid having to create a new User object until else block
             userPresenter.prepareFailView("Oops! This username already exists.");
+            return null;
         } else if (!input.getPassword().equals(input.getRepeatPassword())){
             userPresenter.prepareFailView("Passwords don't match.");
+            return null;
         } else {
             LocalDateTime now = LocalDateTime.now();
             this.userDataAccessObject.saveUser(user);
             UserSignupOutputData signupOutputData = new UserSignupOutputData(user, now.toString(), false);
             userPresenter.prepareSuccessView(signupOutputData);
+            return user;
         }
     }
 }
