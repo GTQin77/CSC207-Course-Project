@@ -51,7 +51,7 @@ public class UserSignupInteractor implements UserSignupInputBoundary {
         } else {
             LocalDateTime now = LocalDateTime.now();
             this.userDataAccessObject.saveUser(user);
-            UserSignupOutputData signupOutputData = new UserSignupOutputData(user.getUserName(), now.toString(), false);
+            UserSignupOutputData signupOutputData = new UserSignupOutputData(user, now.toString(), false);
             userPresenter.prepareSuccessView(signupOutputData);
         }
     }
