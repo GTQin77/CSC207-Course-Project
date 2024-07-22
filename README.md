@@ -26,6 +26,9 @@ Yelp Fusion:
 
 ___________________________________________________________________________________________________________________
 # How the Program Works (Phase 1)
+To begin with, we need to install maven to run the code.
+Then, we need to set up the environment variable with 2 api tokens for app/Main.java. Without this step, the dayplan will not work.
+
 Go to app/Main.java and click run. The program will first direct you to the sign up stage in the console. After signing up, you can proceed with entering the number of meals and activities you want in your day plan. You will be also ask to put in the city that you are in and a sentence that describe how you want your day to be. An example sentence will be, "I want an exciting day!". After entering all these things, you can wait for the program to generate a dayplan for you! Check the console for the day plan and start your amazing day.
 
 ___________________________________________________________________________________________________________________
