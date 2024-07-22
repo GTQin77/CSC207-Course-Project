@@ -21,7 +21,7 @@ public class SignupController {
 
     public void execute(String username, String password1, String password2) {
         UserSignupInputData signupInputData = new UserSignupInputData(
-                username, password1, password2); // not sure what bug is this
+                username, password1, password2);
 
         userSignupInteractor.execute(signupInputData);
     }
