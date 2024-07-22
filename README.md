@@ -32,7 +32,7 @@ ________________________________________________________________________________
 ### Authors (JAJA)
 Janice, Amelia, Joshua, Ashley
 
-### Future Work
+### Future Work/ Extendability
 The functionality of this program (after implementing all use cases as promised by the design blueprint) can be extended by the following ways:
 * enabling user to generate a mysterious day plan without inputting anything
 * allow user to delete the account
