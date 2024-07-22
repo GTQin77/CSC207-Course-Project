@@ -23,9 +23,9 @@ public class YelpBusinessFactory implements BusinessFactory {
         Float rating = (Float) businessDetails.get(1);
         String price = (String) businessDetails.get(2);
         String contactNum = (String) businessDetails.get(3);
-        ArrayList<Float> location = (ArrayList<Float>) businessDetails.get(4);
+        ArrayList<Double> location = (ArrayList<Double>) businessDetails.get(4);
 
-        float distance = 0.0f;
+        Double distance = 0.0;
 
         return new Business(name, location, distance, contactNum, price, rating);
     }

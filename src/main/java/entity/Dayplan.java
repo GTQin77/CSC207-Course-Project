@@ -2,6 +2,7 @@ package entity;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import entity.Business;
 
 public class Dayplan {
     private User user;
@@ -38,4 +39,19 @@ public class Dayplan {
 
     public void setPlan(ArrayList<Business> plan){this.plan = plan;}
     public ArrayList<Business> getPlan() {return plan;}
+
+    public String dayplanToString(){
+        StringBuilder businessList = new StringBuilder();
+        // For each Business in the plan...
+        for (int i = 0; i < this.getPlan().size(); i++){
+            Business business = this.getPlan().get(i);
+            String strBusiness = business.getName() + ", Location: " + business.getLocation().toString() +
+                    ", Distance: " + business.getDistance() + ", Contact: " + business.getContactNum() +
+                    ", Price: " + business.getPrice() + ", Ratings: " + business.getRatings() + "\n";
+            businessList.append(strBusiness);
+        }
+        return this.getVibe() + "\n" + businessList.toString();
+
+    }
+
 }
