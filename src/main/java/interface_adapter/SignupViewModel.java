@@ -2,7 +2,7 @@ package interface_adapter;
 
 import java.util.Scanner;
 
-public class SignupViewModel extends ViewModel{
+public class SignupViewModel extends ViewModel {
     private String userName;
     private String password;
     private String repeatedPassword;
@@ -11,44 +11,36 @@ public class SignupViewModel extends ViewModel{
         super("SignupViewModel");
     }
 
-
-    public String getUserName() {
-        return userName;
-    }
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRepeatedPassword() {
-        return repeatedPassword;
-    }
-    public void setRepeatedPassword(String repeatedPassword) {
-        this.repeatedPassword = repeatedPassword;
-    }
-
-
-    public void getUserConsoleInput() {
+    public void setUserName() {
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("Enter your username: ");
         this.userName = scanner.nextLine();
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public void setPassword() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your password: ");
         this.password = scanner.nextLine();
+    }
+
+
+    public String getPassword() {
+        return this.password;
+    }
+
+
+    public void setRepeatedPassword() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter repeated password: ");
         this.repeatedPassword = scanner.nextLine();
-
-        if (!this.password.equals(this.repeatedPassword)) {
-            System.out.println("Passwords do not match, signup failed.");
-            return;
-        }
-
+    }
+    public String getRepeatedPassword() {
+        return this.repeatedPassword;
     }
 
 }
+
