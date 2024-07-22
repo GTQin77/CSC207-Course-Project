@@ -14,6 +14,7 @@ ________________________________________________________________________________
 * User account: user can create an account by entering username, password and repeated password to ensure the password was entered correctly. Our program can check whether the user is already exist. If not, and the password matched the repeated password, then the user creation will be successful. Otherwise, the account creation will failed.
 * Generate the most basic dayplan: user can input the number of meals and activities, along with a description of what the user wants the day to be.
 
+Note: the corresponding use case names for these two are: user and dayplanList in the program. The other use cases are not implemented yet. In particular, we viewed the dayplanList to be the main use case of our program.
 ___________________________________________________________________________________________________________________
 ### APIs
 OpenAI:
