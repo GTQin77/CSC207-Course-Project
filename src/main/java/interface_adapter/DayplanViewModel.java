@@ -69,8 +69,8 @@ public class DayplanViewModel extends ViewModel {
         return this.userNumActivities;
     }
 
-    public void setUser(UserSignupOutputData user) {
-        this.user = user.getUser();
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public User getUser() {

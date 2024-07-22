@@ -1,5 +1,6 @@
 package interface_adapter;
 
+import entity.User;
 import use_case.user.UserSignupInputBoundary;
 import use_case.user.UserSignupInputData;
 
@@ -15,14 +16,22 @@ import java.util.ArrayList;
 public class SignupController {
     final UserSignupInputBoundary userSignupInteractor;
 
+    public User getUser() {return user;}
+
+    public void setUser(User user) {this.user = user;}
+
+    private User user;
+
     public SignupController(UserSignupInputBoundary userSignupInteractor) {
         this.userSignupInteractor = userSignupInteractor;
     }
 
     public void execute(String username, String password1, String password2) {
         UserSignupInputData signupInputData = new UserSignupInputData(
-                username, password1, password2);
+                username, password1, password2, "1.23, 5.67");
 
-        userSignupInteractor.execute(signupInputData);
+        User user = userSignupInteractor.execute(signupInputData);
+
+        this.setUser(user);
     }
 }

@@ -1,5 +1,7 @@
 package use_case.user;
 
+import entity.User;
+
 /**
  * Input boundary of the user sign up use case.
  * <p>
@@ -8,5 +10,5 @@ package use_case.user;
  * </p>
  */
 public interface UserSignupInputBoundary {
-    void execute(UserSignupInputData signupInputData);
+    User execute(UserSignupInputData signupInputData);
 }

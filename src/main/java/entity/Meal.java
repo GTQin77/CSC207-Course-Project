@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 // Public class Meal that inherits from Business and implements Timeblock
 public class Meal extends Business implements Timeblock {
-    public Meal(String name, ArrayList<Float> location, float distance, String contactNum,
+    public Meal(String name, ArrayList<Double> location, Double distance, String contactNum,
                 String price, Float rating) {
         super(name, location, distance, contactNum, price, rating);
     }

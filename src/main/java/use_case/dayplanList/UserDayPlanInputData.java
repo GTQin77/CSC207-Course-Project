@@ -16,7 +16,7 @@ public class UserDayPlanInputData {
 
     public UserDayPlanInputData(User user, String location, String city, int numMeals, int numActivities, String description) {
         this.user = user;
-        this.location = new ArrayList<String>((List.of(location.split(","))));
+        this.location = new ArrayList<String>((List.of(location.substring(1, location.length() - 1).split(","))));
         this.city = city;
         this.numMeals = numMeals;
         this.numActivities = numActivities;
