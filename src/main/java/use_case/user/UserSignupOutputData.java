@@ -1,8 +1,10 @@
 package use_case.user;
 
+import entity.User;
+
 public class UserSignupOutputData {
 
-    private final String username;
+    private final User user;
     private String creationTime;
 
     private boolean useCaseFailed;
@@ -14,18 +16,18 @@ public class UserSignupOutputData {
      * <a href="https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/use_case/SignupOutputData.java">github.com</a>.
      * </p>
      *
-     * @param username Username of the account.
+     * @param user User object that was created, for use in future use cases.
      * @param creationTime Time of the account being created.
      * @param useCaseFailed Whether the account creation is successful.
      */
-    public UserSignupOutputData(String username, String creationTime, boolean useCaseFailed) {
-        this.username = username;
+    public UserSignupOutputData(User user, String creationTime, boolean useCaseFailed) {
+        this.user = user;
         this.creationTime = creationTime;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 
     public String getCreationTime() {

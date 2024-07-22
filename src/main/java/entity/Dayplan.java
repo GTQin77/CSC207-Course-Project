@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Dayplan {
     private User user;
     private ArrayList<Double> location;
+    private String city;
     private int numMeals;
     private int numActivities;
     private String description;
@@ -19,6 +20,9 @@ public class Dayplan {
 
     public void setLocation(ArrayList<Double> location){this.location = location;}
     public ArrayList<Double> getLocation(){return this.location;}
+
+    public void setCity(String city){this.city = city;}
+    public String getCity(){return this.city;}
 
     public void setNumMeals(int numMeals){this.numMeals = numMeals;}
     public int getNumMeals(){return this.numMeals;}
