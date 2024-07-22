@@ -22,6 +22,11 @@ public class UserSignUpUseCaseFactory {
 
     private UserSignUpUseCaseFactory() {}
 
+    /**
+     * Create method that controls flow of Use Case.
+     * @param signupViewModel View model for User signup info.
+     * @return a UserSignupView.
+     */
     public static UserSignupView create(SignupViewModel signupViewModel) {
         SignupController controller = createUserSignUpCase(signupViewModel);
         UserSignupView userSignupView = new UserSignupView(signupViewModel, controller);
@@ -29,6 +34,11 @@ public class UserSignUpUseCaseFactory {
         return userSignupView;
     }
 
+    /**
+     * Helper method for create that instantiates Interactor and relevant factories.
+     * @param signupViewModel View model for User signup info.
+     * @return a SignupController.
+     */
     private static SignupController createUserSignUpCase(SignupViewModel signupViewModel) {
         UserSignupDataAccessObject userDataAccessObject = new UserSignupDataAccessObject();
         userDataAccessObject.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");

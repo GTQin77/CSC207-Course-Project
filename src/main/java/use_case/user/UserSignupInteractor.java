@@ -31,6 +31,10 @@ public class UserSignupInteractor implements UserSignupInputBoundary {
         this.userFactory = userFactory;
     }
 
+    /**
+     * Interactor method that creates a User, writes to DB, and controls Presenter.
+     * @param input UserDayPlanInputData.
+     */
     @Override
     public User execute(UserSignupInputData input) {
         // 1. Process InputData into correct data types

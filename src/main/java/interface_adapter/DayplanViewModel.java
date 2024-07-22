@@ -18,16 +18,11 @@ public class DayplanViewModel extends ViewModel {
         super("Dayplan VM");
     }
 
-    /**
-     * Gets String userInput from DayplanViewModel
-     * */
+
     public String getUserDescription() {
         return this.userDescription;
     }
 
-    /**
-     * Get userDescription from the console
-     * */
     public void setUserDescription() {
         System.out.println(this.prompt);
         Scanner input = new Scanner(System.in);
@@ -36,7 +31,6 @@ public class DayplanViewModel extends ViewModel {
 
     /**
      * Get userCity from the console
-     *
      * Precondition: user input must be in the full name of the city
      * */
     public void setUserCity() {

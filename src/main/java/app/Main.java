@@ -6,6 +6,11 @@ import view.DayplanView;
 import view.UserSignupView;
 
 public class Main {
+
+    /**
+     * Main function that runs the program.
+     * @param args Arbitrary Input.
+     */
     public static void main(String[] args) {
         SignupViewModel signupViewModel = new SignupViewModel();
         UserSignupView userSignupView = UserSignUpUseCaseFactory.create(signupViewModel);
