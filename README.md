@@ -14,6 +14,7 @@ ________________________________________________________________________________
 * User account: user can create an account by entering username, password and repeated password to ensure the password was entered correctly. Our program can check whether the user is already exist. If not, and the password matched the repeated password, then the user creation will be successful. Otherwise, the account creation will failed.
 * Generate the most basic dayplan: user can input the number of meals and activities, along with a description of what the user wants the day to be.
 
+___________________________________________________________________________________________________________________
 ### APIs
 OpenAI:
 * takes in the user description and select a category in Yelp Fusion's category list matching the description.
@@ -22,10 +23,11 @@ OpenAI:
 Yelp Fusion:
 * search activities and restuarants with the selected category from ChatGPT so that the program can put together a day plan for the user!
 
+___________________________________________________________________________________________________________________
 ### Thoughts that goes into the Current Design
 In the current design, we focused a lot of time designing the enetities and making them to be a good fit of the goal of our program. In addition, we packaged our program by use cases, so that it is easier to navigate and maintain. The program currently involves using console to get users' input and output day plan, but we are ready to create an UI for our program in phase 2. 
 
-
+___________________________________________________________________________________________________________________
 ### Authors (JAJA)
 Janice, Amelia, Joshua, Ashley
 
