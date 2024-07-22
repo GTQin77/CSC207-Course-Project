@@ -100,8 +100,9 @@ public class OpenAI implements OpenInterface{
 
     /**
      * Helper method of the getCategory, this builds the API call.
+     *
      * @param userMessage User description of the day that he/she wants.
-     * @param model Model of GPT that is using, always gpt-4o-mini in our case.
+     * @param model       Model of GPT that is using, always gpt-4o-mini in our case.
      * @return the body of the API call for get Category.
      */
     private static @NotNull JSONObject getObject(String userMessage, String model) {
@@ -111,10 +112,9 @@ public class OpenAI implements OpenInterface{
         JSONObject message = new JSONObject();
         JSONArray messages = new JSONArray();
         message.put("role", "user");
-        String note = " , please select one word from the following that you think matches this message most: ";
-        String categories = "active, arts.";
-        String warn = " Note that you can only return one word.";
-        String prompt = "Given "+ userMessage + note + categories + warn;
+        String note = "\", select one word from the following that matches the prompt most: ";
+        String warn = ". Only return one word.";
+        String prompt = "Given the prompt: \""+ userMessage + note + "\"active, arts, beautysvc, localflavor, nightlife, shopping\"" + warn;
         message.put("content", prompt);
         messages.put(message);
 
