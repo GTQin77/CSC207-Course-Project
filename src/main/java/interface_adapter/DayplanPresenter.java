@@ -14,7 +14,7 @@ public class DayplanPresenter implements UserDayPlanOutputBoundary {
 
     @Override
     public void prepareDayplanView(UserDayPlanOutputData data) {
-        Dayplan dayplan = data.dayplanToString();
+        String dayplan = data.getDayplan().dayplanToString();
         System.out.println(dayplan);
     }
 }
