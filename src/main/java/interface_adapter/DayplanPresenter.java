@@ -2,6 +2,7 @@ package interface_adapter;
 
 import use_case.dayplanList.UserDayPlanOutputBoundary;
 import use_case.dayplanList.UserDayPlanOutputData;
+import entity.Dayplan;
 
 public class DayplanPresenter implements UserDayPlanOutputBoundary {
 
@@ -13,6 +14,7 @@ public class DayplanPresenter implements UserDayPlanOutputBoundary {
 
     @Override
     public void prepareDayplanView(UserDayPlanOutputData data) {
-
+        Dayplan dayplan = data.dayplanToString();
+        System.out.println(dayplan);
     }
 }
