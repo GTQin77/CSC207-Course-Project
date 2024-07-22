@@ -5,13 +5,13 @@ import java.util.ArrayList;
 // I think we need to go through this Entity again, seems too cluttered.
 public class Business {
     private String name;
-    private ArrayList<Float> location;
-    private float distance;
+    private ArrayList<Double> location;
+    private Double distance;
     private String contactNum;
     private String price;
     private Float ratings;
 
-    public Business(String name, ArrayList<Float> location, float distance, String contactNum,
+    public Business(String name, ArrayList<Double> location, Double distance, String contactNum,
                     String price, Float rating) {
         this.name = name;
         this.location = location;
@@ -25,19 +25,19 @@ public class Business {
 
     public void setName(String name) { this.name = name; }
 
-    public ArrayList<Float> getLocation() {
+    public ArrayList<Double> getLocation() {
         return location;
     }
 
-    public void setLocation(ArrayList<Float> location) {
+    public void setLocation(ArrayList<Double> location) {
         this.location = location;
     }
 
-    public float getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
