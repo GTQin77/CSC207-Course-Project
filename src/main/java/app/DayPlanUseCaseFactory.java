@@ -16,15 +16,26 @@ public class DayPlanUseCaseFactory {
 
     /**
      * Prevent instantiation.
-     * Taken from PaulGries' LoginCleanArchitecture repo.
+     * Class Structure based off of from PaulGries' LoginCleanArchitecture repo, https://github.com/paulgries/LoginCleanArchitecture
      */
     private DayPlanUseCaseFactory(){}
 
+    /**
+     * Create method that controls flow of Use Case.
+     * @param user User object that the dayplan should belong to, carried over from User SignUp case.
+     * @param dayplanViewModel View Model for dayplan info.
+     * @return a DayplanView
+     */
     public static DayplanView create(User user, DayplanViewModel dayplanViewModel){
         DayplanController dayplanController = createDayplanUseCase(dayplanViewModel);
         return new DayplanView(dayplanController, dayplanViewModel, user);
     }
 
+    /**
+     * Helper method for .create, instantiates Interactor and relevant factories.
+     * @param dayplanViewModel View model for dayplan info.
+     * @return a DayplanView
+     */
     public static DayplanController createDayplanUseCase(DayplanViewModel dayplanViewModel){
         DayPlanDataAccessInterface dayplanDAO = new DayPlanDataAccessObject();
         ((DayPlanDataAccessObject) dayplanDAO).setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");

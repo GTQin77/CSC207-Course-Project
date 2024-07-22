@@ -26,6 +26,12 @@ public class SignupController {
         this.userSignupInteractor = userSignupInteractor;
     }
 
+    /**
+     * Controller for sign up use case that calls Interactor's execute method.
+     * @param username from input
+     * @param password1 from input
+     * @param password2 from input, repeated password
+     */
     public void execute(String username, String password1, String password2) {
         UserSignupInputData signupInputData = new UserSignupInputData(
                 username, password1, password2, "1.23, 5.67");

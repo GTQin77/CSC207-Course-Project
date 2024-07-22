@@ -40,6 +40,12 @@ public class Dayplan {
     public void setPlan(ArrayList<Business> plan){this.plan = plan;}
     public ArrayList<Business> getPlan() {return plan;}
 
+    /**
+     * A method that returns the String version of a Dayplan object for purposes of printing in the console.
+     * Each business in Dayplan is on it's own line.
+     * Each detail about a Business will be separated by commas on same line.
+     * @return String that contains the above info.
+     */
     public String dayplanToString(){
         StringBuilder businessList = new StringBuilder();
         // For each Business in the plan...

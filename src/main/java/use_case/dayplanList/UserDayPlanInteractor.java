@@ -36,7 +36,10 @@ public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
         this.dayplanFactory = dayplanFactory;
     }
 
-
+    /**
+     * Interactor method that creates a dayplan, creates all API objects, and factories necessary for flow.
+     * @param input UserDayPlanInputData.
+     */
     @Override
     public void execute(UserDayPlanInputData input) {
         // 1. Process Input Data
@@ -59,10 +62,6 @@ public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
         // 4. Create a new Dayplan object using factories
         Dayplan dayplan = commonDayplanFactory.create(input.getUser(), location, input.getCity(), input.getNumMeals(),
                 input.getNumActivities(), input.getDescription());
-
-
-
-
 
         // 5. Write new Dayplan to database using DAO
         this.dayPlanDataAccessObject.saveDayPlan(dayplan);
