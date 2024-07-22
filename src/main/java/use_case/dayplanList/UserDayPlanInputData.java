@@ -7,15 +7,15 @@ import java.util.List;
 
 public class UserDayPlanInputData {
 
-    private final String username;
+    private final User user;
     private final ArrayList<String> location;
     private final String city;
     private final int numMeals;
     private final int numActivities;
     private final String description;
 
-    public UserDayPlanInputData(String username, String location, String city, int numMeals, int numActivities, String description) {
-        this.username = username;
+    public UserDayPlanInputData(User user, String location, String city, int numMeals, int numActivities, String description) {
+        this.user = user;
         this.location = new ArrayList<String>((List.of(location.split(","))));
         this.city = city;
         this.numMeals = numMeals;
@@ -23,7 +23,7 @@ public class UserDayPlanInputData {
         this.description = description;
     }
 
-    public String getUsername(){return this.username;}
+    public User getUser(){return this.user;}
 
     public ArrayList<String> getLocation(){return this.location;}
 
