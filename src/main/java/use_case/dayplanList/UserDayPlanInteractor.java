@@ -28,8 +28,9 @@ public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
 
     @Override
     public void execute(UserDayPlanInputData userDayPlanInputData) {
-        // NOTE TO SELF: Should ideally call a PlanFactory interface which calls a DayPlanFactory
-        // TO MYSELF, AMELIA: CONTINUE HERE!
+        // 1. Create a new Dayplan object using factories
+        // 2. Write new Dayplan to database using DAO
+        // 3. Convert Dayplan to String
 
 
 
