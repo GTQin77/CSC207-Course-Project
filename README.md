@@ -31,6 +31,8 @@ Then, we need to set up the environment variable with 2 api tokens for app/Main.
 
 Go to app/Main.java and click run. The program will first direct you to the sign up stage in the console. After signing up, you can proceed with entering the number of meals and activities you want in your day plan. You will be also ask to put in the city that you are in and a sentence that describe how you want your day to be. An example sentence will be, "I want an exciting day!". After entering all these things, you can wait for the program to generate a dayplan for you! Check the console for the day plan and start your amazing day.
 
+Note: Do not use a real username and password for now.
+
 ___________________________________________________________________________________________________________________
 ### Thoughts that goes into the Current Design
 In the current design, we focused a lot of time designing the enetities and making them to be a good fit of the goal of our program. In addition, we packaged our program by use cases, so that it is easier to navigate and maintain. The program currently involves using console to get users' input and output day plan, but we are ready to create an UI for our program in phase 2. 
