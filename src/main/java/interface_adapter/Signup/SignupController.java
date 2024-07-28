@@ -1,10 +1,8 @@
-package interface_adapter;
+package interface_adapter.Signup;
 
 import entity.User;
-import use_case.user.UserSignupInputBoundary;
-import use_case.user.UserSignupInputData;
-
-import java.util.ArrayList;
+import use_case.user_signup.UserSignupInputBoundary;
+import use_case.user_signup.UserSignupInputData;
 
 /**
  * Controller of the user sign up use case.
