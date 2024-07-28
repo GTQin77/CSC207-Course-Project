@@ -3,23 +3,28 @@ package use_case.distance;
 import use_case.dayplanList.UserDayPlanInputBoundary;
 
 import java.util.ArrayList;
-import java.lang.Math.*;
 
-public class DistanceInteractor implements UserDayPlanInputBoundary {
-
+public class DistanceInteractor implements DistanceInputBoundary {
     // DAO for distance??? prob not
     final DistanceOutputBoundary distanceOutputBoundary;
-
     // prob no factories for this either
 
+    /**
+     * Interactor for the distance difference use case.
+     * @param distanceOutputBoundary Output boundary for use case.
+     * */
     public DistanceInteractor(DistanceOutputBoundary distanceOutputBoundary) {
         this.distanceOutputBoundary = distanceOutputBoundary;
     }
 
     @Override
-    public void execute(DistanceInputData inputData) {
-        // do
-        ;;
+    public double execute(DistanceInputData inputData) {
+        ArrayList<Double> userLocation = inputData.getLocation();
+        ArrayList<Double> businessLocation = inputData.getBusinessLocation();
+        double difference;
+        difference = getDifference(userLocation, businessLocation);
+
+        return difference;
     }
 
 
