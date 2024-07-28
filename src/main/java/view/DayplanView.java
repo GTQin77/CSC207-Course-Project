@@ -1,8 +1,7 @@
 package view;
 
-import interface_adapter.DayplanController;
-import interface_adapter.DayplanViewModel;
-import use_case.user.UserSignupOutputData;
+import interface_adapter.Dayplan.DayplanController;
+import interface_adapter.Dayplan.DayplanViewModel;
 import entity.User;
 
 import java.util.ArrayList;

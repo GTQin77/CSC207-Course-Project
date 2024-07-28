@@ -1,16 +1,14 @@
 package app;
 
-import data_access.UserSignupDataAccessInterface;
 import data_access.UserSignupDataAccessObject;
 import entity.CommonUserFactory;
-import entity.User;
 import entity.UserFactory;
-import interface_adapter.SignupController;
-import interface_adapter.SignupPresenter;
-import interface_adapter.SignupViewModel;
-import use_case.user.UserSignupInputBoundary;
-import use_case.user.UserSignupInteractor;
-import use_case.user.UserSignupOutputBoundary;
+import interface_adapter.Signup.SignupController;
+import interface_adapter.Signup.SignupPresenter;
+import interface_adapter.Signup.SignupViewModel;
+import use_case.user_signup.UserSignupInputBoundary;
+import use_case.user_signup.UserSignupInteractor;
+import use_case.user_signup.UserSignupOutputBoundary;
 import view.UserSignupView;
 
 

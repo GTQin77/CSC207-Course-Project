@@ -114,7 +114,7 @@ public class OpenAI implements OpenInterface{
         message.put("role", "user");
         String note = "\", select one word from the following that matches the prompt most: ";
         String warn = ". Only return one word.";
-        String prompt = "Given the prompt: \""+ userMessage + note + "\"active, arts, beautysvc, localflavor, nightlife, shopping\"" + warn;
+        String prompt = "Given the prompt: \""+ userMessage + note + "\"active, arts\"" + warn;
         message.put("content", prompt);
         messages.put(message);
 

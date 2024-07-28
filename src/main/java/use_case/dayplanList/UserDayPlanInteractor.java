@@ -3,15 +3,10 @@ package use_case.dayplanList;
 import api.OpenAI;
 import api.YelpFusion;
 import data_access.DayPlanDataAccessInterface;
-import data_access.DayPlanDataAccessInterface;
 import entity.*;
-import use_case.user.UserSignupOutputBoundary;
 // NOTE TO SELF: Should import a DayplanFactory interface instead, no time :(
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
 

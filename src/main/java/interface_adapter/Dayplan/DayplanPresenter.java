@@ -1,8 +1,7 @@
-package interface_adapter;
+package interface_adapter.Dayplan;
 
 import use_case.dayplanList.UserDayPlanOutputBoundary;
 import use_case.dayplanList.UserDayPlanOutputData;
-import entity.Dayplan;
 
 public class DayplanPresenter implements UserDayPlanOutputBoundary {
 

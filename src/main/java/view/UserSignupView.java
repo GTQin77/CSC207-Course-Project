@@ -1,10 +1,8 @@
 package view;
 
 import entity.User;
-import interface_adapter.SignupController;
-import interface_adapter.SignupViewModel;
-
-import java.util.Scanner;
+import interface_adapter.Signup.SignupController;
+import interface_adapter.Signup.SignupViewModel;
 
 public class UserSignupView {
     private final SignupViewModel signupViewModel;

@@ -1,7 +1,7 @@
 package app;
 
-import interface_adapter.DayplanViewModel;
-import interface_adapter.SignupViewModel;
+import interface_adapter.Dayplan.DayplanViewModel;
+import interface_adapter.Signup.SignupViewModel;
 import view.DayplanView;
 import view.UserSignupView;
 
