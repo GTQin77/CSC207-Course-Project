@@ -7,7 +7,7 @@ public class UserLoginInputData {
     /**
      * Input data of the user login use case.
      * <p>
-     * This implementation referenced the Pualgries' Clean Architecture code for SignupInputData on
+     * This implementation referenced the Pualgries' Clean Architecture code for LoginInputData on
      * <a href="https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/use_case/SignupInputData.java">github.com</a>.
      * </p>
      *
