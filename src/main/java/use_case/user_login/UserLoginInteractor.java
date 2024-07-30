@@ -15,7 +15,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary {
     private User user;
 
     /**
-     * Constructor for the UserLoginInteractor.
+     * Constructor for the UserLoginInteractor
      *
      * @param userLoginDataAccessInterface Data access interface of the user login use case.
      * @param loginOutputBoundary Output boundary of the login use case.
