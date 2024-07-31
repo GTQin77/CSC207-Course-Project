@@ -1,4 +1,4 @@
-package use_case.previousPlan;
+package use_case.previous_plan;
 
 public class PreviousPlanOutputData {
 
