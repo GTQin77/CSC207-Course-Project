@@ -10,15 +10,17 @@ public class Business {
     private String contactNum;
     private String price;
     private Float ratings;
+    private String type;
 
     public Business(String name, ArrayList<Double> location, Double distance, String contactNum,
-                    String price, Float rating) {
+                    String price, Float rating, String type) {
         this.name = name;
         this.location = location;
         this.distance = distance;
         this.contactNum = contactNum;
         this.price = price;
         this.ratings = rating;
+        this.type = type;
     }
 
     public String getName() { return name; }
@@ -60,6 +62,9 @@ public class Business {
     public Float getRatings() { return ratings; }
 
     public void setRatings(Float ratings) { this.ratings = ratings; }
+
+    public String getType() {return type; }
+    public void setType(String type) { this.type = type; }
 }
 
 

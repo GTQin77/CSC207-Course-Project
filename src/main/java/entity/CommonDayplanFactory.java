@@ -55,6 +55,7 @@ public class CommonDayplanFactory implements DayplanFactory{
 
         // 3. Calling Yelp API to create Business objects for each Business
         ArrayList<Business> plan = new ArrayList<Business>();
+        ArrayList<String> businessIDs = new ArrayList<String>();
         // For ACTIVITIES
         for (int i = 0; i < numActivities; i++){
             String businessID = activityIDs.get(i);
@@ -62,14 +63,17 @@ public class CommonDayplanFactory implements DayplanFactory{
             Business activity = this.businessFactory.createBusiness(businessID);  // Casting Business to Activity
             // Adding the Activity object to ArrayList
             plan.add(activity);
+            businessIDs.add(businessID);
         }
         // For MEALS
         for (int i = 0; i < numMeals; i++){
             String businessID = mealsIDs.get(i);
             Business meal = this.businessFactory.createBusiness(businessID);
             plan.add(meal);
+            businessIDs.add(businessID);
         }
         dayplan.setPlan(plan);
+        dayplan.setBusinessIDs(businessIDs);
 
         // 4. Calling OpenAI API to get the vibe attribute
         // Must create 1 String that contains sequence of all business names
