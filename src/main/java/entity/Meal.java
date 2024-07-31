@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Meal extends Business implements Timeblock {
     public Meal(String name, ArrayList<Double> location, Double distance, String contactNum,
                 String price, Float rating) {
-        super(name, location, distance, contactNum, price, rating);
+        super(name, location, distance, contactNum, price, rating, "meal");
     }
 
     // Implementing the Timeblock interface method to get duration of meal

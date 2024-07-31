@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Activity extends Business implements Timeblock {
     public Activity(String name, ArrayList<Double> location, Double distance, String contactNum,
                     String price, Float rating) {
-        super(name, location, distance, contactNum, price, rating);
+        super(name, location, distance, contactNum, price, rating, "activity");
     }
 
     // Implementing the Timeblock interface method to get duration of activity
