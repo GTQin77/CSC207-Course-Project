@@ -13,6 +13,7 @@ public class Dayplan {
     private String description;
     private String vibe;
     private ArrayList<Business> plan;
+    private ArrayList<String> businessIDs;
 
     public Dayplan() {plan = new ArrayList<>();}
 
@@ -39,6 +40,15 @@ public class Dayplan {
 
     public void setPlan(ArrayList<Business> plan){this.plan = plan;}
     public ArrayList<Business> getPlan() {return plan;}
+
+    public ArrayList<String> getBusinessIDs() {
+        return businessIDs;
+    }
+
+    public void setBusinessIDs(ArrayList<String> businessIDs) {
+        this.businessIDs = businessIDs;
+    }
+
 
     /**
      * A method that returns the String version of a Dayplan object for purposes of printing in the console.
