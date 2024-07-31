@@ -1,8 +1,8 @@
-package interface_adapter;
+package interface_adapter.Dayplan;
 
 import java.util.Scanner;
 import entity.User;
-import use_case.user.UserSignupOutputData;
+import interface_adapter.ViewModel;
 
 public class DayplanViewModel extends ViewModel {
     public final String titleLabel = "Prompt Input";

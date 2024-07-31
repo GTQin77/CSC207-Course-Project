@@ -1,4 +1,6 @@
-package interface_adapter;
+package interface_adapter.Signup;
+
+import interface_adapter.ViewModel;
 
 import java.util.Scanner;
 

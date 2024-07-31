@@ -21,12 +21,12 @@ public class YelpBusinessFactory implements BusinessFactory {
         ArrayList<Object> businessDetails = yelpFusion.getBusiness(businessID);
         String name = (String) businessDetails.get(0);
         Float rating = (Float) businessDetails.get(1);
-        // String price = (String) businessDetails.get(2);
-        String contactNum = (String) businessDetails.get(2);
-        ArrayList<Double> location = (ArrayList<Double>) businessDetails.get(3);
+        String price = (String) businessDetails.get(2);
+        String contactNum = (String) businessDetails.get(3);
+        ArrayList<Double> location = (ArrayList<Double>) businessDetails.get(4);
 
         Double distance = 0.0;
 
-        return new Business(name, location, distance, contactNum, "expensive", rating);
+        return new Business(name, location, distance, contactNum, price, rating);
     }
 }

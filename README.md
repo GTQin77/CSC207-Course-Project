@@ -14,7 +14,7 @@ ________________________________________________________________________________
 * User account: user can create an account by entering username, password and repeated password to ensure the password was entered correctly. Our program can check whether the user is already exist. If not, and the password matched the repeated password, then the user creation will be successful. Otherwise, the account creation will failed.
 * Generate the most basic dayplan: user can input the number of meals and activities, along with a description of what the user wants the day to be.
 
-Note: the corresponding use case names for these two are: user and dayplanList in the program. The other use cases are not implemented yet. In particular, we viewed the dayplanList to be the main use case of our program.
+Note: the corresponding use case names for these two are: user and dayplanList in the program. The other use cases are not implemented yet, and implementation for business detail is in progress.
 ___________________________________________________________________________________________________________________
 ### APIs
 OpenAI:
@@ -30,6 +30,8 @@ To begin with, we need to install maven to run the code.
 Then, we need to set up the environment variable with 2 api tokens for app/Main.java. Without this step, the dayplan will not work.
 
 Go to app/Main.java and click run. The program will first direct you to the sign up stage in the console. After signing up, you can proceed with entering the number of meals and activities you want in your day plan. You will be also ask to put in the city that you are in and a sentence that describe how you want your day to be. An example sentence will be, "I want an exciting day!". After entering all these things, you can wait for the program to generate a dayplan for you! Check the console for the day plan and start your amazing day.
+
+Note: Do not use a real username and password for now.
 
 ___________________________________________________________________________________________________________________
 ### Thoughts that goes into the Current Design

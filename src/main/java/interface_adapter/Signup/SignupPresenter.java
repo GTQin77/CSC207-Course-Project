@@ -1,7 +1,7 @@
-package interface_adapter;
+package interface_adapter.Signup;
 
-import use_case.user.UserSignupOutputBoundary;
-import use_case.user.UserSignupOutputData;
+import use_case.user_signup.UserSignupOutputBoundary;
+import use_case.user_signup.UserSignupOutputData;
 
 public class SignupPresenter implements UserSignupOutputBoundary {
 

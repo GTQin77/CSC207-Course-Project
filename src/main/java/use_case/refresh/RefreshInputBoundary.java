@@ -1,5 +1,7 @@
 package use_case.refresh;
 
+import entity.Dayplan;
+
 public interface RefreshInputBoundary {
-    void execute(RefreshInputData refreshInputData);
+    Dayplan execute(RefreshInputData refreshInputData);
 }
