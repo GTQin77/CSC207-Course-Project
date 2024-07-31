@@ -91,7 +91,12 @@ public class YelpFusion implements YelpInterface{
             if (response.isSuccessful()) {
                 String name = responseBody.getString("name");
                 Float rating = responseBody.getFloat("rating");
-                // String price = responseBody.getString("price");
+                String price; // sometimes the price information is not available on Yelp
+                if (responseBody.has("price")) {
+                    price = responseBody.getString("price");
+                } else {
+                    price = "Information unavailable"; // use this to prevent price from being not defined
+                }
                 String contactNum = responseBody.getString("phone");
 
                 JSONObject coordinates = responseBody.getJSONObject("coordinates");
@@ -105,7 +110,7 @@ public class YelpFusion implements YelpInterface{
                 ArrayList<Object> details = new ArrayList<>();
                 details.add(name);
                 details.add(rating);
-                //details.add(price);
+                details.add(price);
                 details.add(contactNum);
                 details.add(locationBusiness);
 

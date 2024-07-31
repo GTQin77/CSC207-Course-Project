@@ -1,5 +1,6 @@
 package interface_adapter;
 
+import interface_adapter.Dayplan.DayplanViewModel;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

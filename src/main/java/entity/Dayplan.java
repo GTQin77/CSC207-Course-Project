@@ -60,4 +60,32 @@ public class Dayplan {
 
     }
 
+    /**
+     * Replace the businesses at a given index with a given business.
+     *
+     * @param index the index of the business that we want to replace
+     * @param newBusiness the new business that we want to input into the dayplan
+     * @return true if the business got replaced, false otherwise
+     */
+    public boolean replaceBusiness(int index, Business newBusiness) {
+        if (index >= this.plan.size() || index < 0) {
+            return false; // invalid index, fail to replace business
+        }
+        this.plan.set(index, newBusiness);
+        return true;
+    }
+
+
+    /**
+     * Get the names of all business in the dayplan.
+     * @return an arraylist of business name.
+     */
+    public ArrayList<String> getBusinessNames(){
+        ArrayList<String> businessNames = new ArrayList<>();
+        for (int i = 0; i < this.getPlan().size(); i++){
+            Business business = this.getPlan().get(i);
+            businessNames.add(business.getName());
+        }
+        return businessNames;
+    }
 }

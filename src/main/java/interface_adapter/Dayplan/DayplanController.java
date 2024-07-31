@@ -1,4 +1,4 @@
-package interface_adapter;
+package interface_adapter.Dayplan;
 
 import entity.User;
 import use_case.dayplanList.UserDayPlanInputBoundary;

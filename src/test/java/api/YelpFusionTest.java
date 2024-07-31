@@ -16,10 +16,11 @@ class YelpFusionTest {
         String category = "food";
         String cityName = "Toronto";
 
-        int numIDs = 2;
+        int numIDs = 20;
 
         YelpFusion yelpFusion = new YelpFusion();
         ArrayList<String> businessIDs = yelpFusion.getBusinessIDs(category, cityName, numIDs);
+        System.out.println(businessIDs);
 
         assertNotNull(businessIDs);
         assertEquals(numIDs, businessIDs.size());
