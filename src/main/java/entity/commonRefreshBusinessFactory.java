@@ -21,14 +21,14 @@ public class commonRefreshBusinessFactory implements refreshBusinessFactory{
     public void setBusinessFactory(BusinessFactory businessFactory){this.businessFactory = businessFactory;}
 
     @Override
-    public Business generateNewBusiness(Dayplan dayplan, String type) {
+    public Business generateNewBusiness(Dayplan dayplan, String type, boolean isMeal) {
         User user = dayplan.getUser();
         String city = dayplan.getCity();
         String description = dayplan.getDescription();
         ArrayList<String> businessIDs = dayplan.getBusinessIDs();
 
 
-        String category = this.openApi.getCategory(description);
+        String category = this.openApi.getCategory(description, isMeal);
 
         ArrayList<String> mealsIDs = this.yelpApi.getBusinessIDs("restaurants", city, 20);
         ArrayList<String> activityIDs = this.yelpApi.getBusinessIDs(category, city, 20);
