@@ -35,13 +35,42 @@ public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
      * @return User object if user is found in UserDataBase.
      */
     @Override
-    public User findUser(String username, String password) {
+    public boolean findUser(String username, String password) {
         String value = ",";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(this.getCsvFile()))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
             String line = br.readLine();
+            // Mutate line to refer to 2nd row... where actual values begin(skipping past row names)
+            line = br.readLine();
+            // While loop that keeps reading file until it's empty
+            while (line != null) {
+                // Create an array of Strings that stores each value separated by comma as a new object in array
+                String[] row = line.split(value);
+                // Early return if the userID we put in is equal to the userID in the row
+                if (username.equals(row[0])){
+                    if (password.equals(row[1])){
+                        br.close();
+                        return true;
+                    } else {
+                        return false;
+
+                    }
+                    // Need to close the BufferedReader object
+                    // Normally, the "Try" block will do this for you, but not in case of early return
+                }
+                line = br.readLine();
+            }
+            System.out.println("User not found");
+        }
+
+        // "Catch" block is necessary with any try block
+        catch (IOException e){
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
 
 
     }
-}
+
 
