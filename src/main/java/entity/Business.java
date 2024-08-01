@@ -2,7 +2,6 @@ package entity;
 
 import java.util.ArrayList;
 
-// I think we need to go through this Entity again, seems too cluttered.
 public class Business {
     private String name;
     private ArrayList<Double> location;
