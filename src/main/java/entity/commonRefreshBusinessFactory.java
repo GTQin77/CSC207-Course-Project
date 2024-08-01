@@ -27,6 +27,7 @@ public class commonRefreshBusinessFactory implements refreshBusinessFactory{
         String description = dayplan.getDescription();
         ArrayList<String> businessIDs = dayplan.getBusinessIDs();
 
+
         String category = this.openApi.getCategory(description);
 
         ArrayList<String> mealsIDs = this.yelpApi.getBusinessIDs("restaurants", city, 20);
@@ -48,6 +49,13 @@ public class commonRefreshBusinessFactory implements refreshBusinessFactory{
         }
 
         return newBusiness;
+// =======
+        // String activityCategory = this.openApi.getCategory(description, false);
+        // String mealCategory = this.openApi.getCategory(description, true);
 
+        // ArrayList<String> mealsIDs = this.yelpApi.getBusinessIDs(mealCategory, city, dayplan.getNumMeals());
+        // ArrayList<String> activityIDs = this.yelpApi.getBusinessIDs(activityCategory, city, dayplan.getnumActivities());
+        // NOTE TO SELF: REPLACE RETURN STATEMENT
+        // return null;
     }
 }

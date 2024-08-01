@@ -25,13 +25,13 @@ public class OpenAI implements OpenInterface{
      * @return a category name.
      */
     @Override
-    public String getCategory(String userMessage) {
+    public String getCategory(String userMessage, boolean isMeal) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 
         // setting up the input to GPT
         String model = "gpt-4o-mini";
-        JSONObject callBody = getObject(userMessage, model);
+        JSONObject callBody = getObject(userMessage, model, isMeal);
 
         // build request
         return getAPICallString(client, callBody);
@@ -105,7 +105,7 @@ public class OpenAI implements OpenInterface{
      * @param model       Model of GPT that is using, always gpt-4o-mini in our case.
      * @return the body of the API call for get Category.
      */
-    private static @NotNull JSONObject getObject(String userMessage, String model) {
+    private static @NotNull JSONObject getObject(String userMessage, String model, boolean isMeal) {
         JSONObject callBody = new JSONObject();
         callBody.put("model", model); // model that you want to use
 
@@ -114,7 +114,13 @@ public class OpenAI implements OpenInterface{
         message.put("role", "user");
         String note = "\", select one word from the following that matches the prompt most: ";
         String warn = ". Only return one word.";
-        String prompt = "Given the prompt: \""+ userMessage + note + "\"active, arts, beautysvc, nightlife, shopping\"" + warn;
+        if (isMeal){
+            String categories = "\"active, arts, beautysvc, nightlife, shopping\"";
+        }
+        else{
+            String categories = "\"....\"";
+        }
+        String prompt = "Given the prompt: \""+ userMessage + note + categories + warn;
         message.put("content", prompt);
         messages.put(message);
 
