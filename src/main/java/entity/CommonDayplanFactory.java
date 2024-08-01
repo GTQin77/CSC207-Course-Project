@@ -47,11 +47,12 @@ public class CommonDayplanFactory implements DayplanFactory{
         dayplan.setDescription(description);
 
         // 1. Call OpenAI API, receive category from description
-        String category = this.openApi.getCategory(description);
+        String activityCategory = this.openApi.getCategory(description, false);
+        String mealCategory = this.openApi.getCategory(description, true);
 
         // 2. Calling Yelp API with the category
-        ArrayList<String> mealsIDs = this.yelpApi.getBusinessIDs("restaurants", city, numMeals);
-        ArrayList<String> activityIDs = this.yelpApi.getBusinessIDs(category, city, numActivities);
+        ArrayList<String> mealsIDs = this.yelpApi.getBusinessIDs(mealCategory, city, numMeals);
+        ArrayList<String> activityIDs = this.yelpApi.getBusinessIDs(activityCategory, city, numActivities);
 
         // 3. Calling Yelp API to create Business objects for each Business
         ArrayList<Business> plan = new ArrayList<Business>();

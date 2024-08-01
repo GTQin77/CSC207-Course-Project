@@ -18,7 +18,7 @@ class OpenAITest {
 
         OpenAI openAI = new OpenAI();
 
-        String category = openAI.getCategory(userMessage);
+        String category = openAI.getCategory(userMessage, false);
         assertNotNull(category);
     }
 

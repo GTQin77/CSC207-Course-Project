@@ -24,11 +24,12 @@ public class commonRefreshBusinessFactory implements refreshBusinessFactory{
         String city = dayplan.getCity();
         String description = dayplan.getDescription();
 
-        String category = this.openApi.getCategory(description);
+        String activityCategory = this.openApi.getCategory(description, false);
+        String mealCategory = this.openApi.getCategory(description, true);
 
-        ArrayList<String> mealsIDs = this.yelpApi.getBusinessIDs("restaurants", city, );
-        ArrayList<String> activityIDs = this.yelpApi.getBusinessIDs(category, city, numActivities);
-
-
+        ArrayList<String> mealsIDs = this.yelpApi.getBusinessIDs(mealCategory, city, dayplan.getNumMeals());
+        ArrayList<String> activityIDs = this.yelpApi.getBusinessIDs(activityCategory, city, dayplan.getnumActivities());
+        // NOTE TO SELF: REPLACE RETURN STATEMENT
+        return null;
     }
 }
