@@ -40,16 +40,14 @@ public class UserLoginInteractor implements UserLoginInputBoundary {
      */
     @Override
     public User execute(UserLoginInputData input) {
-        // 1. Retrieve User object from the DAO
         User user = this.userLoginDataAccessInterface.findUser(input.getUsername(), input.getPassword());
 
-        // 2. Check if the user exists and if the password matches
         if (user != null) {
             UserLoginOutputData loginOutputData = new UserLoginOutputData(user, true);
-            loginOutputBoundary.presentLoginResult(loginOutputData);
+            loginOutputBoundary.prepareSuccessView(loginOutputData);
             return user;
         } else {
-            loginOutputBoundary.presentLoginResult(new UserLoginOutputData(null, false));
+            loginOutputBoundary.prepareFailView("Passwords don't match.");
             return null;
         }
     }
