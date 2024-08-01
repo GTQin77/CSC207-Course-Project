@@ -1,22 +1,22 @@
 package use_case.previous_plan;
 
-import data_access.DayPlanDataAccessObject;
+import data_access.PrevPlanDataAccessObject;
+import entity.User;
 
 public class PreviousPlanInteractor implements PreviousPlanInputBoundary {
 
-    final DayPlanDataAccessObject dayplanDAO;
+    final PrevPlanDataAccessObject previousPlanDAO;
     final PreviousPlanOutputBoundary previousPlanPresenter;
 
-    public PreviousPlanInteractor(DayPlanDataAccessObject dayplanDAO,
+    public PreviousPlanInteractor(PrevPlanDataAccessObject dayplanDAO,
                                   PreviousPlanOutputBoundary previousPlan) {
         this.previousPlanPresenter = previousPlan;
-        this.dayplanDAO = dayplanDAO;
+        this.previousPlanDAO = dayplanDAO;
     }
 
     @Override
     public void execute(PreviousPlanInputData previousPlanInputData) {
-        ;;
-        // nuances to consider, what happens to a user that already exists and their dayplans
-        // i.e/ how does our system write existing users to the database?
+        User currentUser = previousPlanInputData.getUser();
+
     }
 }
