@@ -1,8 +1,11 @@
 package use_case.user_login;
 
+import java.util.ArrayList;
+
 public class UserLoginInputData {
     private final String username;
     private final String password;
+    private final ArrayList<Double> location;
 
     /**
      * Input data of the user login use case.
@@ -15,9 +18,10 @@ public class UserLoginInputData {
      * @param password Password of this account.
      */
 
-    public UserLoginInputData(String username, String password) {
+    public UserLoginInputData(String username, String password, ArrayList<Double> location) {
         this.username = username;
         this.password = password;
+        this.location = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -27,4 +31,6 @@ public class UserLoginInputData {
     public String getPassword() {
         return password;
     }
+
+    public ArrayList<Double> getLocation() { return location; }
 }
