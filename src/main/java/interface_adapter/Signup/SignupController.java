@@ -2,6 +2,7 @@ package interface_adapter.Signup;
 
 import entity.User;
 import use_case.user_signup.UserSignupInputBoundary;
+import use_case.user_signup.UserSignupInteractor;
 import use_case.user_signup.UserSignupInputData;
 
 /**
@@ -12,14 +13,13 @@ import use_case.user_signup.UserSignupInputData;
  * </p>
  */
 public class SignupController {
-    final UserSignupInputBoundary userSignupInteractor;
-
     public User getUser() {return user;}
 
     public void setUser(User user) {this.user = user;}
 
     private User user;
 
+    final UserSignupInputBoundary userSignupInteractor;
     public SignupController(UserSignupInputBoundary userSignupInteractor) {
         this.userSignupInteractor = userSignupInteractor;
     }

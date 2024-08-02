@@ -1,4 +1,5 @@
 package interface_adapter;
+import java.beans.PropertyChangeListener;
 
 
 /**
@@ -10,13 +11,17 @@ package interface_adapter;
  */
 public abstract class ViewModel {
 
-    private final String modelName;
+    private String viewName;
 
-    public ViewModel(String modelName) {
-        this.modelName = modelName;
+    public ViewModel(String viewName) {
+        this.viewName = viewName;
+    }
+    public String getViewName() {
+        return this.viewName;
     }
 
-    public String getModelName() {
-        return this.modelName;
-    }
+    public abstract void firePropertyChanged();
+    public abstract void addPropertyChangeListener(PropertyChangeListener listener);
+
+
 }
