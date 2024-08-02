@@ -16,6 +16,7 @@ public class UserLoginInputData {
      *
      * @param username Username of this account.
      * @param password Password of this account.
+     * @param location coordinates of this account.
      */
 
     public UserLoginInputData(String username, String password, ArrayList<Double> location) {

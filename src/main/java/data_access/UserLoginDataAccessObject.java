@@ -53,7 +53,6 @@ public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
                         return true;
                     } else {
                         return false;
-
                     }
                     // Need to close the BufferedReader object
                     // Normally, the "Try" block will do this for you, but not in case of early return
