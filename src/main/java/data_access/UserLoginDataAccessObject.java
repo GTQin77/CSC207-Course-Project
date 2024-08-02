@@ -6,12 +6,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 
 public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
     private String csvPath;
     private File csvFile;
+    private User user;
 
     public File getcsvFile() {
         return this.csvFile;
@@ -24,6 +26,10 @@ public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
     public void setcsvFileandPath(String csvPath) {
         this.csvPath = csvPath;
         this.csvFile = new File(csvPath);
+    }
+
+    public User getUser() {
+        return this.user;
     }
 
     /**
@@ -49,6 +55,8 @@ public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
                 // Early return if the userID we put in is equal to the userID in the row
                 if (username.equals(row[0])){
                     if (password.equals(row[1])){
+                        User user = new User(row[0], row[1], parseLocation(row[2]));
+                        this.user = user;
                         br.close();
                         return true;
                     } else {
@@ -69,6 +77,19 @@ public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
         return false;
     }
 
+    /**
+     * Helper method to parse the location string into an ArrayList of Doubles.
+     * @param locationStr the location string.
+     * @return the parsed location as an ArrayList of Doubles.
+     */
+    private ArrayList<Double> parseLocation(String locationStr) {
+        ArrayList<Double> location = new ArrayList<>();
+        String[] values = locationStr.replace("\"", "").split(",");
+        for (String value : values) {
+            location.add(Double.parseDouble(value.trim()));
+        }
+        return location;
+    }
 
     }
 
