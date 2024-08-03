@@ -4,10 +4,8 @@ import entity.User;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 
 public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
@@ -55,8 +53,7 @@ public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
                 // Early return if the userID we put in is equal to the userID in the row
                 if (username.equals(row[0])){
                     if (password.equals(row[1])){
-                        User user = new User(row[0], row[1], parseLocation(row[2]));
-                        this.user = user;
+                        this.user = new User(row[0], row[1], parseLocation(row[2]));
                         br.close();
                         return true;
                     } else {
@@ -75,6 +72,10 @@ public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
             throw new RuntimeException(e);
         }
         return false;
+    }
+    @Override
+    public User getUser(String username, String password) {
+        return this.user;
     }
 
     /**
