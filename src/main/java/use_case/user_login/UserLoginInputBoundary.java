@@ -8,6 +8,6 @@ import entity.User;
  * Input boundary of the user login use case.
  */
 public interface UserLoginInputBoundary {
-    void loginUser(UserLoginInputData loginInputData);
+    User loginUser(UserLoginInputData loginInputData);
 }
 

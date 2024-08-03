@@ -39,12 +39,12 @@ public class UserLoginInteractor implements UserLoginInputBoundary {
      */
 
     @Override
-    public void loginUser(UserLoginInputData userLoginInputData) {
+    public User loginUser(UserLoginInputData userLoginInputData) {
         boolean userExists = userDataAccessInterface.findUser(userLoginInputData.getUsername(), userLoginInputData.getPassword());
 
         if (!userExists) {
             userPresenter.prepareFailView("Invalid username or password.");
-            return;
+            return null;
         }
 
         User user = userDataAccessInterface.getUser(userLoginInputData.getUsername(), userLoginInputData.getPassword());
@@ -52,6 +52,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary {
         String loginTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         UserLoginOutputData loginResponseModel = new UserLoginOutputData(user, true, loginTime);
         userPresenter.prepareSuccessView(loginResponseModel);
+        return user;
 
     }
 }
