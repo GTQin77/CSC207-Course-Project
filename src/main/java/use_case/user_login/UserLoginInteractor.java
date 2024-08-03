@@ -18,6 +18,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary {
     final UserFactory userFactory;
     private User user;
 
+
     /**
      * Constructor for the UserLoginInteractor
      *
@@ -40,15 +41,17 @@ public class UserLoginInteractor implements UserLoginInputBoundary {
      */
     @Override
     public User execute(UserLoginInputData input) {
-        User user = this.userLoginDataAccessInterface.findUser(input.getUsername(), input.getPassword());
+        boolean userExists = this.userLoginDataAccessInterface.findUser(input.getUsername(), input.getPassword());
 
-        if (user != null) {
+        if (!userExists) {
+            loginOutputBoundary.prepareFailView("Password or username incorrect.");
+            return null;
+        } else {
             UserLoginOutputData loginOutputData = new UserLoginOutputData(user, true);
+            User user = new User(input.getUsername(), input.getPassword(), input.getLocation());
+            loginOutputBoundary.prepareSuccessView(loginOutputData);
             loginOutputBoundary.prepareSuccessView(loginOutputData);
             return user;
-        } else {
-            loginOutputBoundary.prepareFailView("Passwords don't match.");
-            return null;
         }
     }
 }

@@ -1,4 +1,3 @@
 package interface_adapter.Login;
 
-public class LoginViewModel {
-}
+public class LoginViewModel {}
