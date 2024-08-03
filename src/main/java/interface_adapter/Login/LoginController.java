@@ -34,11 +34,10 @@ public class LoginController {
      * Controller for login use case that calls Interactor's execute method.
      * @param username from input
      * @param password from input
-     * @param location from input
      */
-    public void execute(String username, String password, ArrayList<Double> location) {
-        UserLoginInputData loginInputData = new UserLoginInputData(username, password, location);
-        User user = userLoginInteractor.execute(loginInputData);
+    public void execute(String username, String password) {
+        UserLoginInputData loginInputData = new UserLoginInputData(username, password);
+        User user = userLoginInteractor.loginUser(loginInputData);
         this.setUser(user);
     }
 }
