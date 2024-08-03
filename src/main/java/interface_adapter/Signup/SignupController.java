@@ -30,9 +30,9 @@ public class SignupController {
      * @param password1 from input
      * @param password2 from input, repeated password
      */
-    public void execute(String username, String password1, String password2) {
+    public void execute(String username, String password1, String password2, String location) {
         UserSignupInputData signupInputData = new UserSignupInputData(
-                username, password1, password2, "1.23, 5.67");
+                username, password1, password2, location);
 
         User user = userSignupInteractor.execute(signupInputData);
 

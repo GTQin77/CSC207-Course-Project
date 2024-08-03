@@ -21,6 +21,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
+    private final JTextField locationInputField = new JTextField(15);
     private final SignupController signupController;
 
     private final JButton signUp;
@@ -51,6 +52,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new JLabel(signupViewModel.PASSWORD_LABEL), passwordInputField);
         LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
                 new JLabel(signupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
+        LabelTextPanel locationInfo = new LabelTextPanel(
+                new JLabel(signupViewModel.LOCATION_LABEL), locationInputField);
+
 
         JPanel buttons = new JPanel();
         signUp = new JButton(signupViewModel.SIGNUP_BUTTON_LABEL);
@@ -65,7 +69,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         if (evt.getSource().equals(signUp)) {
                             signupController.execute(usernameInputField.getText(),
                                     String.valueOf(passwordInputField.getPassword()),
-                                    String.valueOf(repeatPasswordInputField.getPassword()));
+                                    String.valueOf(repeatPasswordInputField.getPassword()),
+                                    String.valueOf(locationInputField.getLocation()));
                         }
                     }
                 }
@@ -99,6 +104,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(usernameInfo);
         this.add(passwordInfo);
         this.add(repeatPasswordInfo);
+        this.add(locationInfo);
         this.add(buttons);
     }
 
