@@ -15,7 +15,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * Signup view of the program.
+ * Signup view of the program for the signup use case.
  * <p>
  * This implementation referenced the Pualgries' Clean Architecture code for SignupView on
  * <a href="https://github.com/paulgries/LoginCleanArchitecture">github.com</a>.
