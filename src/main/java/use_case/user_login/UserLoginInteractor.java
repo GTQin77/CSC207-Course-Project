@@ -3,53 +3,57 @@ package use_case.user_login;
 import data_access.UserLoginDataAccessInterface;
 import entity.User;
 import entity.UserFactory;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-/**
- * Interactor of the user login use case.
- * <p>
- * This implementation referenced the Pualgries' Clean Architecture code for SignupInputBoundary on
- * <a href="https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/use_case/SignupInputBoundary.java">github.com</a>.
- * </p>
- */
 
 public class UserLoginInteractor implements UserLoginInputBoundary {
-    final UserLoginDataAccessInterface userLoginDataAccessInterface;
-    final UserLoginOutputBoundary loginOutputBoundary;
+    final UserLoginDataAccessInterface userDataAccessInterface;
+    final UserLoginOutputBoundary userPresenter;
     final UserFactory userFactory;
-    private User user;
 
     /**
-     * Constructor for the UserLoginInteractor
+     * Interactor of the user login use case.
      *
+     * <p>
+     * This implementation referenced the Pualgries' Clean Architecture code for SignupInteractor on
+     * <a href="https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/use_case/SignupInteractor.java">github.com</a>.
+     * </p>
      * @param userLoginDataAccessInterface Data access interface of the user login use case.
-     * @param loginOutputBoundary Output boundary of the login use case.
      * @param userFactory Factory for user.
+     * @param userLoginOutputBoundary Output boundary of the login use case.
      */
 
-    public UserLoginInteractor(UserLoginDataAccessInterface userLoginDataAccessInterface,
-                               UserLoginOutputBoundary loginOutputBoundary,
+    public UserLoginInteractor(UserLoginDataAccessInterface userLoginDataAccessInterface, UserLoginOutputBoundary userLoginOutputBoundary,
                                UserFactory userFactory) {
-        this.userLoginDataAccessInterface = userLoginDataAccessInterface;
-        this.loginOutputBoundary = loginOutputBoundary;
+        this.userDataAccessInterface = userLoginDataAccessInterface;
+        this.userPresenter = userLoginOutputBoundary;
         this.userFactory = userFactory;
     }
 
     /**
-     * Interactor method for login use case that retrieves user and checks that it exists.
-     * @param input UserLoginInputData.
+     *
+     * Handles the login process for a user
+     *
+     * @param userLoginInputData The data needed for user login, including username and password.
      */
-    @Override
-    public User execute(UserLoginInputData input) {
-        User user = this.userLoginDataAccessInterface.findUser(input.getUsername(), input.getPassword());
 
-        if (user != null) {
-            UserLoginOutputData loginOutputData = new UserLoginOutputData(user, true);
-            loginOutputBoundary.prepareSuccessView(loginOutputData);
-            return user;
-        } else {
-            loginOutputBoundary.prepareFailView("Passwords don't match.");
+    @Override
+    public User loginUser(UserLoginInputData userLoginInputData) {
+        boolean userExists = userDataAccessInterface.findUser(userLoginInputData.getUsername(), userLoginInputData.getPassword());
+
+        if (!userExists) {
+            userPresenter.prepareFailView("Invalid username or password.");
             return null;
         }
+
+        User user = userDataAccessInterface.getUser(userLoginInputData.getUsername(), userLoginInputData.getPassword());
+        LocalDateTime now = LocalDateTime.now();
+        String loginTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        UserLoginOutputData loginResponseModel = new UserLoginOutputData(user, true, loginTime);
+        userPresenter.prepareSuccessView(loginResponseModel);
+        return user;
+
     }
 }
 

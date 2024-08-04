@@ -4,6 +4,8 @@ import entity.User;
 import use_case.user_login.UserLoginInputBoundary;
 import use_case.user_login.UserLoginInputData;
 
+import java.util.ArrayList;
+
 /**
  * Controller of the user sign up use case.
  * <p>
@@ -35,7 +37,7 @@ public class LoginController {
      */
     public void execute(String username, String password) {
         UserLoginInputData loginInputData = new UserLoginInputData(username, password);
-        User user = userLoginInteractor.execute(loginInputData);
+        User user = userLoginInteractor.loginUser(loginInputData);
         this.setUser(user);
     }
 }

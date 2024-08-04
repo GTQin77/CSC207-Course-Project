@@ -1,5 +1,7 @@
 package use_case.user_login;
 
+import java.util.ArrayList;
+
 public class UserLoginInputData {
     private final String username;
     private final String password;
