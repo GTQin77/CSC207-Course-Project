@@ -7,6 +7,14 @@ import use_case.user_signup.UserSignupOutputData;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
+/**
+ * SignupPresenter for the Signup use case.
+ * <p>
+ * This implementation referenced the Pualgries' Clean Architecture code for SignupPresenter on
+ * <a href="https://github.com/paulgries/LoginCleanArchitecture">github.com</a>.
+ * </p>
+ */
 public class SignupPresenter implements UserSignupOutputBoundary {
 
     private final SignupViewModel signupViewModel;

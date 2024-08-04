@@ -12,6 +12,14 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+
+/**
+ * Login view of the program.
+ * <p>
+ * This implementation referenced the Pualgries' Clean Architecture code for LoginView on
+ * <a href="https://github.com/paulgries/LoginCleanArchitecture">github.com</a>.
+ * </p>
+ */
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "log in";

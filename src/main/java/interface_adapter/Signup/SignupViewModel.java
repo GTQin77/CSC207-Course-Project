@@ -5,6 +5,13 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * SignupViewModel for the Signup use case.
+ * <p>
+ * This implementation referenced the Pualgries' Clean Architecture code for SignupViewModel on
+ * <a href="https://github.com/paulgries/LoginCleanArchitecture">github.com</a>.
+ * </p>
+ */
 public class SignupViewModel extends ViewModel {
 
     public final String TITLE_LABEL = "Sign Up View";

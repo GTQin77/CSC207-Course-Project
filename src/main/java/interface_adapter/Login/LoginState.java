@@ -1,5 +1,12 @@
 package interface_adapter.Login;
 
+/**
+ * LoginState for the Signup use case.
+ * <p>
+ * This implementation referenced the Pualgries' Clean Architecture code for LoginState on
+ * <a href="https://github.com/paulgries/LoginCleanArchitecture">github.com</a>.
+ * </p>
+ */
 public class LoginState {
     private String username = "";
     private String usernameError = null;

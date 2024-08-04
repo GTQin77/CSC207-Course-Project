@@ -3,6 +3,13 @@ package interface_adapter.Signup;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * SignupViewManagerModel for the Signup use case.
+ * <p>
+ * This implementation referenced the Pualgries' Clean Architecture code for SignupViewManagerModel on
+ * <a href="https://github.com/paulgries/LoginCleanArchitecture">github.com</a>.
+ * </p>
+ */
 public class SignupViewManagerModel {
 
     private String activeViewName;
