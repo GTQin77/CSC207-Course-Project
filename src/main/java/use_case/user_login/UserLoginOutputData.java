@@ -37,4 +37,8 @@ public class UserLoginOutputData {
     public String getLoginTime() {
         return loginTime;
     }
+
+    public void setLoginTime(String loginTime) {
+        this.loginTime = loginTime;
+    }
 }
