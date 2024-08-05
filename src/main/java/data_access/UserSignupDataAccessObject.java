@@ -9,18 +9,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-// A DAO object that writes to a Microsoft Excel .csv file.
-// Records new Users and existing day lists associated with their account into the file.
 public class UserSignupDataAccessObject implements UserSignupDataAccessInterface {
 
     private File csvFile;
     private String csvPath;
     private User user;
 
-    // csvFile attribute has no individual setter
     public File getcsvFile(){return this.csvFile;}
 
-    // Method is a setter for both csvPath and csvFile
     public void setcsvPathAndcsvFile(String csvPath){
         this.csvPath = csvPath;
         this.csvFile = new File(csvPath);

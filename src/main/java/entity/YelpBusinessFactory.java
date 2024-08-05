@@ -1,7 +1,6 @@
 package entity;
 
 import api.YelpFusion;
-import use_case.distance.DistanceInputData;
 
 import java.util.ArrayList;
 
