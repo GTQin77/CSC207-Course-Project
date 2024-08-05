@@ -2,47 +2,43 @@ package interface_adapter.Signup;
 
 import interface_adapter.ViewModel;
 
-import java.util.Scanner;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class SignupViewModel extends ViewModel {
-    private String userName;
-    private String password;
-    private String repeatedPassword;
+
+    public final String TITLE_LABEL = "Sign Up View";
+    public final String USERNAME_LABEL = "Username";
+    public final String PASSWORD_LABEL = "Password";
+    public final String REPEAT_PASSWORD_LABEL = "Repeat password";
+    public final String LOCATION_LABEL = "Location (Optional)";
+
+    public final String SIGNUP_BUTTON_LABEL = "Sign up";
+    public final String CANCEL_BUTTON_LABEL = "Cancel";
+
+    private SignupState state = new SignupState();
 
     public SignupViewModel() {
-        super("SignupViewModel");
+        super("sign up");
     }
 
-    public void setUserName() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your username: ");
-        this.userName = scanner.nextLine();
+    public void setState(SignupState state) {
+        this.state = state;
     }
 
-    public String getUserName() {
-        return this.userName;
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
+    // This is what the Signup Presenter will call to let the ViewModel know
+    // to alert the View
+    public void firePropertyChanged() {
+        support.firePropertyChange("state", null, this.state);
     }
 
-    public void setPassword() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your password: ");
-        this.password = scanner.nextLine();
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
     }
 
-
-    public String getPassword() {
-        return this.password;
+    public SignupState getState() {
+        return state;
     }
-
-
-    public void setRepeatedPassword() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter repeated password: ");
-        this.repeatedPassword = scanner.nextLine();
-    }
-    public String getRepeatedPassword() {
-        return this.repeatedPassword;
-    }
-
 }
-

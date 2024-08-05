@@ -3,5 +3,6 @@ package data_access;
 import entity.User;
 
 public interface UserLoginDataAccessInterface {
-    User checkPassword(String username, String password);
+    boolean findUser(String username, String password);
+    User getUser(String username, String password);
 }

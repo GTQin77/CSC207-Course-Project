@@ -12,15 +12,18 @@ import entity.User;
 public class UserLoginOutputData {
     private final User user;
     private final boolean loginSuccessful;
+    private String loginTime;
 
     /**
      *
      * @param user The user object if login is successful, null otherwise.
      * @param loginSuccessful Whether the login was successful.
+     * @param loginTime When the login occurred.
      */
-    public UserLoginOutputData(User user, boolean loginSuccessful) {
+    public UserLoginOutputData(User user, boolean loginSuccessful, String loginTime) {
         this.user = user;
         this.loginSuccessful = loginSuccessful;
+        this.loginTime = loginTime;
     }
 
     public User getUser() {
@@ -29,5 +32,13 @@ public class UserLoginOutputData {
 
     public boolean isLoginSuccessful() {
         return loginSuccessful;
+    }
+
+    public String getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(String loginTime) {
+        this.loginTime = loginTime;
     }
 }

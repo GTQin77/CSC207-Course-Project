@@ -6,14 +6,11 @@ import entity.Dayplan;
 import entity.Business;
 import entity.refreshBusinessFactory;
 
-import java.util.ArrayList;
-
 public class RefreshInteractor implements RefreshInputBoundary{
     final DayPlanDataAccessInterface dayPlanDataAccessObject;
     final RefreshOutputBoundary refreshPresenter;
     final DayplanFactory dayplanFactory;
     final refreshBusinessFactory refreshBusinessFactory;
-
 
     public RefreshInteractor(DayPlanDataAccessInterface dayPlanDataAccessObject, RefreshOutputBoundary refreshPresenter, DayplanFactory dayplanFactory, refreshBusinessFactory businessFactory) {
         this.dayPlanDataAccessObject = dayPlanDataAccessObject;
@@ -28,10 +25,6 @@ public class RefreshInteractor implements RefreshInputBoundary{
         Boolean refreshAll = refreshInputData.getRefreshAll();
         Integer refreshIndex = refreshInputData.getRefreshIndex();
 
-        // 1. get the names of businesses in the current dayplan:
-        ArrayList<String> businessNames = dayplan.getBusinessNames();
-
-        // 2. refresh the entire plan if needed
         if (refreshAll){
             refreshAllBusiness(dayplan);
         }
