@@ -4,67 +4,26 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class MealTest {
+class MealTest extends BusinessTest{
+    private Meal meal;
+    private ArrayList<Double> location;
 
     @BeforeEach
+    @Override
     void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void getName() {
+        location = new ArrayList<>();
+        location.add(43.6532);
+        location.add(79.3832);
+        meal = new Meal("testBusiness", location, 1.2, "334-556-7788", "$$$$", 4.1f);
     }
 
     @Test
-    void setName() {
-    }
-
-    @Test
-    void getLocation() {
-    }
-
-    @Test
-    void setLocation() {
-    }
-
-    @Test
-    void getDistance() {
-    }
-
-    @Test
-    void setDistance() {
-    }
-
-    @Test
-    void getContactNum() {
-    }
-
-    @Test
-    void setContactNum() {
-    }
-
-    @Test
-    void getPrice() {
-    }
-
-    @Test
-    void setPrice() {
-    }
-
-    @Test
-    void getRatings() {
-    }
-
-    @Test
-    void setRatings() {
-    }
-
-    @Test
-    void getDuration() {
+    @Override
+    void getType(){
+        assertEquals("meal", meal.getType());
     }
 }

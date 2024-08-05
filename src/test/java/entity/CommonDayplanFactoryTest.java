@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TimeblockFactoryTest {
+class CommonDayplanFactoryTest {
 
     @BeforeEach
     void setUp() {
@@ -14,6 +14,26 @@ class TimeblockFactoryTest {
 
     @AfterEach
     void tearDown() {
+    }
+
+    @Test
+    void setOpenApi() {
+    }
+
+    @Test
+    void getOpenApi() {
+    }
+
+    @Test
+    void setYelpApi() {
+    }
+
+    @Test
+    void getYelpApi() {
+    }
+
+    @Test
+    void setBusinessFactory() {
     }
 
     @Test
