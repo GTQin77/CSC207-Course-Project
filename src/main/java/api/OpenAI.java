@@ -112,15 +112,22 @@ public class OpenAI implements OpenInterface{
         JSONObject message = new JSONObject();
         JSONArray messages = new JSONArray();
         message.put("role", "user");
-        String note = "\", select one word from the following that matches the prompt most: ";
-        String warn = ". Only return one word.";
+        String note;
+        String categories;
+        String warn = ". Only return the category name.";
         if (isMeal){
-            String categories = "\"active, arts, beautysvc, nightlife, shopping\"";
+            note = ", select one category of food from the following that matches the prompt most: ";
+            categories = "\"african, tradamerican, arabian, bbq, bistros, breakfast_brunch, buffets, burgers, cafes, " +
+                    "carribean, chickenshop, chinese, cuban, diners, dumplings, hotdogs, filipino, fishnchips, " +
+                    "french, greek, halal, indian, italian, japanese, korean, mexican, mediterranean, noodles, " +
+                    "oriental, panasian, pubfood, salad, seafood, soulfood, soup, steakhouses, sushi bars, vegan, " +
+                    "vegetarian, vietnamese, thai, sandwiches, portuguese, mideastern\"";
         }
         else{
-            String categories = "\"....\"";
+            note = ", select one category from the following that matches the prompt most: ";
+            categories = "\"active, arts, beautysvc, nightlife, shopping\"";
         }
-        String prompt = "Given the prompt: \""+ userMessage + note + categories + warn;
+        String prompt = "Given the prompt:" + "\"" + userMessage + "\"" + note + categories + warn;
         message.put("content", prompt);
         messages.put(message);
 
