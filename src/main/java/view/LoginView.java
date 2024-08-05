@@ -1,7 +1,9 @@
 package view;
 
+import interface_adapter.Login.LoginController;
 import interface_adapter.Login.LoginState;
 import interface_adapter.Login.LoginViewModel;
+import interface_adapter.Signup.SignupController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     public final String viewName = "log in";
     private final LoginViewModel loginViewModel;
+    private final LoginController loginController;
 
     /**
      * The username chosen by the user
@@ -34,8 +37,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     /**
      * A window with a title and a JButton.
      */
-    public LoginView(LoginViewModel loginViewModel) {
+    public LoginView(LoginController controller, LoginViewModel loginViewModel) {
         this.loginViewModel = loginViewModel;
+        this.loginController = controller;
         this.loginViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Login Screen");
