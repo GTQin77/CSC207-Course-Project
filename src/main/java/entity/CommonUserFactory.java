@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class CommonUserFactory implements UserFactory {
-//taken from Paul Gries Login Clean Architecture
     /**
      * Creates a new User instance with the specified attributes.
      * <p>

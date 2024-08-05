@@ -16,7 +16,9 @@ class UserTest {
 
     @BeforeEach
     void setUp() {
-        location = new ArrayList<>(Arrays.asList(43.6532, 79.3832));
+        location = new ArrayList<>();
+        location.add(43.6532);
+        location.add(79.3832);
         dayplans = new ArrayList<>();
         user = new User("testName", "testPassword", location);
         user.setDayPlans(dayplans);
@@ -40,7 +42,9 @@ class UserTest {
 
     @Test
     void setLocation() {
-        ArrayList<Double> newLocation = new ArrayList<>(Arrays.asList(22.3344, 33.2211));
+        ArrayList<Double> newLocation = new ArrayList<>();
+        newLocation.add(33.4455);
+        newLocation.add(66.7788);
         user.setLocation(newLocation);
         assertEquals(newLocation, user.getLocation());
     }
