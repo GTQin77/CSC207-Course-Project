@@ -43,7 +43,7 @@ public class CommonRefreshBusinessFactory implements RefreshBusinessFactory{
             i = i + 1;
         }
 
-        return this.businessFactory.createBusiness(newBusinessIDs.get(i));
+        return this.businessFactory.createBusiness(newBusinessIDs.get(i), user.getLocation());
     }
 
 

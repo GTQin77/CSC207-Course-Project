@@ -61,7 +61,7 @@ public class CommonDayplanFactory implements DayplanFactory{
         for (int i = 0; i < numActivities; i++){
             String businessID = activityIDs.get(i);
             // NOTE TO SELF: Do we need to pass in the api??
-            Business activity = this.businessFactory.createBusiness(businessID);  // Casting Business to Activity
+            Business activity = this.businessFactory.createBusiness(businessID, user.getLocation());  // Casting Business to Activity
             // Adding the Activity object to ArrayList
             plan.add(activity);
             businessIDs.add(businessID);
@@ -69,7 +69,7 @@ public class CommonDayplanFactory implements DayplanFactory{
         // For MEALS
         for (int i = 0; i < numMeals; i++){
             String businessID = mealsIDs.get(i);
-            Business meal = this.businessFactory.createBusiness(businessID);
+            Business meal = this.businessFactory.createBusiness(businessID, user.getLocation());
             plan.add(meal);
             businessIDs.add(businessID);
         }
