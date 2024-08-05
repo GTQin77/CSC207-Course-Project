@@ -120,6 +120,7 @@ public class OpenAI implements OpenInterface{
         else{
             String categories = "\"....\"";
         }
+        String categories = "good";
         String prompt = "Given the prompt: \""+ userMessage + note + categories + warn;
         message.put("content", prompt);
         messages.put(message);
