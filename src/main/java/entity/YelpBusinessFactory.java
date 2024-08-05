@@ -1,6 +1,7 @@
 package entity;
 
 import api.YelpFusion;
+import use_case.distance,
 
 import java.util.ArrayList;
 
@@ -24,6 +25,8 @@ public class YelpBusinessFactory implements BusinessFactory {
         String price = (String) businessDetails.get(2);
         String contactNum = (String) businessDetails.get(3);
         ArrayList<Double> location = (ArrayList<Double>) businessDetails.get(4);
+
+
 
         Double distance = 0.0;
         String type = "";

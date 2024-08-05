@@ -1,2 +1,4 @@
-package app;public class EditInfoUseCaseFactory {
+package app;
+
+public class EditInfoUseCaseFactory {
 }

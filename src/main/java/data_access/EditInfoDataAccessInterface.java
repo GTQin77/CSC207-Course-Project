@@ -1,2 +1,4 @@
-package data_access;public interface EditInfoDataAccessInterface {
+package data_access;
+
+public interface EditInfoDataAccessInterface {
 }

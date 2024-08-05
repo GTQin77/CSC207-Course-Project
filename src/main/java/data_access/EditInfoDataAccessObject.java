@@ -1,2 +1,4 @@
-package data_access;public class EditInfoDataAccessObject {
+package data_access;
+
+public class EditInfoDataAccessObject {
 }
