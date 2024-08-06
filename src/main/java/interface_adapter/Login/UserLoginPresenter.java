@@ -29,7 +29,7 @@ public class UserLoginPresenter implements UserLoginOutputBoundary {
 
     @Override
     public void prepareSuccessView(UserLoginOutputData response) {
-        // On success, switch to the main application view or dashboard.
+        // On success, switch to the dayplan input view.
         LocalDateTime responseTime = LocalDateTime.parse(response.getLoginTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         response.setLoginTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
 
@@ -47,8 +47,14 @@ public class UserLoginPresenter implements UserLoginOutputBoundary {
     @Override
     public void prepareFailView(String error) {
         LoginState loginState = loginViewModel.getState();
-        loginState.setUsernameError(error);
         loginState.setLoginSuccessful(false);
+
+        if (error.contains("username")) {
+            loginState.setUsernameError("Incorrect username.");
+        } else if (error.contains("password")) {
+            loginState.setPasswordError("Incorrect password.");
+        }
+
         loginViewModel.setState(loginState);
         loginViewModel.firePropertyChanged();
     }
