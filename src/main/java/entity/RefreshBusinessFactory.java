@@ -1,8 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
-
-public interface refreshBusinessFactory {
+public interface RefreshBusinessFactory {
     Business generateNewBusiness(Dayplan dayplan, String type);
-
+    boolean isMeal(String type);
 }
