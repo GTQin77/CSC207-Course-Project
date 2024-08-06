@@ -33,10 +33,12 @@ public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
 
     /**
      * Interactor method that creates a dayplan, creates all API objects, and factories necessary for flow.
+     *
      * @param input UserDayPlanInputData.
+     * @return
      */
     @Override
-    public void execute(UserDayPlanInputData input) {
+    public Dayplan execute(UserDayPlanInputData input) {
         // 1. Process Input Data
         ArrayList<Double> location = new ArrayList<Double>();
         for (int i = 0; i < input.getLocation().size(); i++){
@@ -63,5 +65,6 @@ public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
         // 6. Prepare Output Data
         UserDayPlanOutputData outputData = new UserDayPlanOutputData(dayplan);
         this.dayplanPresenter.prepareDayplanView(outputData);
+        return dayplan;
     }
 }
