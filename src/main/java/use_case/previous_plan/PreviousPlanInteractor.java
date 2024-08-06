@@ -1,25 +1,35 @@
 package use_case.previous_plan;
 
 import data_access.PrevPlanDataAccessObject;
+import entity.CommonPreviousPlanFactory;
+import entity.PreviousPlan;
+import entity.PreviousPlanFactory;
 import entity.User;
 
 public class PreviousPlanInteractor implements PreviousPlanInputBoundary {
 
     final PrevPlanDataAccessObject previousPlanDAO;
     final PreviousPlanOutputBoundary previousPlanPresenter;
+    final PreviousPlanFactory previousPlanFactory;
 
     public PreviousPlanInteractor(PrevPlanDataAccessObject dayplanDAO,
-                                  PreviousPlanOutputBoundary previousPlan) {
+                                  PreviousPlanOutputBoundary previousPlan,
+                                  PreviousPlanFactory previousPlanFactory) {
         this.previousPlanPresenter = previousPlan;
         this.previousPlanDAO = dayplanDAO;
+        this.previousPlanFactory = previousPlanFactory;
     }
 
     @Override
-    public void execute(PreviousPlanInputData previousPlanInputData) {
+    public PreviousPlan execute(PreviousPlanInputData previousPlanInputData) {
         User currentUser = previousPlanInputData.getUser();
-        // access the DAO from the input data and use factory to take String and convert to Dayplan
-        String previousDayplan = this.previousPlanDAO.getPreviousDayplan(currentUser);
-        // make previousPlanFactory
-        //after conversion to Dayplan present with presenter
+        String previousDayplanString = this.previousPlanDAO.getPreviousDayplan(currentUser);
+        CommonPreviousPlanFactory previousPlanFactory = new CommonPreviousPlanFactory();
+
+        PreviousPlan previousPlan = previousPlanFactory.convertDayplan(previousDayplanString);
+
+        PreviousPlanOutputData outputData = new PreviousPlanOutputData(previousPlan);
+        this.previousPlanPresenter.preparePreviousPlanView(outputData);
+        return previousPlan;
     }
 }

@@ -1,5 +1,5 @@
 package entity;
 
 public interface PreviousPlanFactory {
-    Dayplan convertDayplan(String stringDayplan);
+    PreviousPlan convertDayplan(String stringDayplan);
 }
