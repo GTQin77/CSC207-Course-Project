@@ -48,12 +48,14 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
             String stringLocation = dayplan.getLocation().toString();
             String finalLocation = "\"" + stringLocation.substring(1, stringLocation.length() - 2) + "\"";
             // Writing preliminary Dayplan attributes to csv
-            fw.write(dayplan.getUser().getUserName() + "," + finalLocation + "," + "\"" + dayplan.getVibe() + "\"");
+            fw.write(dayplan.getUser().getUserName() + ";" + finalLocation + ";" + dayplan.getVibe() + ";");
             // Iterate through Businesses in Dayplan and write them to csv
             // Each new Business goes in individual cell
-            for (int i = 0; i < dayplan.getPlan().size(); i++){
-                Business business = dayplan.getPlan().get(i);
-                fw.write("," + this.businessToString(business));
+            Business business = dayplan.getPlan().getFirst();
+            fw.write(this.businessToString(business));
+            for (int i = 1; i < dayplan.getPlan().size(); i++){
+                business = dayplan.getPlan().get(i);
+                fw.write("~" + this.businessToString(business));
             }
             System.out.println("Dayplan saved successfully!");
         }
@@ -70,8 +72,8 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
      * @return String version of a Business, with attributes separated by commas
      */
     public String businessToString(Business business){
-        return "\n" + business.getName() + "," + business.getLocation().toString() + "," +
+        return business.getName() + "," + business.getLocation().toString() + "," +
                 business.getDistance() + "," + business.getContactNum() + "," + business.getPrice() + ","
-                + business.getRatings() + "\n";
+                + business.getRatings();
     }
 }
