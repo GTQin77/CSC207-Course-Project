@@ -40,7 +40,7 @@ public class UserLoginPresenter implements UserLoginOutputBoundary {
         loginViewModel.setState(loginState);
         loginViewModel.firePropertyChanged();
 
-        viewManagerModel.setActiveView("mainView");
+        viewManagerModel.setActiveView(dayplanInputViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
