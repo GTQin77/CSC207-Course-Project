@@ -18,7 +18,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     public final String viewName = "log in";
     private final LoginViewModel loginViewModel;
-    private final LoginController loginController;
 
     /**
      * The username chosen by the user
@@ -37,9 +36,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     /**
      * A window with a title and a JButton.
      */
-    public LoginView(LoginController controller, LoginViewModel loginViewModel) {
+    public LoginView(LoginViewModel loginViewModel) {
         this.loginViewModel = loginViewModel;
-        this.loginController = controller;
         this.loginViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Login Screen");
