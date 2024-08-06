@@ -1,12 +1,12 @@
 package view;
 
-import interface_adapter.Login.LoginState;
 import interface_adapter.Login.LoginViewManagerModel;
 import interface_adapter.Login.LoginViewModel;
-import interface_adapter.Signup.SignupState;
 import interface_adapter.Signup.SignupViewManagerModel;
 import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.ViewModel;
+import interface_adapter.Welcome.WelcomeViewManagerModel;
+import interface_adapter.Welcome.WelcomeViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,28 +16,32 @@ import java.awt.event.ActionListener;
 public class WelcomeView extends JPanel implements ActionListener {
     public final String viewName = "welcome";
 
-    private final ViewModel viewModel;
-    private final LoginViewModel loginViewModel;
+    private final WelcomeViewModel welcomeViewModel;
+    private WelcomeViewManagerModel welcomeViewManagerModel;
     private final SignupViewModel signupViewModel;
-    private SignupViewManagerModel signupViewManagerModel;
-    private LoginViewManagerModel loginViewManagerModel;
-    private final JButton logIn = new JButton("Log in");
-    private final JButton signUp = new JButton("Sign up");
+    private final LoginViewModel loginViewModel;
+    private final JButton logIn;
+    private final JButton signUp;
 
     /**
      * A window with a title and a JButton.
      */
-    public WelcomeView(ViewModel viewModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel) {
-        this.viewModel = viewModel;
-        this.loginViewModel = loginViewModel;
+    public WelcomeView(WelcomeViewModel welcomeViewModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, WelcomeViewManagerModel welcomeViewManagerModel) {
+        this.welcomeViewModel = welcomeViewModel;
+        this.welcomeViewManagerModel = welcomeViewManagerModel;
         this.signupViewModel = signupViewModel;
+        this.loginViewModel = loginViewModel;
 
         JLabel title = new JLabel("Welcome Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttons = new JPanel();
-        buttons.add(logIn);
+        signUp = new JButton(welcomeViewModel.SIGNUP_WELCOME_BUTTON_LABEL);
         buttons.add(signUp);
+
+        logIn = new JButton(welcomeViewModel.LOGIN_WELCOME_BUTTON_LABEL);
+        buttons.add(logIn);
+
 
         logIn.addActionListener(this);
         signUp.addActionListener(this);
@@ -46,25 +50,19 @@ public class WelcomeView extends JPanel implements ActionListener {
 
         this.add(title);
         this.add(buttons);
-
     }
 
     /**
      * React to a button click that results in evt.
      */
+    @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(logIn)) {
-            LoginState loginState = loginViewModel.getState();
-            this.loginViewModel.setState(loginState);
-            loginViewModel.firePropertyChanged();
-            loginViewManagerModel.setActiveView(loginViewModel.getViewName());
-            loginViewManagerModel.firePropertyChanged();
+            this.welcomeViewManagerModel.setActiveView(loginViewModel.getViewName());
+            this.welcomeViewManagerModel.firePropertyChanged();
         } else if (evt.getSource().equals(signUp)) {
-            SignupState signupState = signupViewModel.getState();
-            this.signupViewModel.setState(signupState);
-            signupViewModel.firePropertyChanged();
-            signupViewManagerModel.setActiveView(signupViewModel.getViewName());
-            signupViewManagerModel.firePropertyChanged();
+            this.welcomeViewManagerModel.setActiveView(signupViewModel.getViewName());
+            this.welcomeViewManagerModel.firePropertyChanged();
         }
     }
 
