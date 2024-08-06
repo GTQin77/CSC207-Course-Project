@@ -6,6 +6,7 @@ import use_case.user_signup.UserSignupInteractor;
 import use_case.user_signup.UserSignupInputData;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Controller of the user sign up use case.
@@ -38,6 +39,9 @@ public class SignupController {
      * @param password2 from input, repeated password
      */
     public void execute(String username, String password1, String password2, String location) {
+        if (Objects.equals(location, "")) {
+            location = "0;0";
+        }
         UserSignupInputData signupInputData = new UserSignupInputData(
                 username, password1, password2, location);
 

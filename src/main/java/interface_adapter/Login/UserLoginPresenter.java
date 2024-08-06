@@ -1,5 +1,6 @@
 package interface_adapter.Login;
 
+import interface_adapter.DayplanInput.DayplanInputViewModel;
 import use_case.user_login.UserLoginOutputBoundary;
 import use_case.user_login.UserLoginOutputData;
 import java.time.LocalDateTime;
@@ -21,10 +22,12 @@ public class UserLoginPresenter implements UserLoginOutputBoundary {
 
     private final LoginViewModel loginViewModel;
     private final LoginViewManagerModel viewManagerModel;
+    private final DayplanInputViewModel dayplanInputViewModel;
 
-    public UserLoginPresenter(LoginViewManagerModel viewManagerModel, LoginViewModel loginViewModel) {
+    public UserLoginPresenter(LoginViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
+        this.dayplanInputViewModel = dayplanInputViewModel;
     }
 
     @Override
