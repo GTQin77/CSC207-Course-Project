@@ -32,6 +32,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final SignupController signupController;
 
     private final JButton signUp;
+    private final JButton cancel;
 
     public User getUser() {
         return user;
@@ -66,15 +67,24 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         signUp = new JButton(signupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
 
+        cancel = new JButton(signupViewModel.CANCEL_BUTTON_LABEL);
+        buttons.add(cancel);
+
+
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
-                            signupController.execute(usernameInputField.getText(),
-                                    String.valueOf(passwordInputField.getPassword()),
-                                    String.valueOf(repeatPasswordInputField.getPassword()),
-                                    String.valueOf(locationInputField.getLocation()));
+                            try {
+                                signupController.execute(usernameInputField.getText(),
+                                        String.valueOf(passwordInputField.getPassword()),
+                                        String.valueOf(repeatPasswordInputField.getPassword()),
+                                        locationInputField.getText());
+                                JOptionPane.showMessageDialog(SignupView.this, "%s created.".formatted(usernameInputField.getText()));
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(SignupView.this, e.getMessage());
+                            }
                         }
                     }
                 }

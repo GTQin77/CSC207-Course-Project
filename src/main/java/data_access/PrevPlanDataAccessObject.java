@@ -27,7 +27,7 @@ public class PrevPlanDataAccessObject {
     public User getUser(){return this.user;}
 
     public String getPreviousDayplan(User user) {
-        String separator = ",";
+        String separator = ";";
         String userName = user.getUserName();
         String prevDayplan = "";
 

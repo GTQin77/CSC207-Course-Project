@@ -1,5 +1,7 @@
 package use_case.previous_plan;
 
+import entity.PreviousPlan;
+
 public interface PreviousPlanInputBoundary {
-    void execute(PreviousPlanInputData previousPlanInputData);
+    PreviousPlan execute(PreviousPlanInputData previousPlanInputData);
 }

@@ -3,6 +3,7 @@ package view;
 import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.Signup.SignupViewManagerModel;
 import interface_adapter.ViewModel;
+import interface_adapter.Welcome.WelcomeViewManagerModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,9 +22,9 @@ import java.util.Map.Entry;
 public class ViewManager implements PropertyChangeListener {
     private final CardLayout cardLayout;
     private final JPanel views;
-    private SignupViewManagerModel viewManagerModel;
+    private WelcomeViewManagerModel viewManagerModel;
 
-    public ViewManager(JPanel views, CardLayout cardLayout, SignupViewManagerModel viewManagerModel) {
+    public ViewManager(JPanel views, CardLayout cardLayout, WelcomeViewManagerModel viewManagerModel) {
         this.views = views;
         this.cardLayout = cardLayout;
         this.viewManagerModel = viewManagerModel;

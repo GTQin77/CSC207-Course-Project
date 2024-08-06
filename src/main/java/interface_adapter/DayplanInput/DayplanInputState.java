@@ -3,9 +3,9 @@ package interface_adapter.DayplanInput;
 public class DayplanInputState {
     private String city = "";
     private String cityError = null;
-    private Integer numMeals = 0;
+    private int numMeals = 0;
     private String numMealsError = null;
-    private Integer numActivities = 0;
+    private int numActivities = 0;
     private String numActivitiesError = null;
     private String description = "";
     private String descriptionError = null;
@@ -39,7 +39,7 @@ public class DayplanInputState {
         this.cityError = cityError;
     }
 
-    public Integer getNumMeals() {
+    public int getNumMeals() {
         return numMeals;
     }
 
@@ -55,7 +55,7 @@ public class DayplanInputState {
         this.numMealsError = numMealsError;
     }
 
-    public Integer getNumActivities() {
+    public int getNumActivities() {
         return numActivities;
     }
 

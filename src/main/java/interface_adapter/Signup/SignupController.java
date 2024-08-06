@@ -5,6 +5,9 @@ import use_case.user_signup.UserSignupInputBoundary;
 import use_case.user_signup.UserSignupInteractor;
 import use_case.user_signup.UserSignupInputData;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 /**
  * Controller of the user sign up use case.
  * <p>
@@ -13,11 +16,16 @@ import use_case.user_signup.UserSignupInputData;
  * </p>
  */
 public class SignupController {
+
+    private User user;
+    private ArrayList<String> location;
+
     public User getUser() {return user;}
 
     public void setUser(User user) {this.user = user;}
 
-    private User user;
+    public ArrayList<String> getLocation() {return location;}
+    public void setLocation(ArrayList<String> location) {this.location = location;}
 
     final UserSignupInputBoundary userSignupInteractor;
     public SignupController(UserSignupInputBoundary userSignupInteractor) {
@@ -31,6 +39,9 @@ public class SignupController {
      * @param password2 from input, repeated password
      */
     public void execute(String username, String password1, String password2, String location) {
+        if (Objects.equals(location, "")) {
+            location = "0;0";
+        }
         UserSignupInputData signupInputData = new UserSignupInputData(
                 username, password1, password2, location);
 
