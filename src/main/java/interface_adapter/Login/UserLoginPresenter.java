@@ -17,12 +17,6 @@ import java.time.format.DateTimeFormatter;
  * and throws an exception for failed logins.
  */
 
-import use_case.user_login.UserLoginOutputBoundary;
-import use_case.user_login.UserLoginOutputData;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class UserLoginPresenter implements UserLoginOutputBoundary {
 
     private final LoginViewModel loginViewModel;
