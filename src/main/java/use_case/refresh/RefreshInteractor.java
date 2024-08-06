@@ -38,7 +38,7 @@ public class RefreshInteractor implements RefreshInputBoundary{
     private void refreshOneBusiness(Dayplan dayplan, Integer refreshIndex) {
         Business prevBusiness = dayplan.getPlan().get(refreshIndex);
         String type = prevBusiness.getType();
-        Business newBusiness = RefreshBusinessFactory.generateNewBusiness(dayplan, type);
+        Business newBusiness = refreshBusinessFactory.generateNewBusiness(dayplan, type);
         dayplan.replaceBusiness(refreshIndex, newBusiness);
     }
 
