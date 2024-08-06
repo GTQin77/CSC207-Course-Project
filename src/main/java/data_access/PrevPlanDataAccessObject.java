@@ -43,6 +43,7 @@ public class PrevPlanDataAccessObject {
                     String value = values[3];
                     System.out.println(value);
                     prevDayplan = value;
+                    return prevDayplan;
                 }
             }
         } catch (IOException ioException) {
