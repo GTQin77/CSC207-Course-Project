@@ -15,7 +15,26 @@ import java.util.stream.Collectors;
 public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
     private File csvFile;
     private String csvPath;
-    private User user;
+    private final User currUser;
+    private final boolean usernameChanged;
+    private final boolean passwordChanged;
+    private final boolean locationChanged;
+
+    public EditInfoDataAccessObject(User user, String newUsername, String newPassword, String newLocation){
+        this.currUser = user;
+        this.usernameChanged = user.getUserName().equals(newUsername);
+        this.passwordChanged = user.getPassword().equals(newPassword);
+        this.locationChanged = user.getLocation().equals(processLocation(newLocation));
+    }
+
+    public ArrayList<Double> processLocation(String newLocation){
+        ArrayList<Double> newDoubLocation = new ArrayList<Double>();
+        String[] newStrLocation = newLocation.split(",");
+        for (int i = 0; i < newLocation.length(); i++){
+            newDoubLocation.add(Double.parseDouble(newStrLocation[i]));
+        }
+        return newDoubLocation;
+    }
 
     public File getcsvFile(){return this.csvFile;}
 
@@ -23,19 +42,20 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
 
     public String getcsvPath(){return this.csvPath;}
 
-    public void setUser(User user){this.user = user;}
-
-    public User getUser(){return this.user;}
+    public User getCurrUser(){return this.currUser;}
 
     /**
-     * Method
-     * @param username stores User's username, may be changed.
+     * Method that controls process of editing a username and/or password and location.
+     * Writes to UserDatabase and DayplanDatabase.
+     * Checks to see if the new username is already taken.
+     * @param newUsername stores username User wants to switch to.
+     * @param newPassword optional, replace with null if password is unchanged.
+     * @param newLocation optional, replace with null if location is unchanged.
      */
     @Override
-    public String editUsername(String username) {
+    public String editUsername(String newUsername, String newPassword, String newLocation) {
         UserSignupDataAccessInterface userSignupDataAccessInterface = new UserSignupDataAccessObject();
-        this.getUser().setUserName(username);
-        boolean userPreExists = userSignupDataAccessInterface.userExists(user);
+        boolean userPreExists = userSignupDataAccessInterface.userExists(newUsername);
         // CASE 1: New username already exists, we do not change data
         if (userPreExists){
             return "Username already exists. Please try again.";
@@ -43,25 +63,39 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
         } else{
             // Change username file using updateDatabase
             // Update Dayplan DB using updateDatabase
+            // BEFORE CALLING THIS.... csvpath MUST be set to userDB
+            HandleFile(newUsername, newPassword, newLocation);
+            // Change DB to be Dayplan Database
+            this.setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");
+            HandleFile(newUsername, newPassword, newLocation);
+            return "Info successfully changed.";
         }
     }
 
     /**
-     * Method
-     * @param password stores User's password, may be changed.
-     * @param location stores User's location, may be changed.
+     * Method that controls process of editing only a User's password and/or location.
+     * Writes to only UserDatabase.
+     * @param newPassword optional, replace with null if password is unchanged.
+     * @param newLocation optional, replace with null if location is unchanged.
      */
     @Override
-    public void editPasswordOrLocation(String password, ArrayList<Double> location) {
-
-    }
+    public String editPasswordOrLocation(String newPassword, String newLocation) {
+        UserSignupDataAccessInterface userSignupDataAccessInterface = new UserSignupDataAccessObject();
+            // Change username file using updateDatabase
+            // Update Dayplan DB using updateDatabase
+            // BEFORE CALLING THIS.... csvpath MUST be set to userDB
+        HandleFile(null, newPassword, newLocation);
+        return "Info successfully changed.";
+        }
 
     /**
-     * Method
-     * @param username
+     * Helper method that creates a temporary database and calls updateDatabse helper method
+     * Once done updating info, it replaces the old database with the updated temporary one.
+     * @param newUsername optional, replace with null if unchanged.
+     * @param newPassword optional, replace with null if unchanged.
+     * @param newLocation optional, replace with null if unchanged.
      */
-    // @Override
-    public void HandleFile(String username) {
+    public void HandleFile(String newUsername, String newPassword, String newLocation) {
         try {
             // Create new temporary database file
             File tempFile = new File("./src/main/resources/TempDatabase.csv");
@@ -71,7 +105,7 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
                 // For every line in old database, write to new database...
                 // UNLESS row[0] is username.
                 // In that case, edit info THEN write to new database.
-                this.updateDatabase(username, tempFile);
+                this.updateDatabase(newUsername, newPassword, newLocation, tempFile);
 
                 // Once done writing to temp file, delete old file...
                 // this.DeleteIfExists
@@ -117,60 +151,86 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
         return false;
     }
 
-    public void updateDatabase(String username, File tempFile){
+    /**
+     * Helper method that copies over existing database to a temporary one, rewriting info where necessary.
+     * Calls helper method rewriteRow to change specific lines.
+     * @param newUsername optional, replace with null if unchanged.
+     * @param newPassword optional, replace with null if unchanged.
+     * @param newLocation optional, replace with null if unchanged.
+     * @param tempFile optional, replace with null if unchanged.
+     */
+    public void updateDatabase(String newUsername, String newPassword, String newLocation, File tempFile){
         // For every line in old database, write to new database...
         // UNLESS row[0] is username.
         // In that case, edit info THEN write to new database.
+        String currUsername = this.getCurrUser().getUserName();
         try (FileWriter fw = new FileWriter(tempFile, true)) {
             // Writing header & switching to next line
             // Case 1: If csvpath is to UserDB:
+            if (this.getcsvPath().contains("UserDatabase")){
+                fw.write("userName,password,location\n");
+            }
                 // Write header as username, password, etc.
             // Case 2: If csvpath is to DayplanDB:
-                // Write header as username, location, etc.
-                // Switching to new line
-                fw.write("\n");
-                // Open BufferedReader, read each line, write it to fw
-                    // If row[0] == username:
-                    // Only write AFTER altering info.
-                // When line is null, close BufferedReader
-            // Close FileReader
+            else{
+                fw.write("userName,location,vibe,Dayplan\n");
+            }
+            try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
+                String line = br.readLine();
+                // Mutate line to refer to 2nd row... where actual values begin(skipping past row names)
+                line = br.readLine();
+                // While loop that keeps reading file until it's empty
+                while (line != null) {
+                    // Create an array of Strings that stores each value separated by comma as a new object in array
+                    String[] row = line.split(";");
+                    // Early return if the userID we put in is equal to the userID in the row
+                    if (currUsername.equals(row[0])){
+                        // Rewriting the row to have updated info
+                        line = rewriteRow(newUsername, newPassword, newLocation, row);
+                    }
+                    fw.write(line);
+                    line = br.readLine();
+                }
+            }
+            catch (IOException e){
+                throw new RuntimeException(e);
+            }
 
         }
         catch (IOException e){
             throw new RuntimeException(e);
         }
+    }
 
 
-
-
-        try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
-            String line = br.readLine();
-            // Mutate line to refer to 2nd row... where actual values begin(skipping past row names)
-            line = br.readLine();
-            // While loop that keeps reading file until it's empty
-            while (line != null) {
-                // Create an array of Strings that stores each value separated by comma as a new object in array
-                String[] row = line.split(value);
-                // Early return if the userID we put in is equal to the userID in the row
-                if (identifier.equals(row[0])){
-                    // Need to close the BufferedReader object
-                    // Normally, the "Try" block will do this for you, but not in case of early return
-                    br.close();
-                    // Do not save the user to database, return false
-                    return true;
-                }
-                line = br.readLine();
+    /**
+     * Helper method that given a row in a DB, rewrites the row in String form with the desired updated user info.
+     * Works differently depending on whether we write to UserDB or DayplanDB.
+     * @param newUsername optional, replace with null if unchanged.
+     * @param newPassword optional, replace with null if unchanged.
+     * @param newLocation optional, replace with null if unchanged.
+     * @param row a String[] from a previous database to alter.
+     * @return a String representation of the updated row, ready to write to the copy of the DB.
+     */
+    public String rewriteRow(String newUsername, String newPassword, String newLocation, String[] row){
+        if (this.getcsvPath().contains("UserDatabase")){
+            if (usernameChanged){
+                row[0] = newUsername;
+            }if (passwordChanged){
+                row[1] = newPassword;
+            }if (locationChanged){
+                row[2] = newLocation;
+            }
+        }else{  // Writing to Dayplan DB
+            if (usernameChanged){
+                row[0] = newUsername;
             }
         }
-
-        // "Catch" block is necessary with any try block
-        catch (IOException e){
-            throw new RuntimeException(e);
+        StringBuilder newRow = new StringBuilder();
+        for (int i = 0; i < row.length - 1; i++){
+            newRow.append(row[i]).append(";");
         }
-
-
-
-
+        return newRow + row[row.length - 1];
     }
 
 
