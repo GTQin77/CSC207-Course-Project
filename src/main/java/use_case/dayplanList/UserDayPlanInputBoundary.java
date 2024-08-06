@@ -1,5 +1,7 @@
 package use_case.dayplanList;
 
+import entity.Dayplan;
+
 public abstract interface UserDayPlanInputBoundary {
-    void execute(UserDayPlanInputData userDayPlanInputData);
+    Dayplan execute(UserDayPlanInputData userDayPlanInputData);
 }
