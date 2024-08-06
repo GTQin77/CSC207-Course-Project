@@ -32,7 +32,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final SignupController signupController;
 
     private final JButton signUp;
-    private final JButton cancel;
 
     public User getUser() {
         return user;
@@ -66,8 +65,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         JPanel buttons = new JPanel();
         signUp = new JButton(signupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
-        cancel = new JButton(signupViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -82,7 +79,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     }
                 }
         );
-        cancel.addActionListener(this);
 
         // This makes a new KeyListener implementing class, instantiates it, and
         // makes it listen to keystrokes in the usernameInputField.
