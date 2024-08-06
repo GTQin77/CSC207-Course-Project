@@ -1,16 +1,16 @@
 package use_case.previous_plan;
 
-import entity.Dayplan;
+import entity.PreviousPlan;
 
 public class PreviousPlanOutputData {
 
-    private final Dayplan dayplan;
+    private final PreviousPlan previousPlan;
 
-    public PreviousPlanOutputData(Dayplan dayplan) {
-        this.dayplan = dayplan;
+    public PreviousPlanOutputData(PreviousPlan previousPlan) {
+        this.previousPlan = previousPlan;
     }
 
-    public Dayplan getPreviousPlan() {
-        return this.dayplan;
+    public PreviousPlan getPreviousPlan() {
+        return this.previousPlan;
     }
 }

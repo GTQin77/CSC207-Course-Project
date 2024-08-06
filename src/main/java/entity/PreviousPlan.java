@@ -12,4 +12,8 @@ public class PreviousPlan {
     public void addBusiness(PreviousBusiness previousBusiness) {
         this.businesses.add(previousBusiness);
     }
+
+    public PreviousBusiness getBusinesses(int index) {
+        return this.businesses.get(index);
+    }
 }
