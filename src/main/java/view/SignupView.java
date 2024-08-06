@@ -76,10 +76,15 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
-                            signupController.execute(usernameInputField.getText(),
-                                    String.valueOf(passwordInputField.getPassword()),
-                                    String.valueOf(repeatPasswordInputField.getPassword()),
-                                    locationInputField.getText());
+                            try {
+                                signupController.execute(usernameInputField.getText(),
+                                        String.valueOf(passwordInputField.getPassword()),
+                                        String.valueOf(repeatPasswordInputField.getPassword()),
+                                        locationInputField.getText());
+                                JOptionPane.showMessageDialog(SignupView.this, "%s created.".formatted(usernameInputField.getText()));
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(SignupView.this, e.getMessage());
+                            }
                         }
                     }
                 }

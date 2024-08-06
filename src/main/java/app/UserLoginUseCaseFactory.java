@@ -3,6 +3,7 @@ package app;
 import data_access.UserLoginDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
+import interface_adapter.DayplanInput.DayplanInputViewModel;
 import interface_adapter.Login.*;
 import use_case.user_login.UserLoginInputBoundary;
 import use_case.user_login.UserLoginInteractor;
@@ -23,10 +24,10 @@ public class UserLoginUseCaseFactory {
     /** Prevent instantiation. */
     private UserLoginUseCaseFactory() {}
 
-    public static LoginView create(LoginViewManagerModel viewManagerModel, LoginViewModel loginViewModel) {
+    public static LoginView create(LoginViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel) {
 
         try {
-            LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel);
+            LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, dayplanInputViewModel);
             return new LoginView(loginViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -35,11 +36,11 @@ public class UserLoginUseCaseFactory {
         return null;
     }
 
-    private static LoginController createUserLoginUseCase(LoginViewManagerModel viewManagerModel, LoginViewModel loginViewModel) throws IOException {
+    private static LoginController createUserLoginUseCase(LoginViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel) throws IOException {
         UserLoginDataAccessObject userDataAccessObject = new UserLoginDataAccessObject();
         userDataAccessObject.setcsvFileandPath("./src/main/resources/UserDatabase.csv");
 
-        UserLoginOutputBoundary loginOutputBoundary = new UserLoginPresenter(viewManagerModel, loginViewModel);
+        UserLoginOutputBoundary loginOutputBoundary = new UserLoginPresenter(viewManagerModel, loginViewModel, dayplanInputViewModel);
 
         UserFactory userFactory = new CommonUserFactory();
 
