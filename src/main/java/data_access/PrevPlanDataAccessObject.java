@@ -26,9 +26,10 @@ public class PrevPlanDataAccessObject {
 
     public User getUser(){return this.user;}
 
-    public void getPreviousDayplan(User user) {
+    public String getPreviousDayplan(User user) {
         String separator = ",";
         String userName = user.getUserName();
+        String prevDayplan = "";
 
         try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
             String line = br.readLine();
@@ -41,11 +42,13 @@ public class PrevPlanDataAccessObject {
                 if (userName.equals(values[0])) {
                     String value = values[3];
                     System.out.println(value);
+                    prevDayplan = value;
                 }
             }
         } catch (IOException ioException) {
             System.out.println("File not found");
         }
+        return prevDayplan;
     }
 
     public static void main(String[] args) {
@@ -55,6 +58,6 @@ public class PrevPlanDataAccessObject {
         User user = new User("amelia", "hello",location);
         PrevPlanDataAccessObject prevPlanDataAccessObject = new PrevPlanDataAccessObject();
         prevPlanDataAccessObject.setcsvPathAndcsvFile("src/main/resources/DayplanDatabase.csv");
-        prevPlanDataAccessObject.getPreviousDayplan(user);
+        System.out.println(prevPlanDataAccessObject.getPreviousDayplan(user));
     }
 }

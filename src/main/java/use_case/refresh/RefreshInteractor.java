@@ -4,15 +4,15 @@ import data_access.DayPlanDataAccessInterface;
 import entity.DayplanFactory;
 import entity.Dayplan;
 import entity.Business;
-import entity.refreshBusinessFactory;
+import entity.RefreshBusinessFactory;
 
 public class RefreshInteractor implements RefreshInputBoundary{
     final DayPlanDataAccessInterface dayPlanDataAccessObject;
     final RefreshOutputBoundary refreshPresenter;
     final DayplanFactory dayplanFactory;
-    final refreshBusinessFactory refreshBusinessFactory;
+    final RefreshBusinessFactory refreshBusinessFactory;
 
-    public RefreshInteractor(DayPlanDataAccessInterface dayPlanDataAccessObject, RefreshOutputBoundary refreshPresenter, DayplanFactory dayplanFactory, refreshBusinessFactory businessFactory) {
+    public RefreshInteractor(DayPlanDataAccessInterface dayPlanDataAccessObject, RefreshOutputBoundary refreshPresenter, DayplanFactory dayplanFactory, RefreshBusinessFactory businessFactory) {
         this.dayPlanDataAccessObject = dayPlanDataAccessObject;
         this.refreshPresenter = refreshPresenter;
         this.dayplanFactory = dayplanFactory;
@@ -38,7 +38,7 @@ public class RefreshInteractor implements RefreshInputBoundary{
     private void refreshOneBusiness(Dayplan dayplan, Integer refreshIndex) {
         Business prevBusiness = dayplan.getPlan().get(refreshIndex);
         String type = prevBusiness.getType();
-        Business newBusiness = refreshBusinessFactory.generateNewBusiness(dayplan, type);
+        Business newBusiness = RefreshBusinessFactory.generateNewBusiness(dayplan, type);
         dayplan.replaceBusiness(refreshIndex, newBusiness);
     }
 
