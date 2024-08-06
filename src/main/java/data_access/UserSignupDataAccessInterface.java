@@ -4,6 +4,6 @@ import entity.User;
 
 public interface UserSignupDataAccessInterface {
 
-    boolean userExists(User user);
+    boolean userExists(String username);
     void saveUser(User user);
 }

@@ -45,7 +45,7 @@ public class UserSignupInteractor implements UserSignupInputBoundary {
         // 2. Create new User object using UserFactory
         User user = this.userFactory.create(input.getUsername(), input.getPassword(), location);
         // 3. Write new User to the DAO
-        if (this.userDataAccessObject.userExists(user)){
+        if (this.userDataAccessObject.userExists(user.getUserName())){
             // NOTE TO SELF: CHANGE DAO implementation to only take username!!!
             // So that we avoid having to create a new User object until else block
             userPresenter.prepareFailView("Oops! This username already exists.");
