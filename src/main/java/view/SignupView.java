@@ -74,7 +74,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                             signupController.execute(usernameInputField.getText(),
                                     String.valueOf(passwordInputField.getPassword()),
                                     String.valueOf(repeatPasswordInputField.getPassword()),
-                                    String.valueOf(locationInputField.getLocation()));
+                                    locationInputField.getText());
                         }
                     }
                 }
