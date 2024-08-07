@@ -1,6 +1,7 @@
 package interface_adapter.Login;
 
 import entity.User;
+import services.UserService;
 import use_case.user_login.UserLoginInputBoundary;
 import use_case.user_login.UserLoginInputData;
 
@@ -17,15 +18,7 @@ import use_case.user_login.UserLoginInputData;
 
 public class LoginController {
     final UserLoginInputBoundary userLoginInteractor;
-    private User user;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+    private UserService userService;
 
     /**
      * Constructs a LoginController with the specified user login interactor.
@@ -33,8 +26,9 @@ public class LoginController {
      * @param userLoginInteractor The interactor to handle user login logic.
      */
 
-    public LoginController(UserLoginInputBoundary userLoginInteractor) {
+    public LoginController(UserLoginInputBoundary userLoginInteractor, UserService userService) {
         this.userLoginInteractor = userLoginInteractor;
+        this.userService = userService;
     }
     /**
      * Executes the login process with the provided username and password.
@@ -46,6 +40,6 @@ public class LoginController {
     public void execute(String username, String password) {
         UserLoginInputData loginInputData = new UserLoginInputData(username, password);
         User user = userLoginInteractor.loginUser(loginInputData);
-        this.setUser(user);
+        this.userService.setCurrentUser(user);
     }
 }

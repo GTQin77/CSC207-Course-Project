@@ -7,6 +7,7 @@ import interface_adapter.DayplanInput.DayplanInputViewModel;
 import interface_adapter.Login.*;
 import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import services.UserService;
 import use_case.user_login.UserLoginInputBoundary;
 import use_case.user_login.UserLoginInteractor;
 import use_case.user_login.UserLoginOutputBoundary;
@@ -26,10 +27,10 @@ public class UserLoginUseCaseFactory {
     /** Prevent instantiation. */
     private UserLoginUseCaseFactory() {}
 
-    public static LoginView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel, SignupViewModel signupViewModel) {
+    public static LoginView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel, SignupViewModel signupViewModel, UserService userService) {
 
         try {
-            LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, dayplanInputViewModel);
+            LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, dayplanInputViewModel, userService);
             return new LoginView(loginViewModel, viewManagerModel, signupViewModel, loginController, dayplanInputViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -38,7 +39,7 @@ public class UserLoginUseCaseFactory {
         return null;
     }
 
-    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel) throws IOException {
+    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel, UserService userService) throws IOException {
         UserLoginDataAccessObject userDataAccessObject = new UserLoginDataAccessObject();
         userDataAccessObject.setcsvFileandPath("./src/main/resources/UserDatabase.csv");
 
@@ -49,7 +50,7 @@ public class UserLoginUseCaseFactory {
         UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(
                 userDataAccessObject, loginOutputBoundary, userFactory);
 
-        return new LoginController(userLoginInteractor);
+        return new LoginController(userLoginInteractor, userService);
     }
 
 }

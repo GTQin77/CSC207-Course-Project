@@ -5,6 +5,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.Welcome.WelcomeViewManagerModel;
 import interface_adapter.Welcome.WelcomeViewModel;
+import services.UserService;
 import view.*;
 
 
@@ -38,10 +39,12 @@ public class Main {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
 
-        SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, welcomeViewModel);
+        UserService userService = new UserService();
+
+        SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, welcomeViewModel, userService);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = UserLoginUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel, signupViewModel);
+        LoginView loginView = UserLoginUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel, signupViewModel, userService);
         views.add(loginView, loginView.viewName);
 
 //        DayplanInputView dayplanInputView =
