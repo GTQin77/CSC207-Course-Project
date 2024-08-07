@@ -1,9 +1,11 @@
 package use_case.edit_info;
 
 import data_access.EditInfoDataAccessInterface;
-import data_access.UserSignupDataAccessInterface;
+import data_access.EditInfoDataAccessObject;
+
 import entity.User;
 import entity.UserFactory;
+import services.UserService;
 import use_case.edit_info.EditInfoOutputBoundary;
 import use_case.user_signup.UserSignupInputData;
 import use_case.user_signup.UserSignupOutputBoundary;
@@ -37,7 +39,10 @@ public class EditInfoInteractor implements EditInfoInputBoundary{
      * @param input raw input data that contains whatever the user wants to change(eg. new password, new username, etc.)
      * @return a User object with updated username, password, etc.
      */
-    public User execute(EditInfoInputData input){
+    public User execute(EditInfoInputData input, UserService userService){
+
+        handleDAO(input, userService);
+
         if (input.getUserName().isEmpty() && input.getLocation().isEmpty() && input.getPassword().isEmpty()) { // just return current this.user
             EditInfoOutputData editInfoOutputData = new EditInfoOutputData(user, "No changes made. Continue program.", false);
             editInfoPresenter.prepareSuccessView(editInfoOutputData);
@@ -107,6 +112,15 @@ public class EditInfoInteractor implements EditInfoInputBoundary{
             doubLocation.add(Double.valueOf(s));
         }
         return doubLocation;
+    }
+
+    /**
+     * Helper method that gives DAO the necessary input info to set attributes.
+     * @param input contains an input object that contains updated username, password, location
+     * @param userService contains old User object that we need to compare new input to.
+     */
+    private void handleDAO(EditInfoInputData input, UserService userService){
+        editInfoDAO.setCurrUserAndChanges(userService.getCurrentUser(), input.getUserName(), input.getPassword(), input.getLocation());
     }
 
 }
