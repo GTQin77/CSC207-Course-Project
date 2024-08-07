@@ -44,6 +44,8 @@ public class Main {
         LoginView loginView = UserLoginUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel, signupViewModel);
         views.add(loginView, loginView.viewName);
 
+//        DayplanInputView dayplanInputView =
+
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 

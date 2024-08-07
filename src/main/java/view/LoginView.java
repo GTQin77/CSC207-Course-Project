@@ -74,7 +74,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         signUp = new JButton(loginViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
 
-//        logIn.addActionListener(this);
         logIn.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -121,10 +120,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
      */
     @Override
     public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource().equals(logIn)) {
-            this.viewManagerModel.setActiveView(dayplanInputViewModel.getViewName());
-            this.viewManagerModel.firePropertyChanged();
-        } else if (evt.getSource().equals(signUp)) {
+        if (evt.getSource().equals(signUp)) {
             this.viewManagerModel.setActiveView(signupViewModel.getViewName());
             this.viewManagerModel.firePropertyChanged();
         }
