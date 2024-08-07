@@ -8,7 +8,6 @@ import interface_adapter.Login.LoginState;
 import interface_adapter.Login.LoginViewModel;
 import interface_adapter.Login.UserLoginPresenter;
 import interface_adapter.ViewManagerModel;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -96,8 +95,8 @@ class UserLoginInteractorTest {
 
         LoginState loginState = loginViewModel.getState();
         assertFalse(loginState.loginSuccessful());
-        assertNotNull(loginState.getPasswordError());
-        assertEquals("Invalid password.", loginState.getPasswordError());
+        assertNotNull(loginState.getErrorMessage());
+        assertEquals("Incorrect username or password!", loginState.getErrorMessage());
     }
 
     @Test
@@ -116,7 +115,7 @@ class UserLoginInteractorTest {
 
         LoginState loginState = loginViewModel.getState();
         assertFalse(loginState.loginSuccessful());
-        assertNotNull(loginState.getUsernameError());
-        assertEquals("Incorrect username.", loginState.getUsernameError());
+        assertNotNull(loginState.getErrorMessage());
+        assertEquals("Incorrect username or password!", loginState.getErrorMessage());
     }
 }
