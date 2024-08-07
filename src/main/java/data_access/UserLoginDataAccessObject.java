@@ -40,7 +40,7 @@ public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
      */
     @Override
     public boolean findUser(String username, String password) {
-        String value = ",";
+        String value = ";";
 
         try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
             String line = br.readLine();

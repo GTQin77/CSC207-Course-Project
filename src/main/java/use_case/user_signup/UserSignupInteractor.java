@@ -33,10 +33,11 @@ public class UserSignupInteractor implements UserSignupInputBoundary {
 
     /**
      * Interactor method that creates a User, writes to DB, and controls Presenter.
+     *
      * @param input UserDayPlanInputData.
      */
     @Override
-    public User execute(UserSignupInputData input) {
+    public void execute(UserSignupInputData input) {
         // 1. Process InputData into correct data types
         ArrayList<Double> location = new ArrayList<Double>();
         for (int i = 0; i < input.getLocation().size(); i++){
@@ -49,16 +50,16 @@ public class UserSignupInteractor implements UserSignupInputBoundary {
             // NOTE TO SELF: CHANGE DAO implementation to only take username!!!
             // So that we avoid having to create a new User object until else block
             userPresenter.prepareFailView("Oops! This username already exists.");
-            return null;
+//            return null;
         } else if (!input.getPassword().equals(input.getRepeatPassword())){
             userPresenter.prepareFailView("Passwords don't match.");
-            return null;
+//            return null;
         } else {
             LocalDateTime now = LocalDateTime.now();
             this.userDataAccessObject.saveUser(user);
             UserSignupOutputData signupOutputData = new UserSignupOutputData(user, now.toString(), false);
-            userPresenter.prepareSuccessView(signupOutputData);
-            return user;
+            userPresenter.prepareSuccessView(signupOutputData, "%s created.".formatted(input.getUsername()));
+//            return user;
         }
     }
 }

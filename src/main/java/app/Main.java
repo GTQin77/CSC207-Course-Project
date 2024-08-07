@@ -1,6 +1,7 @@
 package app;
 
-import interface_adapter.Login.LoginViewManagerModel;
+import interface_adapter.DayplanInput.DayplanInputViewModel;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.Welcome.WelcomeViewManagerModel;
 import interface_adapter.Welcome.WelcomeViewModel;
@@ -8,8 +9,6 @@ import view.*;
 
 
 import interface_adapter.Login.LoginViewModel;
-import interface_adapter.Signup.SignupViewModel;
-import interface_adapter.Signup.SignupViewManagerModel;
 import view.SignupView;
 
 import javax.swing.*;
@@ -31,36 +30,61 @@ public class Main {
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
-        // This keeps track of and manages which view is currently showing.
-        WelcomeViewManagerModel welcomeViewManagerModel = new WelcomeViewManagerModel();
-        new ViewManager(views, cardLayout, welcomeViewManagerModel);
-
-        // The data for the views, such as username and password, are in the ViewModels.
-        // This information will be changed by a presenter object that is reporting the
-        // results from the use case. The ViewModels are observable, and will
-        // be observed by the Views.
-        WelcomeViewModel welcomeViewModel = new WelcomeViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
+        WelcomeViewModel welcomeViewModel = new WelcomeViewModel();
+        DayplanInputViewModel dayplanInputViewModel = new DayplanInputViewModel();
 
-        SignupViewManagerModel signupViewManagerModel = new SignupViewManagerModel();
-        LoginViewManagerModel loginViewManagerModel = new LoginViewManagerModel();
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        new ViewManager(views, cardLayout, viewManagerModel);
 
-
-        WelcomeView welcomeView = new WelcomeView(welcomeViewModel, loginViewModel, signupViewModel, welcomeViewManagerModel);
-        views.add(welcomeView, welcomeView.viewName);
-
-
-        SignupView signupView = UserSignupUseCaseFactory.create(signupViewManagerModel, loginViewModel, signupViewModel, welcomeViewModel);
+        SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, welcomeViewModel);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = new LoginView(loginViewModel);
+        LoginView loginView = UserLoginUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel, signupViewModel);
         views.add(loginView, loginView.viewName);
 
-        welcomeViewManagerModel.setActiveView(welcomeView.viewName);
-        welcomeViewManagerModel.firePropertyChanged();
+        viewManagerModel.setActiveView(loginView.viewName);
+        viewManagerModel.firePropertyChanged();
 
         application.pack();
         application.setVisible(true);
+
+
+
+//        // This keeps track of and manages which view is currently showing.
+//        WelcomeViewManagerModel welcomeViewManagerModel = new WelcomeViewManagerModel();
+//        new ViewManager(views, cardLayout, welcomeViewManagerModel);
+//
+//        // The data for the views, such as username and password, are in the ViewModels.
+//        // This information will be changed by a presenter object that is reporting the
+//        // results from the use case. The ViewModels are observable, and will
+//        // be observed by the Views.
+//        WelcomeViewModel welcomeViewModel = new WelcomeViewModel();
+//        LoginViewModel loginViewModel = new LoginViewModel();
+//        SignupViewModel signupViewModel = new SignupViewModel();
+//
+//        interface_adapter.ViewManagerModel viewManagerModel = new interface_adapter.ViewManagerModel();
+//        ViewManagerModel loginViewManagerModel = new ViewManagerModel();
+//
+//
+//        WelcomeView welcomeView = new WelcomeView(welcomeViewModel, loginViewModel, signupViewModel, welcomeViewManagerModel);
+//        views.add(welcomeView, welcomeView.viewName);
+//
+//
+//        SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, welcomeViewModel);
+//        views.add(signupView, signupView.viewName);
+//
+//        LoginView loginView = new LoginView(loginViewModel);
+//        views.add(loginView, loginView.viewName);
+//
+//        welcomeViewManagerModel.setActiveView(welcomeView.viewName);
+//        welcomeViewManagerModel.firePropertyChanged();
+//
+//        viewManagerModel.setActiveView(signupView.viewName);
+//        viewManagerModel.firePropertyChanged();
+//
+//        application.pack();
+//        application.setVisible(true);
     }
 }

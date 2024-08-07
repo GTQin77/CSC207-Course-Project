@@ -5,6 +5,8 @@ import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.DayplanInput.DayplanInputViewModel;
 import interface_adapter.Login.*;
+import interface_adapter.Signup.SignupViewModel;
+import interface_adapter.ViewManagerModel;
 import use_case.user_login.UserLoginInputBoundary;
 import use_case.user_login.UserLoginInteractor;
 import use_case.user_login.UserLoginOutputBoundary;
@@ -24,11 +26,11 @@ public class UserLoginUseCaseFactory {
     /** Prevent instantiation. */
     private UserLoginUseCaseFactory() {}
 
-    public static LoginView create(LoginViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel) {
+    public static LoginView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel, SignupViewModel signupViewModel) {
 
         try {
             LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, dayplanInputViewModel);
-            return new LoginView(loginViewModel);
+            return new LoginView(loginViewModel, viewManagerModel, signupViewModel, loginController, dayplanInputViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
@@ -36,7 +38,7 @@ public class UserLoginUseCaseFactory {
         return null;
     }
 
-    private static LoginController createUserLoginUseCase(LoginViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel) throws IOException {
+    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel) throws IOException {
         UserLoginDataAccessObject userDataAccessObject = new UserLoginDataAccessObject();
         userDataAccessObject.setcsvFileandPath("./src/main/resources/UserDatabase.csv");
 

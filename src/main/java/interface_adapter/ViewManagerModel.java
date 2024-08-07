@@ -1,17 +1,16 @@
-package interface_adapter.DayplanInput;
-
+package interface_adapter;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * DayplanViewManagerModel for the Signup use case.
+ * SignupViewManagerModel for the Signup use case.
  * <p>
  * This implementation referenced the Pualgries' Clean Architecture code for SignupViewManagerModel on
  * <a href="https://github.com/paulgries/LoginCleanArchitecture">github.com</a>.
  * </p>
  */
-public class DayplanInputViewManagerModel {
+public class ViewManagerModel {
 
     private String activeViewName;
 
@@ -22,7 +21,10 @@ public class DayplanInputViewManagerModel {
     }
 
     public void setActiveView(String activeView) {
+        String oldView = this.activeViewName;
         this.activeViewName = activeView;
+        support.firePropertyChange("view", oldView, activeView);
+
     }
 
     // This is what the Signup Presenter will call to let the ViewModel know

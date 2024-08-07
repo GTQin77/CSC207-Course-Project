@@ -38,7 +38,7 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
     @Override
     public boolean userExists(User user) {
         // Create variable used to track where to split values in single line
-        String value = ",";
+        String value = ";";
         // Access user.userID attribute
         String identifier = user.getUserName();
 

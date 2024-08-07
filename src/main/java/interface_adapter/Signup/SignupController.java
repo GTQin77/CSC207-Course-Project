@@ -17,12 +17,12 @@ import java.util.Objects;
  */
 public class SignupController {
 
-    private User user;
+//    private User user;
     private ArrayList<String> location;
 
-    public User getUser() {return user;}
-
-    public void setUser(User user) {this.user = user;}
+//    public User getUser() {return user;}
+//
+//    public void setUser(User user) {this.user = user;}
 
     public ArrayList<String> getLocation() {return location;}
     public void setLocation(ArrayList<String> location) {this.location = location;}
@@ -37,16 +37,17 @@ public class SignupController {
      * @param username from input
      * @param password1 from input
      * @param password2 from input, repeated password
+     * @param location Location of the user, if not input, default to Bahen.
      */
     public void execute(String username, String password1, String password2, String location) {
         if (Objects.equals(location, "")) {
-            location = "0;0";
+            location = "43.6598, 79.3973";
         }
         UserSignupInputData signupInputData = new UserSignupInputData(
                 username, password1, password2, location);
 
-        User user = userSignupInteractor.execute(signupInputData);
+        userSignupInteractor.execute(signupInputData);
 
-        this.setUser(user);
+//        this.setUser(user);
     }
 }
