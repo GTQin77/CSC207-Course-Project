@@ -15,17 +15,11 @@ import java.util.stream.Collectors;
 public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
     private File csvFile;
     private String csvPath;
-    private final User currUser;
-    private final boolean usernameChanged;
-    private final boolean passwordChanged;
-    private final boolean locationChanged;
+    private User currUser;
+    private boolean usernameChanged;
+    private boolean passwordChanged;
+    private boolean locationChanged;
 
-    public EditInfoDataAccessObject(User user, String newUsername, String newPassword, String newLocation){
-        this.currUser = user;
-        this.usernameChanged = user.getUserName().equals(newUsername);
-        this.passwordChanged = user.getPassword().equals(newPassword);
-        this.locationChanged = user.getLocation().equals(processLocation(newLocation));
-    }
 
     public ArrayList<Double> processLocation(String newLocation){
         ArrayList<Double> newDoubLocation = new ArrayList<Double>();
@@ -34,6 +28,13 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
             newDoubLocation.add(Double.parseDouble(newStrLocation[i]));
         }
         return newDoubLocation;
+    }
+
+    public void setCurrUserAndChanges(User user, String newUsername, String newPassword, String newLocation){
+        this.currUser = user;
+        this.usernameChanged = user.getUserName().equals(newUsername);
+        this.passwordChanged = user.getPassword().equals(newPassword);
+        this.locationChanged = user.getLocation().equals(processLocation(newLocation));
     }
 
     public File getcsvFile(){return this.csvFile;}

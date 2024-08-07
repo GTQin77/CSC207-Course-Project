@@ -3,7 +3,6 @@ package interface_adapter.EditInfo;
 import interface_adapter.Login.LoginState;
 import interface_adapter.Login.LoginViewModel;
 import interface_adapter.Signup.SignupState;
-import interface_adapter.Signup.SignupViewManagerModel;
 import interface_adapter.Signup.SignupViewModel;
 import use_case.edit_info.EditInfoOutputBoundary;
 import use_case.edit_info.EditInfoOutputData;
