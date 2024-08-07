@@ -59,13 +59,7 @@ public class UserLoginPresenter implements UserLoginOutputBoundary {
     public void prepareFailView(String error) {
         LoginState loginState = loginViewModel.getState();
         loginState.setLoginSuccessful(false);
-
-        if (error.contains("username")) {
-            loginState.setUsernameError("Incorrect username.");
-        } else if (error.contains("password")) {
-            loginState.setPasswordError("Incorrect password.");
-        }
-
+        loginState.setErrorMessage(error);
         loginViewModel.setState(loginState);
         loginViewModel.firePropertyChanged();
     }
