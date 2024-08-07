@@ -47,49 +47,11 @@ public class Main {
         LoginView loginView = UserLoginUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel, signupViewModel, userService);
         views.add(loginView, loginView.viewName);
 
-//        DayplanInputView dayplanInputView =
-
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
         application.setVisible(true);
 
-
-
-//        // This keeps track of and manages which view is currently showing.
-//        WelcomeViewManagerModel welcomeViewManagerModel = new WelcomeViewManagerModel();
-//        new ViewManager(views, cardLayout, welcomeViewManagerModel);
-//
-//        // The data for the views, such as username and password, are in the ViewModels.
-//        // This information will be changed by a presenter object that is reporting the
-//        // results from the use case. The ViewModels are observable, and will
-//        // be observed by the Views.
-//        WelcomeViewModel welcomeViewModel = new WelcomeViewModel();
-//        LoginViewModel loginViewModel = new LoginViewModel();
-//        SignupViewModel signupViewModel = new SignupViewModel();
-//
-//        interface_adapter.ViewManagerModel viewManagerModel = new interface_adapter.ViewManagerModel();
-//        ViewManagerModel loginViewManagerModel = new ViewManagerModel();
-//
-//
-//        WelcomeView welcomeView = new WelcomeView(welcomeViewModel, loginViewModel, signupViewModel, welcomeViewManagerModel);
-//        views.add(welcomeView, welcomeView.viewName);
-//
-//
-//        SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, welcomeViewModel);
-//        views.add(signupView, signupView.viewName);
-//
-//        LoginView loginView = new LoginView(loginViewModel);
-//        views.add(loginView, loginView.viewName);
-//
-//        welcomeViewManagerModel.setActiveView(welcomeView.viewName);
-//        welcomeViewManagerModel.firePropertyChanged();
-//
-//        viewManagerModel.setActiveView(signupView.viewName);
-//        viewManagerModel.firePropertyChanged();
-//
-//        application.pack();
-//        application.setVisible(true);
     }
 }
