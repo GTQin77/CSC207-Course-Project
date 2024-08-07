@@ -92,7 +92,7 @@ public class EditInfoInteractor {
         if (input.getUserName().isEmpty()){this.setNewUsername(user.getUserName());}    // setting current username to old username
         if (input.getPassword().isEmpty()){this.setNewPassword(user.getPassword());}
         if (input.getRepeatPassword().isEmpty()){this.setNewPassword(user.getPassword());}
-
+        // REMOVE SPACING IN LOCATION COMMAS!!!!!
 
 
     }
