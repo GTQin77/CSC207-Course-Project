@@ -12,7 +12,7 @@ import use_case.user_signup.UserSignupOutputData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditInfoInteractor {
+public class EditInfoInteractor implements EditInfoInputBoundary{
     final EditInfoDataAccessInterface editInfoDAO;
     final EditInfoOutputBoundary editInfoPresenter;
     final UserFactory userFactory;
