@@ -63,7 +63,12 @@ public class LoginState {
     public void setLoginSuccessful(boolean loginSuccessful) {
         this.loginSuccessful = loginSuccessful;
     }
+
     public void setLoginTime(String loginTime) {
         this.loginTime = loginTime;
     }
+
+    public String getLoginTime() { return loginTime; }
+
+    public boolean loginSuccessful() { return loginSuccessful; }
 }
