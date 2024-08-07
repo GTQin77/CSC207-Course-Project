@@ -9,5 +9,5 @@ public interface EditInfoOutputBoundary {
      * */
     void prepareSuccessView(EditInfoOutputData outputData);
 
-    void prepareFailView();
+    void prepareFailView(String errorMessage);
 }
