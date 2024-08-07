@@ -53,12 +53,12 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
      * @param newLocation optional, replace with null if location is unchanged.
      */
     @Override
-    public String editUsername(String newUsername, String newPassword, String newLocation) {
+    public boolean editUsername(String newUsername, String newPassword, String newLocation) {
         UserSignupDataAccessInterface userSignupDataAccessInterface = new UserSignupDataAccessObject();
         boolean userPreExists = userSignupDataAccessInterface.userExists(newUsername);
         // CASE 1: New username already exists, we do not change data
         if (userPreExists){
-            return "Username already exists. Please try again.";
+            return false;
         // CASE 2: New username is valid, change data
         } else{
             // Change username file using updateDatabase
@@ -68,7 +68,7 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
             // Change DB to be Dayplan Database
             this.setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");
             HandleFile(newUsername, newPassword, newLocation);
-            return "Info successfully changed.";
+            return true;
         }
     }
 
@@ -79,13 +79,12 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
      * @param newLocation optional, replace with null if location is unchanged.
      */
     @Override
-    public String editPasswordOrLocation(String newPassword, String newLocation) {
+    public void editPasswordOrLocation(String newPassword, String newLocation) {
         UserSignupDataAccessInterface userSignupDataAccessInterface = new UserSignupDataAccessObject();
             // Change username file using updateDatabase
             // Update Dayplan DB using updateDatabase
             // BEFORE CALLING THIS.... csvpath MUST be set to userDB
         HandleFile(null, newPassword, newLocation);
-        return "Info successfully changed.";
         }
 
     /**
