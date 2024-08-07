@@ -1,27 +1,29 @@
 package use_case.edit_info;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import entity.User;
 
 public class EditInfoInputData {
-    private String userName;
-    private String password;
-    private String repeatPassword;
-    private ArrayList<String> location;
 
-    public EditInfoInputData(String userName, String password, String repeatPass,
-                             String location) {
-        this.userName = userName;
-        this.password = password;
-        this.repeatPassword = repeatPass;
-        this.location = new ArrayList<String>((List.of(location.split(","))));
+    private final User user;
+    private final ArrayList<String> stringLocation = new ArrayList<>(2);
+
+    public EditInfoInputData(User user) {
+        this.user = user;
     }
 
-    public String getUserName() {return this.userName;}
+    public String getUserName() {return this.user.getUserName();}
 
-    public String getPassword() {return this.password;}
+    public String getPassword() {return this.user.getPassword();}
 
-    public String getRepeatPassword() {return this.repeatPassword;}
+    public ArrayList<String> getLocation() {
 
-    public ArrayList<String> getLocation() {return this.location;}
+        ArrayList<Double> doubleLocation = this.user.getLocation();
+        for (Double location : doubleLocation) {
+            this.stringLocation.add(location.toString());
+        }
+        return stringLocation;
+    }
 }
