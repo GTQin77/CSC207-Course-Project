@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 class PrevPlanDataAccessObjectTest {
 
-    PrevPlanDataAccessObject prevPlanDataAccessObjectTest
+    PrevPlanDataAccessObject prevPlanDataAccessObjectTest;
 
     @BeforeEach
     void setUp() {

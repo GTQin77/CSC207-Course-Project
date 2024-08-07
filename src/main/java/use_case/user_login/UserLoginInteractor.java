@@ -41,14 +41,8 @@ public class UserLoginInteractor implements UserLoginInputBoundary {
     @Override
     public User loginUser(UserLoginInputData userLoginInputData) {
         boolean userExists = userDataAccessInterface.findUser(userLoginInputData.getUsername(), userLoginInputData.getPassword());
-        boolean usernameExists = userDataAccessInterface.findUser(userLoginInputData.getUsername(), userLoginInputData.getPassword());
-
-        if (userExists) {
-            if (usernameExists) {
-                userPresenter.prepareFailView("Invalid password.");
-            } else {
-                userPresenter.prepareFailView("Incorrect username.");
-            }
+        if (!userExists) {
+            userPresenter.prepareFailView("Incorrect username or password!");
             return null;
         }
         User user = userDataAccessInterface.getUser(userLoginInputData.getUsername(), userLoginInputData.getPassword());
