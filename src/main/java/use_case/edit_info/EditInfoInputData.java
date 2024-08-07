@@ -12,7 +12,6 @@ public class EditInfoInputData {
     private final String repeatPassword;
     private final String location;
     private final User user;
-    private final ArrayList<String> stringLocation = new ArrayList<>(2);
 
     public EditInfoInputData(String userName, String password, String repeatPassword,
                              String location, User user) {
