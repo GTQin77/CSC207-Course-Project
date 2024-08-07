@@ -4,6 +4,7 @@ import interface_adapter.Login.LoginState;
 import interface_adapter.Login.LoginViewModel;
 import interface_adapter.Signup.SignupState;
 import interface_adapter.Signup.SignupViewModel;
+import interface_adapter.ViewManagerModel;
 import use_case.edit_info.EditInfoOutputBoundary;
 import use_case.edit_info.EditInfoOutputData;
 import java.time.LocalDateTime;
@@ -12,12 +13,12 @@ import java.time.format.DateTimeFormatter;
 
 public class EditInfoPresenter implements EditInfoOutputBoundary {
     private final EditInfoViewModel editInfoViewModel;
-    private EditInfoViewManagerModel editInfoViewManagerModel;
+    private ViewManagerModel viewManagerModel;
 
-    public EditInfoPresenter(EditInfoViewManagerModel viewManagerModel,
+    public EditInfoPresenter(ViewManagerModel viewManagerModel,
                            EditInfoViewModel editInfoViewModel) {
         this.editInfoViewModel = editInfoViewModel;
-        this.editInfoViewManagerModel = viewManagerModel;
+        this.viewManagerModel = viewManagerModel;
     }
 
 
@@ -28,8 +29,8 @@ public class EditInfoPresenter implements EditInfoOutputBoundary {
         editInfoState.setUsername(output.getUser().getUserName());
         this.editInfoViewModel.setState(editInfoState);
         editInfoViewModel.firePropertyChanged();
-        editInfoViewManagerModel.setActiveView(editInfoViewModel.getViewName());
-        editInfoViewManagerModel.firePropertyChanged();
+        viewManagerModel.setActiveView(editInfoViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     @Override
