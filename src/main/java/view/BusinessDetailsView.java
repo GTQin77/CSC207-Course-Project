@@ -1,6 +1,11 @@
 package view;
 
+import entity.Business;
+import interface_adapter.BusinessDetails.BusinessDetailsPresenter;
 import interface_adapter.BusinessDetails.BusinessDetailsViewModel;
+
+import javax.swing.*;
+import java.awt.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +20,10 @@ public class BusinessDetailsView extends JPanel implements BusinessDetailsViewIn
     private JLabel typeLabel;
     private JButton returnButton;
     private JButton editUserButton;
+    private BusinessDetailsPresenter presenter;
 
-    public BusinessDetailsView(Runnable onReturnClick, Runnable onEditUserClick) {
+    public BusinessDetailsView(Runnable onReturnClick, Runnable onEditUserClick, BusinessDetailsPresenter presenter) {
+        this.presenter = presenter;
         setLayout(new BorderLayout());
 
         JPanel detailsPanel = new JPanel(new GridLayout(7, 2, 10, 10));
@@ -47,8 +54,8 @@ public class BusinessDetailsView extends JPanel implements BusinessDetailsViewIn
         returnButton = new JButton("Return");
         editUserButton = new JButton("Edit User");
 
-        returnButton.addActionListener(e -> onReturnClick.run());
-        editUserButton.addActionListener(e -> onEditUserClick.run());
+        returnButton.addActionListener(e -> presenter.navigateToBusinessDetails());
+        editUserButton.addActionListener(e -> presenter.navigateToEditUserInfo());
 
         buttonPanel.add(returnButton);
         buttonPanel.add(editUserButton);

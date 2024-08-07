@@ -1,26 +1,27 @@
 package interface_adapter.BusinessDetails;
 
-import entity.Business;
+import interface_adapter.ViewManagerModel;
 import view.BusinessDetailsViewInterface;
 
 public class BusinessDetailsPresenter {
     private BusinessDetailsViewModel viewModel;
     private BusinessDetailsViewInterface view;
+    private ViewManagerModel viewManagerModel;
 
-    public BusinessDetailsPresenter(BusinessDetailsViewModel viewModel, BusinessDetailsViewInterface view) {
+    public BusinessDetailsPresenter(BusinessDetailsViewModel viewModel, BusinessDetailsViewInterface view, ViewManagerModel viewManagerModel) {
         this.viewModel = viewModel;
         this.view = view;
+        this.viewManagerModel = viewManagerModel;
     }
 
-    public void loadBusinessDetails(Business business) {
-        viewModel.setName(business.getName());
-        viewModel.setLocation(String.format("%.2f, %.2f", business.getLocation().get(0), business.getLocation().get(1)));
-        viewModel.setDistance(String.format("%.2f km", business.getDistance()));
-        viewModel.setContactNum(business.getContactNum());
-        viewModel.setPrice(business.getPrice());
-        viewModel.setRatings(String.format("%.1f / 5.0", business.getRatings()));
-        viewModel.setType(business.getType());
-
-        view.updateDetails(viewModel);
+    public void navigateToBusinessDetails() {
+        viewManagerModel.setActiveView("BusinessDetails");
+        viewManagerModel.firePropertyChanged();
     }
+
+    public void navigateToEditUserInfo() {
+        viewManagerModel.setActiveView("EditUserInfo");
+        viewManagerModel.firePropertyChanged();
+    }
+
 }
