@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class UserLoginInteractorTest {
 
     private UserLoginDataAccessInterface userLoginDataAccess;
@@ -35,8 +36,6 @@ class UserLoginInteractorTest {
                 if ("testUser".equals(username) && "testPass".equals(password)) {
                     user = new User(username, password, new ArrayList<>(Arrays.asList(43.6532, 79.3832)));
                     return true;
-                } else if ("testUser".equals(username) && "wrongPass".equals(password)) {
-                    return false;
                 }
                 return false;
             }
@@ -80,14 +79,11 @@ class UserLoginInteractorTest {
     }
 
     @Test
-    void testLoginFailureIncorrectPassword() {
+    void testLoginFailure() {
         // Arrange
         String username = "testUser";
-        String password = "wrongPass";
-
-        UserLoginInputData inputData = new UserLoginInputData(username, password);
-
-        // Act
+        String incorrectPassword = "wrongPass";
+        UserLoginInputData inputData = new UserLoginInputData(username, incorrectPassword);
         User user = userLoginInteractor.loginUser(inputData);
 
         // Assert
@@ -100,14 +96,10 @@ class UserLoginInteractorTest {
     }
 
     @Test
-    void testLoginFailureIncorrectUsername() {
-        // Arrange
-        String username = "wrongUser";
+    void testLoginFailureWithIncorrectUsername() {
+        String incorrectUsername = "wrongUser";
         String password = "testPass";
-
-        UserLoginInputData inputData = new UserLoginInputData(username, password);
-
-        // Act
+        UserLoginInputData inputData = new UserLoginInputData(incorrectUsername, password);
         User user = userLoginInteractor.loginUser(inputData);
 
         // Assert
