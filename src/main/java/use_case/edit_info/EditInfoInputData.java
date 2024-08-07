@@ -7,23 +7,33 @@ import entity.User;
 
 public class EditInfoInputData {
 
+    private final String userName;
+    private final String password;
+    private final String repeatPassword;
+    private final String location;
     private final User user;
     private final ArrayList<String> stringLocation = new ArrayList<>(2);
 
-    public EditInfoInputData(User user) {
+    public EditInfoInputData(String userName, String password, String repeatPassword,
+                             String location, User user) {
+        this.userName = userName;
+        this.password = password;
+        this.repeatPassword = repeatPassword;
+        this.location = location;
         this.user = user;
     }
 
-    public String getUserName() {return this.user.getUserName();}
+    public String getUserName() {return this.userName;}
 
-    public String getPassword() {return this.user.getPassword();}
+    public String getPassword() {return this.password;}
 
-    public ArrayList<String> getLocation() {
+    public String getRepeatPassword() {return this.repeatPassword;}
 
-        ArrayList<Double> doubleLocation = this.user.getLocation();
-        for (Double location : doubleLocation) {
-            this.stringLocation.add(location.toString());
-        }
-        return stringLocation;
+    public String getLocation() {
+        return this.location;
+    }
+
+    public User getUser() {
+        return this.user;
     }
 }
