@@ -15,15 +15,13 @@ import java.util.List;
 public class EditInfoInteractor implements EditInfoInputBoundary{
     final EditInfoDataAccessInterface editInfoDAO;
     final EditInfoOutputBoundary editInfoPresenter;
-    final UserFactory userFactory;
     private User user;
 
 
     public EditInfoInteractor(EditInfoDataAccessInterface editInfoDataAccessObject,
-                              EditInfoOutputBoundary editInfoPresenter, UserFactory userFactory, User user){
+                              EditInfoOutputBoundary editInfoPresenter, User user){
         this.editInfoDAO= editInfoDataAccessObject;
         this.editInfoPresenter = editInfoPresenter;
-        this.userFactory = userFactory;
         this.user = user;
     }
 
