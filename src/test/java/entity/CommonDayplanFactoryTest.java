@@ -59,7 +59,7 @@ class CommonDayplanFactoryTest {
         testFactory.setBusinessFactory(YelpBusinessFactory);
         Dayplan testDayplan = testFactory.create(testUser,location,"Toronto",1,0,
                 "wahahahah im so funny");
-        assertEquals(1, testDayplan.getPlan().size());
+        assertEquals(testDayplan.getNumMeals(), testDayplan.getPlan().size());
     }
 
     @Test
@@ -70,7 +70,7 @@ class CommonDayplanFactoryTest {
         testFactory.setBusinessFactory(YelpBusinessFactory);
         Dayplan testDayplan = testFactory.create(testUser,location,"Toronto",0,1,
                 "wahahahah im so funny");
-        assertEquals(testDayplan.getNumMeals(), testDayplan.getPlan().size());
+        assertEquals(testDayplan.getnumActivities(), testDayplan.getPlan().size());
 
     }
 
