@@ -28,9 +28,9 @@ public class RefreshInteractor implements RefreshInputBoundary{
         if (refreshAll){
             refreshAllBusiness(dayplan);
         }
-        else {
-            refreshOneBusiness(dayplan, refreshIndex);
-        }
+//        else {
+//            refreshOneBusiness(dayplan, refreshIndex);
+//        }
         this.dayPlanDataAccessObject.saveDayPlan(dayplan);
         return dayplan;
     }
