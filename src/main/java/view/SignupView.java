@@ -6,10 +6,8 @@ import interface_adapter.Signup.SignupController;
 import interface_adapter.Signup.SignupState;
 import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.Welcome.WelcomeViewModel;
 
 import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,8 +28,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     private final SignupViewModel signupViewModel;
 //    private final ViewModel viewModel;
+    private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
-    private final WelcomeViewModel welcomeViewModel;
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
@@ -52,12 +50,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     private User user;
 
-    public SignupView(SignupController controller, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel, WelcomeViewModel welcomeViewModel) {
+    public SignupView(SignupController controller, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel, LoginViewModel loginViewModel) {
 
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
         this.viewManagerModel = viewManagerModel;
-        this.welcomeViewModel = welcomeViewModel;
+        this.loginViewModel = loginViewModel;
 //        this.viewModel = viewModel;
 
 
@@ -140,8 +138,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     /**
      * React to a button click that results in evt.
      */
+    @Override
     public void actionPerformed(ActionEvent evt) {
-            this.viewManagerModel.setActiveView(welcomeViewModel.getViewName());
+            this.viewManagerModel.setActiveView(loginViewModel.getViewName());
             this.viewManagerModel.firePropertyChanged();
     }
 

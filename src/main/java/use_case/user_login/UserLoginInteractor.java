@@ -43,7 +43,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary {
         boolean userExists = userDataAccessInterface.findUser(userLoginInputData.getUsername(), userLoginInputData.getPassword());
         boolean usernameExists = userDataAccessInterface.findUser(userLoginInputData.getUsername(), userLoginInputData.getPassword());
 
-        if (!userExists) {
+        if (userExists) {
             if (!usernameExists) {
                 userPresenter.prepareFailView("Incorrect username.");
             } else {

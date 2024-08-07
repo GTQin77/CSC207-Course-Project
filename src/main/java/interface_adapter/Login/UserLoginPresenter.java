@@ -1,5 +1,6 @@
 package interface_adapter.Login;
 
+import interface_adapter.DayplanInput.DayplanInputState;
 import interface_adapter.DayplanInput.DayplanInputViewModel;
 import use_case.user_login.UserLoginOutputBoundary;
 import use_case.user_login.UserLoginOutputData;
@@ -38,11 +39,17 @@ public class UserLoginPresenter implements UserLoginOutputBoundary {
         response.setLoginTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
 
         LoginState loginState = loginViewModel.getState();
-        loginState.setUsername(response.getUser().getUserName());
-        loginState.setLoginTime(response.getLoginTime());
-        loginState.setLoginSuccessful(true);
-        loginViewModel.setState(loginState);
-        loginViewModel.firePropertyChanged();
+        DayplanInputState dayplanInputState = dayplanInputViewModel.getState();
+        dayplanInputState.setCity("placeholder");
+
+//        loginState.setUsername(response.getUser().getUserName());
+//        loginState.setLoginTime(response.getLoginTime());
+//        loginState.setLoginSuccessful(true);
+//        loginViewModel.setState(loginState);
+//        loginViewModel.firePropertyChanged();
+
+        this.dayplanInputViewModel.setState(dayplanInputState);
+        dayplanInputViewModel.firePropertyChanged();
 
         viewManagerModel.setActiveView(dayplanInputViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
