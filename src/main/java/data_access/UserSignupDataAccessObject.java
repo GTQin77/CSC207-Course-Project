@@ -32,15 +32,15 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
     /**
      * Method that checks if a user already exists in the UserDatabase csv file.
      * Each attribute of the User class is saved into a column in the csv file, starting with userID.
-     * @param user a User object meant to be checked for existence.
+     * @param username linked to a user account to be checked for existence.
      * @return  boolean that is true if user is already in DB.
      */
     @Override
-    public boolean userExists(User user) {
+    public boolean userExists(String username) {
         // Create variable used to track where to split values in single line
+
         String value = ";";
         // Access user.userID attribute
-        String identifier = user.getUserName();
 
         // "Try" block is necessary for BufferedReader objects
         try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
@@ -52,7 +52,7 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
                 // Create an array of Strings that stores each value separated by comma as a new object in array
                 String[] row = line.split(value);
                 // Early return if the userID we put in is equal to the userID in the row
-                if (identifier.equals(row[0])){
+                if (username.equals(row[0])){
                     // Need to close the BufferedReader object
                     // Normally, the "Try" block will do this for you, but not in case of early return
                     br.close();

@@ -5,6 +5,7 @@ import entity.User;
 import java.util.ArrayList;
 
 public interface EditInfoDataAccessInterface {
-    void editUsername(String username);
-    void editPasswordOrLocation(String password, ArrayList<Double> location);
+    boolean editUsername(String newUsername, String newPassword, String newLocation);
+    void editPasswordOrLocation(String newPassword, String newLocation);
+
 }

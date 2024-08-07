@@ -1,5 +1,7 @@
 package use_case.edit_info;
 
+import entity.User;
+
 public interface EditInfoInputBoundary {
-    void execute(EditInfoInputData editInfoInputData);
+    User execute(EditInfoInputData editInfoInputData);
 }
