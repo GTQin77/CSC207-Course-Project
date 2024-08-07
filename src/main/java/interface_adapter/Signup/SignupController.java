@@ -1,6 +1,7 @@
 package interface_adapter.Signup;
 
 import entity.User;
+import services.UserService;
 import use_case.user_signup.UserSignupInputBoundary;
 import use_case.user_signup.UserSignupInteractor;
 import use_case.user_signup.UserSignupInputData;
@@ -19,6 +20,7 @@ public class SignupController {
 
 //    private User user;
     private ArrayList<String> location;
+    private UserService userService;
 
 //    public User getUser() {return user;}
 //
@@ -28,7 +30,8 @@ public class SignupController {
     public void setLocation(ArrayList<String> location) {this.location = location;}
 
     final UserSignupInputBoundary userSignupInteractor;
-    public SignupController(UserSignupInputBoundary userSignupInteractor) {
+    public SignupController(UserService userService, UserSignupInputBoundary userSignupInteractor) {
+        this.userService = userService;
         this.userSignupInteractor = userSignupInteractor;
     }
 
@@ -47,6 +50,7 @@ public class SignupController {
                 username, password1, password2, location);
 
         userSignupInteractor.execute(signupInputData);
+        this.userService.setCurrentLocation(location);
 
 //        this.setUser(user);
     }
