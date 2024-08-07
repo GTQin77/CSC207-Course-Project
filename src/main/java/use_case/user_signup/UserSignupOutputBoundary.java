@@ -8,7 +8,8 @@ package use_case.user_signup;
  * </p>
  */
 public interface UserSignupOutputBoundary {
-    void prepareSuccessView(UserSignupOutputData user);
 
     void prepareFailView(String error);
+
+    void prepareSuccessView(UserSignupOutputData signupOutputData, String formatted);
 }

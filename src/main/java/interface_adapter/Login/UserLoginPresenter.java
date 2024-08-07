@@ -5,6 +5,7 @@ import use_case.user_login.UserLoginOutputBoundary;
 import use_case.user_login.UserLoginOutputData;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import interface_adapter.ViewManagerModel;
 
 /**
  * Presenter of the user Login use case.
@@ -21,10 +22,10 @@ import java.time.format.DateTimeFormatter;
 public class UserLoginPresenter implements UserLoginOutputBoundary {
 
     private final LoginViewModel loginViewModel;
-    private final LoginViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
     private final DayplanInputViewModel dayplanInputViewModel;
 
-    public UserLoginPresenter(LoginViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel) {
+    public UserLoginPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
         this.dayplanInputViewModel = dayplanInputViewModel;

@@ -16,6 +16,7 @@ public class SignupState {
     private String repeatPassword = "";
     private String repeatPasswordError = null;
     private String location = "";
+    private String userCreation = null;
 
     public SignupState(SignupState copy) {
         username = copy.username;
@@ -84,5 +85,13 @@ public class SignupState {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getUserCreation() {
+        return userCreation;
+    }
+
+    public void setUserCreation(String userCreation) {
+        this.userCreation = userCreation;
     }
 }

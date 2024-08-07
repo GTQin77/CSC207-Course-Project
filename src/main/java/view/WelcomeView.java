@@ -1,10 +1,7 @@
 package view;
 
-import interface_adapter.Login.LoginViewManagerModel;
 import interface_adapter.Login.LoginViewModel;
-import interface_adapter.Signup.SignupViewManagerModel;
 import interface_adapter.Signup.SignupViewModel;
-import interface_adapter.ViewModel;
 import interface_adapter.Welcome.WelcomeViewManagerModel;
 import interface_adapter.Welcome.WelcomeViewModel;
 

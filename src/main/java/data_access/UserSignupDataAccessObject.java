@@ -38,7 +38,9 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
     @Override
     public boolean userExists(String username) {
         // Create variable used to track where to split values in single line
-        String value = ",";
+
+        String value = ";";
+        // Access user.userID attribute
 
         // "Try" block is necessary for BufferedReader objects
         try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
