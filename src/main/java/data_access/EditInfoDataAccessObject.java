@@ -64,6 +64,7 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
             // Change username file using updateDatabase
             // Update Dayplan DB using updateDatabase
             // BEFORE CALLING THIS.... csvpath MUST be set to userDB
+            this.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
             HandleFile(newUsername, newPassword, newLocation);
             // Change DB to be Dayplan Database
             this.setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");
@@ -84,6 +85,7 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
             // Change username file using updateDatabase
             // Update Dayplan DB using updateDatabase
             // BEFORE CALLING THIS.... csvpath MUST be set to userDB
+        this.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
         HandleFile(null, newPassword, newLocation);
         }
 
