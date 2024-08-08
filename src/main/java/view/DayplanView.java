@@ -9,6 +9,7 @@ import interface_adapter.Dayplan.DayplanPresenter;
 import services.UserService;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -28,6 +29,7 @@ public class DayplanView extends JPanel implements PropertyChangeListener {
         this.dayplanController = dayplanController;
         this.businessDetailsPresenter = businessDetailsPresenter;
         this.businessDetailsController = businessDetailsController;
+//        this.pastDayplanController = pastDayplanController;
         this.userService.addPropertyChangeListener(this);
         setLayout(new BorderLayout());
         initializeUI();
@@ -37,31 +39,48 @@ public class DayplanView extends JPanel implements PropertyChangeListener {
         updateUIComponents(userService.getDayplan());
     }
 
+
     private void updateUIComponents(Dayplan dayplan) {
         removeAll();
-        JPanel businessPanel = new JPanel(new GridLayout(dayplan.getPlan().size(), 1));
+
+        JLabel vibeLabel = new JLabel("Vibe: " + dayplan.getVibe());
+        vibeLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        vibeLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        vibeLabel.setHorizontalAlignment(JLabel.CENTER);
+        add(vibeLabel, BorderLayout.SOUTH);
+
+        JPanel businessPanel = new JPanel(new GridLayout(dayplan.getPlan().size(), 1, 5, 5));
         for (Business business : dayplan.getPlan()) {
             JButton button = new JButton(business.getName());
-            button.addActionListener(e -> businessDetailsController.loadBusinessDetails(business));
             businessPanel.add(button);
+            button.addActionListener(e -> businessDetailsController.loadBusinessDetails(business));
         }
-        JScrollPane scrollPane = new JScrollPane(businessPanel);
-        add(scrollPane, BorderLayout.CENTER);
+        add(new JScrollPane(businessPanel), BorderLayout.CENTER);
 
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+        JPanel leftButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton returnButton = new JButton("Return");
-        JButton editUserButton = new JButton("Edit User Info");
+        JButton editUserButton = new JButton("Edit Account");
+        JButton previousDayplanButton = new JButton("Previous Dayplan");
+
         returnButton.addActionListener(e -> dayplanPresenter.navigateToDayplanInput());
         editUserButton.addActionListener(e -> dayplanPresenter.navigateToEditUser());
-        topPanel.add(returnButton);
-        topPanel.add(editUserButton);
-        add(topPanel, BorderLayout.NORTH);
+//        previousDayplanButton.addActionListener(e -> pastDayplanController.execute());
 
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        leftButtons.add(returnButton);
+        leftButtons.add(editUserButton);
+//        leftButtons.add(previousDayplanButton);
+
         JButton refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(e -> dayplanController.handleRefresh());
-        bottomPanel.add(refreshButton);
-        add(bottomPanel, BorderLayout.SOUTH);
+        JPanel rightButton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        rightButton.add(refreshButton);
+
+        buttonPanel.add(leftButtons, BorderLayout.WEST);
+        buttonPanel.add(rightButton, BorderLayout.EAST);
+
+        add(buttonPanel, BorderLayout.NORTH);
 
         revalidate();
         repaint();
@@ -82,53 +101,3 @@ public class DayplanView extends JPanel implements PropertyChangeListener {
     }
 }
 
-
-//public class DayplanView extends JPanel {
-//    public final String viewName = "DayplanView";
-//    private BusinessDetailsView businessDetailsView;
-//    private DayplanController dayplanController;
-//    private DayplanPresenter dayplanPresenter;
-//    private UserService userService;
-//    private BusinessDetailsPresenter businessDetailsPresenter;
-//
-//    public DayplanView(BusinessDetailsView businessDetailsView, DayplanController dayplanController, DayplanPresenter dayplanPresenter, UserService userService) {
-//        this.businessDetailsView = businessDetailsView;
-//        this.dayplanController = dayplanController;
-//        this.userService = userService;
-//        this.dayplanPresenter = dayplanPresenter;
-//        initializeUI();
-//    }
-//
-//    private void initializeUI() {
-//        setLayout(new BorderLayout());
-//        ArrayList<Business> businesses = userService.getDayplan().getPlan();
-//
-//        JPanel businessPanel = new JPanel();
-//        businessPanel.setLayout(new GridLayout(businesses.size(), 1));
-//        for (Business business : businesses) {
-//            JButton button = new JButton(business.getName());
-//            button.addActionListener(e -> businessDetailsPresenter.loadBusinessDetails(business));
-//            businessPanel.add(button);
-//        }
-//        add(new JScrollPane(businessPanel), BorderLayout.CENTER);
-//
-//        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//        JButton returnButton = new JButton("Return");
-//        JButton editUserButton = new JButton("Edit User Info");
-//        returnButton.addActionListener(e -> dayplanPresenter.navigateToDayplanInput());
-//        editUserButton.addActionListener(e -> dayplanPresenter.navigateToEditUser());
-//        topPanel.add(returnButton);
-//        topPanel.add(editUserButton);
-//
-//        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-//        JButton refreshButton = new JButton("Refresh");
-//        refreshButton.addActionListener(e -> dayplanController.handleRefresh());
-//        bottomPanel.add(refreshButton);
-//
-//        add(topPanel, BorderLayout.NORTH);
-//        add(bottomPanel, BorderLayout.SOUTH);
-//    }
-//
-//
-
-//}

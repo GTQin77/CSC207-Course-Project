@@ -22,21 +22,6 @@ public class BusinessDetailsViewModel extends ViewModel {
     }
 
 
-
-//    public BusinessDetailsViewModel(String name, String location, String distance,
-//                                    String contactNum, String price, String ratings, String type) {
-//        super("BusinessDetails");
-//        this.name = name;
-//        this.location = location;
-//        this.distance = distance;
-//        this.contactNum = contactNum;
-//        this.price = price;
-//        this.ratings = ratings;
-//        this.type = type;
-//        this.support = new PropertyChangeSupport(this);
-//
-//    }
-
     public String getName() {
         return name;
     }
