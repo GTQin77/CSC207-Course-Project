@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
@@ -24,17 +25,16 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
     public ArrayList<Double> processLocation(String newLocation){
         ArrayList<Double> newDoubLocation = new ArrayList<Double>();
         String[] newStrLocation = newLocation.split(",");
-        for (int i = 0; i < newLocation.length(); i++){
-            newDoubLocation.add(Double.parseDouble(newStrLocation[i]));
-        }
+        newDoubLocation.add(Double.parseDouble(newStrLocation[0]));
+        newDoubLocation.add(Double.parseDouble(newStrLocation[1]));
         return newDoubLocation;
     }
 
     public void setCurrUserAndChanges(User user, String newUsername, String newPassword, String newLocation){
         this.currUser = user;
-        this.usernameChanged = user.getUserName().equals(newUsername);
-        this.passwordChanged = user.getPassword().equals(newPassword);
-        this.locationChanged = user.getLocation().equals(processLocation(newLocation));
+        this.usernameChanged = !user.getUserName().equals(newUsername);
+        this.passwordChanged = !user.getPassword().equals(newPassword);
+        this.locationChanged = !user.getLocation().equals(processLocation(newLocation));
     }
 
     public File getcsvFile(){return this.csvFile;}
@@ -44,6 +44,10 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
     public String getcsvPath(){return this.csvPath;}
 
     public User getCurrUser(){return this.currUser;}
+
+    public boolean getUsernameChanged(){return this.usernameChanged;}
+    public boolean getPasswordChanged(){return this.passwordChanged;}
+    public boolean getLocationChanged(){return this.locationChanged;}
 
     /**
      * Method that controls process of editing a username and/or password and location.
@@ -88,6 +92,13 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
             // BEFORE CALLING THIS.... csvpath MUST be set to userDB
         this.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
         HandleFile(null, newPassword, newLocation);
+
+
+        // COMMENT OUT IF NEEDED... NEW STUFF???
+        this.setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");
+        HandleFile(null, newPassword, newLocation);
+
+
         }
 
     /**
@@ -109,17 +120,14 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
                 // In that case, edit info THEN write to new database.
                 this.updateDatabase(newUsername, newPassword, newLocation, tempFile);
 
-                // Once done writing to temp file, delete old file...
-                // this.DeleteIfExists
-                // BUT don't use this for now, since Path.resolveSibling should work?
-
                 // Rename temp file to old file name
-                try {
-                    Path tempPath = Paths.get("./src/main/resources/TempDatabase.csv");
-                    Files.move(tempPath, tempPath.resolveSibling(this.getcsvFile().getName()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                // Path tempPath = Paths.get("./src/main/resources/TempDatabase.csv");
+
+                File oldFile = this.getcsvFile();
+                oldFile.delete();
+                tempFile.renameTo(oldFile);
+
+                // Files.move(tempPath, tempPath.resolveSibling(this.getcsvFile().getName()));
 
             } else {
                 System.out.println("File already exists.");
@@ -130,28 +138,6 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
         }
     }
 
-    public boolean DeleteIfExists(){
-        try {
-            boolean isDeleted = Files.deleteIfExists(Paths.get(this.getcsvPath()));
-
-            if (isDeleted) {
-                System.out.println("File is successfully deleted!");
-            } else {
-                System.out.println("Sorry, the file was not deleted.");
-            }
-            return isDeleted;
-        }
-        catch (DirectoryNotEmptyException e) {
-            System.out.println("Directory is not empty!");
-        }
-        catch (IOException e) {
-            System.out.println("I/O error occurred");
-        }
-        catch (SecurityException e) {
-            System.out.println("Delete access denied!");
-        }
-        return false;
-    }
 
     /**
      * Helper method that copies over existing database to a temporary one, rewriting info where necessary.
@@ -159,7 +145,7 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
      * @param newUsername optional, replace with null if unchanged.
      * @param newPassword optional, replace with null if unchanged.
      * @param newLocation optional, replace with null if unchanged.
-     * @param tempFile optional, replace with null if unchanged.
+     * @param tempFile is an EMPTY new temporary csv file.
      */
     public void updateDatabase(String newUsername, String newPassword, String newLocation, File tempFile){
         // For every line in old database, write to new database...
@@ -167,30 +153,37 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
         // In that case, edit info THEN write to new database.
         String currUsername = this.getCurrUser().getUserName();
         try (FileWriter fw = new FileWriter(tempFile, true)) {
-            // Writing header & switching to next line
+//             Writing header & switching to next line
             // Case 1: If csvpath is to UserDB:
-            if (this.getcsvPath().contains("UserDatabase")){
-                fw.write("userName,password,location\n");
+             if (this.getcsvPath().contains("UserDatabase") || this.getcsvPath().contains("userDatabase")){
+                fw.write("userName,password,location" + "\n");
             }
                 // Write header as username, password, etc.
-            // Case 2: If csvpath is to DayplanDB:
+//             Case 2: If csvpath is to DayplanDB:
             else{
-                fw.write("userName,location,vibe,Dayplan\n");
+                fw.write("userName,location,vibe,Dayplan" + "\n");
             }
             try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
                 String line = br.readLine();
-                // Mutate line to refer to 2nd row... where actual values begin(skipping past row names)
                 line = br.readLine();
                 // While loop that keeps reading file until it's empty
                 while (line != null) {
                     // Create an array of Strings that stores each value separated by comma as a new object in array
                     String[] row = line.split(";");
+
+
+                    System.out.println(Arrays.toString(row));
+
+
                     // Early return if the userID we put in is equal to the userID in the row
                     if (currUsername.equals(row[0])){
                         // Rewriting the row to have updated info
                         line = rewriteRow(newUsername, newPassword, newLocation, row);
+
+                        System.out.println(line);
+
                     }
-                    fw.write(line);
+                    fw.write(line + "\n");
                     line = br.readLine();
                 }
             }
@@ -215,17 +208,18 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
      * @return a String representation of the updated row, ready to write to the copy of the DB.
      */
     public String rewriteRow(String newUsername, String newPassword, String newLocation, String[] row){
-        if (this.getcsvPath().contains("UserDatabase")){
+        if (this.getcsvPath().contains("UserDatabase") || this.getcsvPath().contains("userDatabase")){
             if (usernameChanged){
                 row[0] = newUsername;
             }if (passwordChanged){
                 row[1] = newPassword;
             }if (locationChanged){
-                row[2] = newLocation;
+                row[2] = newLocation.replaceAll("\\s", "");
             }
         }else{  // Writing to Dayplan DB
             if (usernameChanged){
                 row[0] = newUsername;
+                row[1] = newLocation.replaceAll("\\s", "");
             }
         }
         StringBuilder newRow = new StringBuilder();
