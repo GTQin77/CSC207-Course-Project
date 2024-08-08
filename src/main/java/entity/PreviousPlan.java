@@ -9,6 +9,10 @@ public class PreviousPlan {
         this.businesses = new ArrayList<>();
     }
 
+    public int getPlanSize() {
+        return this.businesses.size();
+    }
+
     public void addBusiness(PreviousBusiness previousBusiness) {
         this.businesses.add(previousBusiness);
     }
