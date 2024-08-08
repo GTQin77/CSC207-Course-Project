@@ -62,12 +62,11 @@ class EditInfoInteractorTest {
         editPresenter = new EditInfoPresenter(vmModel, vm);
 
         editInteractor = new EditInfoInteractor(editDAO, editPresenter, testUser);
-
-
-
-
-
     }
+
+
+
+
 
     @AfterEach
     void tearDown() {
