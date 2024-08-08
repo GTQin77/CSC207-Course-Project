@@ -4,8 +4,7 @@ import api.OpenAI;
 import api.OpenInterface;
 import api.YelpFusion;
 import api.YelpInterface;
-import data_access.DayPlanDataAccessInterface;
-import data_access.DayPlanDataAccessObject;
+import data_access.*;
 import entity.*;
 import interface_adapter.BusinessDetails.BusinessDetailsController;
 import interface_adapter.BusinessDetails.BusinessDetailsPresenter;
@@ -15,12 +14,15 @@ import interface_adapter.Dayplan.DayplanPresenter;
 import interface_adapter.Dayplan.DayplanViewModel;
 import interface_adapter.DayplanInput.DayplanInputViewModel;
 import interface_adapter.EditInfo.EditInfoViewModel;
+
 import interface_adapter.ViewManagerModel;
 import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.Welcome.WelcomeViewManagerModel;
 import interface_adapter.Welcome.WelcomeViewModel;
+import services.PastDayplanService;
 import services.RefreshService;
 import services.UserService;
+import use_case.previous_plan.PreviousPlanInteractor;
 import use_case.refresh.RefreshInteractor;
 import use_case.refresh.RefreshOutputBoundary;
 import view.*;
@@ -51,16 +53,21 @@ public class Main {
         EditInfoViewModel editInfoViewModel = new EditInfoViewModel();
         DayplanViewModel dayplanViewModel = new DayplanViewModel();
         BusinessDetailsViewModel businessDetailsViewModel = new BusinessDetailsViewModel();
+//        PastDayplanViewModel pastDayplanViewModel = new PastDayplanViewModel();
 
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel);
 
-        UserService userService = new UserService();
-
+        UserSignupDataAccessInterface userDAO = new UserSignupDataAccessObject();
         DayPlanDataAccessInterface dayplanDAO = new DayPlanDataAccessObject();
+        ((UserSignupDataAccessObject) userDAO).setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
+
         ((DayPlanDataAccessObject) dayplanDAO).setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");
         DayplanFactory dayplanFactory = new CommonDayplanFactory();
+
+        UserService userService = new UserService(userDAO,dayplanDAO);
+
 
         OpenInterface openApi = new OpenAI();
         YelpInterface yelpApi = new YelpFusion();
@@ -76,12 +83,30 @@ public class Main {
         DayplanController dayplanController = new DayplanController(dayplanViewModel, viewManager, userService, refreshService);
         DayplanPresenter dayplanPresenter = new DayplanPresenter(viewManagerModel, userService);
 
+
+
+
+
+        PreviousPlanFactory previousPlanFactory = new CommonPreviousPlanFactory();
+        PrevPlanDataAccessObject prevPlanDataAccessObject = new PrevPlanDataAccessObject();
+
+
+
+        PreviousPlanInteractor previousPlanInteractor = new PreviousPlanInteractor(prevPlanDataAccessObject, previousPlanFactory);
+        PastDayplanService pastDayplanService = new PastDayplanService(previousPlanInteractor);
+//        PastDayplanController pastDayplanController = new PastDayplanController(userService,pastDayplanViewModel, pastDayplanService);
+
         SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, welcomeViewModel, userService);
         LoginView loginView = UserLoginUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel, signupViewModel, userService);
         DayplanInputView dayplanInputView = DayplanInputUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel,dayplanViewModel, userService);
         EditInfoView editInfoView = EditInfoUseCaseFactory.create(viewManagerModel, editInfoViewModel, userService);
         BusinessDetailsView businessDetailsView = new BusinessDetailsView(businessDetailsPresenter);
         BusinessDetailsController businessDetailsController = new BusinessDetailsController(businessDetailsViewModel, businessDetailsView);
+
+//        PastDayplanPresenter pastDayplanPresenter = new PastDayplanPresenter(viewManagerModel,userService);
+//        PastDayplanView pastDayplanView = new PastDayplanView(pastDayplanPresenter, userService, pastDayplanController, viewManagerModel);
+//        PastDayplanView pastDayplanView = PreviousDayplanUseCaseFactory.create(pastDayplanPresenter, userService, viewManagerModel, pastDayplanViewModel);
+//        userService.addPropertyChangeListener(pastDayplanView);
 
         DayplanView dayplanView = new DayplanView(userService, dayplanPresenter, dayplanController, businessDetailsPresenter, businessDetailsController);
         userService.addPropertyChangeListener(dayplanView);
@@ -95,6 +120,7 @@ public class Main {
         views.add(editInfoView, editInfoView.viewName);
         views.add(businessDetailsView, businessDetailsView.viewName);
         views.add(dayplanView, dayplanView.viewName);
+//        views.add(pastDayplanView, pastDayplanView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();

@@ -34,4 +34,10 @@ public class BusinessDetailsPresenter {
         viewManagerModel.firePropertyChanged();
     }
 
+    public void navigateToPreviousDayplan() {
+        userService.setPrevView("BusinessDetails");
+        viewManagerModel.setActiveView("PastDayplan");
+        viewManagerModel.firePropertyChanged();
+    }
+
 }

@@ -20,6 +20,7 @@ public class BusinessDetailsView extends JPanel implements BusinessDetailsViewIn
     private JLabel ratingsLabel;
     private JButton returnButton;
     private JButton editUserButton;
+    private JButton previousDayplanButton;
     private BusinessDetailsPresenter presenter;
 
     public BusinessDetailsView(BusinessDetailsPresenter presenter) {
@@ -56,15 +57,18 @@ public class BusinessDetailsView extends JPanel implements BusinessDetailsViewIn
         }
 
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         returnButton = new JButton("Return");
-        editUserButton = new JButton("Edit User");
+        editUserButton = new JButton("Edit Account");
+//        previousDayplanButton = new JButton("Previous Dayplan");
 
         returnButton.addActionListener(e -> presenter.nagivateToDayplan());
         editUserButton.addActionListener(e -> presenter.navigateToEditUserInfo());
+//        previousDayplanButton.addActionListener(e -> presenter.navigateToPreviousDayplan());
 
         buttonPanel.add(returnButton);
         buttonPanel.add(editUserButton);
+//        buttonPanel.add(previousDayplanButton);
 
         add(detailsPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.NORTH);
