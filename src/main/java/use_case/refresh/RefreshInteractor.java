@@ -22,7 +22,6 @@ public class RefreshInteractor implements RefreshInputBoundary{
     @Override
     public Dayplan execute(RefreshInputData refreshInputData) {
         Dayplan dayplan = refreshInputData.getDayplan();
-
         refreshAllBusiness(dayplan);
 
         this.dayPlanDataAccessObject.saveDayPlan(dayplan);

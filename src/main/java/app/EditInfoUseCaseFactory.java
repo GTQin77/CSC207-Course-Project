@@ -8,9 +8,10 @@ import interface_adapter.EditInfo.*;
 import interface_adapter.Login.LoginViewModel;
 import interface_adapter.Signup.SignupController;
 import interface_adapter.Signup.SignupPresenter;
-import interface_adapter.Signup.SignupViewManagerModel;
 import interface_adapter.Signup.SignupViewModel;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.Welcome.WelcomeViewModel;
+import services.UserService;
 import use_case.edit_info.EditInfoInputBoundary;
 import use_case.edit_info.EditInfoInteractor;
 import use_case.edit_info.EditInfoOutputBoundary;
@@ -29,28 +30,28 @@ public class EditInfoUseCaseFactory {
     /** Prevent instantiation. */
     private EditInfoUseCaseFactory() {}
 
-    public static EditInfoView create(EditInfoViewManagerModel viewManagerModel, EditInfoViewModel editInfoViewModel) {
+    public static EditInfoView create(ViewManagerModel viewManagerModel, EditInfoViewModel editInfoViewModel, UserService userService) {
 
         try {
-            EditInfoController editInfoController = createEditInfoUseCase(viewManagerModel, editInfoViewModel);
-            return new EditInfoView(editInfoController, editInfoViewModel);
+            EditInfoController editInfoController = createEditInfoUseCase(viewManagerModel, editInfoViewModel, userService);
+            return new EditInfoView(editInfoController, editInfoViewModel, viewManagerModel, userService);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error.");
         }
         return null;
     }
 
-    private static EditInfoController createEditInfoUseCase(EditInfoViewManagerModel editInfoViewManagerModel, EditInfoViewModel editInfoViewModel) throws IOException {
-        // DAO takes in a user object + user's input... but i have no idea how to get that :((
+    private static EditInfoController createEditInfoUseCase(ViewManagerModel viewManagerModel, EditInfoViewModel editInfoViewModel, UserService userService) throws IOException {
+        // UserService at this point stores previous unedited old User object
+        // DAO must take in old User, new Username, new Password, new Location
         EditInfoDataAccessObject editInfoDAO = new EditInfoDataAccessObject();
-
 
         editInfoDAO.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
         // Notice how we pass this method's parameters to the Presenter.
-        EditInfoOutputBoundary editInfoOutputBoundary = new EditInfoPresenter(editInfoViewManagerModel, editInfoViewModel);
+        EditInfoOutputBoundary editInfoOutputBoundary = new EditInfoPresenter(viewManagerModel, editInfoViewModel);
 
         EditInfoInputBoundary editInfoInteractor = new EditInfoInteractor(
-                editInfoDAO, editInfoOutputBoundary, user); // Need to input an actual user object here
+                editInfoDAO, editInfoOutputBoundary, userService.getCurrentUser()); // Need to input an actual user object here
 
         return new EditInfoController(editInfoInteractor);
     }

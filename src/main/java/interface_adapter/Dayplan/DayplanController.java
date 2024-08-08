@@ -29,6 +29,7 @@ public class DayplanController {
         Dayplan dayplan = userService.getDayplan();
         ArrayList<Business> businesses = dayplan.getPlan();
         viewModel.setBusinesses(businesses);
+
     }
 
     public void handleRefresh() {

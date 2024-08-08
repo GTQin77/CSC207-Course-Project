@@ -62,5 +62,3 @@ public class DayplanView extends JPanel {
         repaint();
     }
 }
-
-

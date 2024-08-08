@@ -1,5 +1,7 @@
 package interface_adapter.Dayplan;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Scanner;
 
 import entity.Business;
@@ -41,4 +43,3 @@ public class DayplanViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 }
-

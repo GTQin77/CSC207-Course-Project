@@ -1,6 +1,7 @@
 package interface_adapter.EditInfo;
 
 import entity.User;
+import services.UserService;
 import use_case.edit_info.EditInfoInputBoundary;
 import use_case.edit_info.EditInfoInteractor;
 import use_case.edit_info.EditInfoInputData;
@@ -30,11 +31,11 @@ public class EditInfoController {
      * @param password2 from input, repeated password
      * @param location from input.
      */
-    public void execute(String username, String password1, String password2, String location, User user) {
+    public void execute(String username, String password1, String password2, String location, UserService userService) {
         EditInfoInputData editInfoInputData = new EditInfoInputData(
                 username, password1, password2, location, user);
 
-        this.user = editInfoInteractor.execute(editInfoInputData);
+        this.user = editInfoInteractor.execute(editInfoInputData, userService);
 
         this.setUser(user);
     }
