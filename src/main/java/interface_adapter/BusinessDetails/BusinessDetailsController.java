@@ -9,8 +9,15 @@ public class BusinessDetailsController {
     private BusinessDetailsViewInterface view;
 
 
-    public BusinessDetailsController(BusinessDetailsViewModel businessDetailsViewModel) {
+    public BusinessDetailsController(BusinessDetailsViewModel businessDetailsViewModel, BusinessDetailsView view) {
         this.viewModel = businessDetailsViewModel;
+        this.view = view;
     }
+
+    public void loadBusinessDetails(Business business) {
+        viewModel.updateBusinessDetails(business);
+        view.displayDetails(viewModel);
+    }
+
 
 }

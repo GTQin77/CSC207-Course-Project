@@ -16,8 +16,9 @@ public class DayplanPresenter implements  UserDayPlanOutputBoundary, RefreshOutp
     private UserService userService;
 
 
-    public DayplanPresenter(ViewManagerModel viewManagerModel) {
+    public DayplanPresenter(ViewManagerModel viewManagerModel, UserService userService) {
         this.viewManagerModel = viewManagerModel;
+        this.userService = userService;
     }
 
     public void navigateToDayplanInput() {
@@ -34,6 +35,7 @@ public class DayplanPresenter implements  UserDayPlanOutputBoundary, RefreshOutp
 
 
     public void navigateToEditUser() {
+        userService.setPrevView("DayplanView");
         viewManagerModel.setActiveView("EditUserInfo");
         viewManagerModel.firePropertyChanged();
     }

@@ -7,6 +7,7 @@ import api.YelpInterface;
 import data_access.DayPlanDataAccessInterface;
 import data_access.DayPlanDataAccessObject;
 import entity.*;
+import interface_adapter.BusinessDetails.BusinessDetailsController;
 import interface_adapter.BusinessDetails.BusinessDetailsPresenter;
 import interface_adapter.BusinessDetails.BusinessDetailsViewModel;
 import interface_adapter.Dayplan.DayplanController;
@@ -71,18 +72,21 @@ public class Main {
 
         RefreshInteractor refreshInteractor = new RefreshInteractor(dayplanDAO, dayplanFactory, refreshBusinessFactory);
         RefreshService refreshService = new RefreshService(refreshInteractor);
-        BusinessDetailsPresenter businessDetailsPresenter = new BusinessDetailsPresenter(viewManagerModel);
+        BusinessDetailsPresenter businessDetailsPresenter = new BusinessDetailsPresenter(viewManagerModel, businessDetailsViewModel, userService);
         DayplanController dayplanController = new DayplanController(dayplanViewModel, viewManager, userService, refreshService);
-        DayplanPresenter dayplanPresenter = new DayplanPresenter(viewManagerModel);
+        DayplanPresenter dayplanPresenter = new DayplanPresenter(viewManagerModel, userService);
 
         SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, welcomeViewModel, userService);
         LoginView loginView = UserLoginUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel, signupViewModel, userService);
         DayplanInputView dayplanInputView = DayplanInputUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel,dayplanViewModel, userService);
         EditInfoView editInfoView = EditInfoUseCaseFactory.create(viewManagerModel, editInfoViewModel, userService);
         BusinessDetailsView businessDetailsView = new BusinessDetailsView(businessDetailsPresenter);
-        DayplanView dayplanView = new DayplanView(userService, dayplanPresenter, dayplanController, businessDetailsPresenter);
+        BusinessDetailsController businessDetailsController = new BusinessDetailsController(businessDetailsViewModel, businessDetailsView);
+
+        DayplanView dayplanView = new DayplanView(userService, dayplanPresenter, dayplanController, businessDetailsPresenter, businessDetailsController);
         userService.addPropertyChangeListener(dayplanView);
         dayplanController.setView(dayplanView);
+
 
 
         views.add(signupView, signupView.viewName);
