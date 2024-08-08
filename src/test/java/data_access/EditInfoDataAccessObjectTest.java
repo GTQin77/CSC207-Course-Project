@@ -44,9 +44,37 @@ public class EditInfoDataAccessObjectTest {
             throw new RuntimeException(e);
         }
         signupDAO = new UserSignupDataAccessObject();
+    }
 
+
+    @AfterAll
+    static void tearDown() {
+        try {
+            File tempUserDB = new File("src/test/test_resources/tempTestUserDB.csv");
+            tempUserDB.delete();
+            File tempDayplanDB = new File("src/test/test_resources/tempTestDayplanDB.csv");
+            tempDayplanDB.delete();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+//        File tempFile = new File("src/test/test_resources/tempDB.csv");
+//        try (FileWriter fw = new FileWriter(tempFile, true)){
+//            fw.write("userName,password,location\n");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        try {
+//            File oldFile = new File("src/test/test_resources/test_userDatabase.csv");
+//            oldFile.delete();
+//            tempFile.renameTo(oldFile);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
 
     }
+
+
 
     @Test
     void processLocation(){
@@ -223,10 +251,6 @@ public class EditInfoDataAccessObjectTest {
         editDAO.setCurrUserAndChanges(testUser, "jess", "coco", "9.99,9.99");
         editDAO.editPasswordOrLocation("coco", "9.99,9.99", "src/test/test_resources/test_userDatabase.csv", "src/test/test_resources/test_database.csv");
     }
-
-
-
-
 
 
 }
