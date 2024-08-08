@@ -32,12 +32,7 @@ class UserLoginInputBoundaryTest {
         String location = "40.7128,-74.0060";  // Coordinates for New York
 
         UserLoginInputData loginInputData = new UserLoginInputData(username, password);
-
-        ArrayList<Double> expectedCoordinates = new ArrayList<>(Arrays.asList(40.7128, -74.0060));
-
-
-
-        User expectedUser = new User(username, "Test User", expectedCoordinates);
+        User expectedUser = new User(username, "Test User", locationToArrayList(location));
         when(loginInputBoundary.loginUser(loginInputData)).thenReturn(expectedUser);
 
         // Act
@@ -51,6 +46,15 @@ class UserLoginInputBoundaryTest {
         assertEquals(username, capturedData.getUsername());
         assertEquals(password, capturedData.getPassword());
         assertEquals(expectedUser, resultUser);
-        assertEquals(location, resultUser.getLocation());
+        assertEquals(locationToArrayList(location), resultUser.getLocation());
+    }
+
+    private ArrayList<Double> locationToArrayList(String location) {
+        ArrayList<Double> doubLocation = new ArrayList<>();
+        ArrayList<String> stringLocation = new ArrayList<String>((List.of(location.split(","))));
+        for (String s : stringLocation) {
+            doubLocation.add(Double.valueOf(s));
+        }
+        return doubLocation;
     }
 }
