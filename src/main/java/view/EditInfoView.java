@@ -90,9 +90,7 @@ public class EditInfoView extends JPanel implements ActionListener, PropertyChan
                                 JOptionPane.showMessageDialog(EditInfoView.this, e.getMessage());
                             }
                         }
-//                        ViewManagerModel viewManagerModel = new ViewManagerModel();
-//                        LoginViewModel loginViewModel = new LoginViewModel();
-//                        viewManagerModel.setActiveView("log in");
+
                     }
                 }
         );

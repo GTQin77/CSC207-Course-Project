@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserSignupInteractor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">use_case.user_signup</a> &gt; <span class="el_source">UserSignupInteractor.java</span></div><h1>UserSignupInteractor.java</h1><pre class="source lang-java linenums">package use_case.user_signup;
+
+import data_access.UserSignupDataAccessInterface;
+import entity.User;
+import entity.UserFactory;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+public class UserSignupInteractor implements UserSignupInputBoundary {
+    final UserSignupDataAccessInterface userDataAccessObject;
+    final UserSignupOutputBoundary userPresenter;
+    final UserFactory userFactory;
+    private User user;
+
+    /**
+     * Interactor of the user sign up use case.
+     * &lt;p&gt;
+     * This implementation referenced the Pualgries' Clean Architecture code for SignupInteractor on
+     * &lt;a href=&quot;https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/use_case/SignupInteractor.java&quot;&gt;github.com&lt;/a&gt;.
+     * &lt;/p&gt;
+     * @param signupOutputBoundary Output boundary of the signup use case.
+     * @param userFactory Factory for user.
+     * @param userSignupDataAccessInterface Data access interface of the user signup use case.
+     */
+    public UserSignupInteractor(UserSignupDataAccessInterface userSignupDataAccessInterface,
+                            UserSignupOutputBoundary signupOutputBoundary,
+<span class="fc" id="L28">                            UserFactory userFactory) {</span>
+<span class="fc" id="L29">        this.userDataAccessObject = userSignupDataAccessInterface;</span>
+<span class="fc" id="L30">        this.userPresenter = signupOutputBoundary;</span>
+<span class="fc" id="L31">        this.userFactory = userFactory;</span>
+<span class="fc" id="L32">    }</span>
+
+    /**
+     * Interactor method that creates a User, writes to DB, and controls Presenter.
+     *
+     * @param input UserDayPlanInputData.
+     */
+    @Override
+    public void execute(UserSignupInputData input) {
+        // 1. Process InputData into correct data types
+<span class="nc" id="L42">        ArrayList&lt;Double&gt; location = new ArrayList&lt;Double&gt;();</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        for (int i = 0; i &lt; input.getLocation().size(); i++){</span>
+<span class="nc" id="L44">            location.add(Double.valueOf(input.getLocation().get(i)));</span>
+        }
+        // 2. Create new User object using UserFactory
+<span class="nc" id="L47">        User user = this.userFactory.create(input.getUsername(), input.getPassword(), location);</span>
+        // 3. Write new User to the DAO
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (this.userDataAccessObject.userExists(user.getUserName())){</span>
+            // NOTE TO SELF: CHANGE DAO implementation to only take username!!!
+            // So that we avoid having to create a new User object until else block
+<span class="nc" id="L52">            userPresenter.prepareFailView(&quot;Oops! This username already exists.&quot;);</span>
+//            return null;
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        } else if (!input.getPassword().equals(input.getRepeatPassword())){</span>
+<span class="nc" id="L55">            userPresenter.prepareFailView(&quot;Passwords don't match.&quot;);</span>
+//            return null;
+        } else {
+<span class="nc" id="L58">            LocalDateTime now = LocalDateTime.now();</span>
+<span class="nc" id="L59">            this.userDataAccessObject.saveUser(user);</span>
+<span class="nc" id="L60">            UserSignupOutputData signupOutputData = new UserSignupOutputData(user, now.toString(), false);</span>
+<span class="nc" id="L61">            userPresenter.prepareSuccessView(signupOutputData, &quot;%s created.&quot;.formatted(input.getUsername()));</span>
+//            return user;
+        }
+<span class="nc" id="L64">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

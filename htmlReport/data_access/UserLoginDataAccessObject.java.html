@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserLoginDataAccessObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">data_access</a> &gt; <span class="el_source">UserLoginDataAccessObject.java</span></div><h1>UserLoginDataAccessObject.java</h1><pre class="source lang-java linenums">package data_access;
+
+import entity.User;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+
+<span class="fc" id="L11">public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {</span>
+    private String csvPath;
+    private File csvFile;
+    private User user;
+
+    public File getcsvFile() {
+<span class="nc" id="L17">        return this.csvFile;</span>
+    }
+
+    public String getcsvPath() {
+<span class="nc" id="L21">        return this.csvPath;</span>
+    }
+
+    public void setcsvFileandPath(String csvPath) {
+<span class="fc" id="L25">        this.csvPath = csvPath;</span>
+<span class="fc" id="L26">        this.csvFile = new File(csvPath);</span>
+<span class="fc" id="L27">    }</span>
+
+    public User getUser() {
+<span class="nc" id="L30">        return this.user;</span>
+    }
+
+    /**
+     * Method that checks if a user exists in the UserDatabase csv file based on username and password.
+     * Each attribute of the User class is saved into a column in the csv file, starting with userID.
+     *
+     * @param username the username of the user.
+     * @param password the password of the user.
+     * @return User object if user is found in UserDataBase.
+     */
+    @Override
+    public boolean findUser(String username, String password) {
+<span class="nc" id="L43">        String value = &quot;;&quot;;</span>
+
+<span class="nc" id="L45">        try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {</span>
+<span class="nc" id="L46">            String line = br.readLine();</span>
+            // Mutate line to refer to 2nd row... where actual values begin(skipping past row names)
+<span class="nc" id="L48">            line = br.readLine();</span>
+            // While loop that keeps reading file until it's empty
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            while (line != null) {</span>
+                // Create an array of Strings that stores each value separated by comma as a new object in array
+<span class="nc" id="L52">                String[] row = line.split(value);</span>
+                // Early return if the userID we put in is equal to the userID in the row
+<span class="nc bnc" id="L54" title="All 2 branches missed.">                if (username.equals(row[0])){</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">                    if (password.equals(row[1])){</span>
+<span class="nc" id="L56">                        this.user = new User(row[0], row[1], parseLocation(row[2]));</span>
+<span class="nc" id="L57">                        br.close();</span>
+<span class="nc" id="L58">                        return true;</span>
+                    } else {
+<span class="nc" id="L60">                        return false;</span>
+                    }
+                    // Need to close the BufferedReader object
+                    // Normally, the &quot;Try&quot; block will do this for you, but not in case of early return
+                }
+<span class="nc" id="L65">                line = br.readLine();</span>
+<span class="nc" id="L66">            }</span>
+<span class="nc" id="L67">            System.out.println(&quot;User not found&quot;);</span>
+<span class="nc" id="L68">        }</span>
+
+        // &quot;Catch&quot; block is necessary with any try block
+<span class="nc" id="L71">        catch (IOException e){</span>
+<span class="nc" id="L72">            throw new RuntimeException(e);</span>
+<span class="nc" id="L73">        }</span>
+<span class="nc" id="L74">        return false;</span>
+    }
+    @Override
+    public User getUser(String username, String password) {
+<span class="nc" id="L78">        return this.user;</span>
+    }
+
+    /**
+     * Helper method to parse the location string into an ArrayList of Doubles.
+     * @param locationStr the location string.
+     * @return the parsed location as an ArrayList of Doubles.
+     */
+    private ArrayList&lt;Double&gt; parseLocation(String locationStr) {
+<span class="nc" id="L87">        ArrayList&lt;Double&gt; location = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L88">        String[] values = locationStr.replace(&quot;\&quot;&quot;, &quot;&quot;).split(&quot;,&quot;);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        for (String value : values) {</span>
+<span class="nc" id="L90">            location.add(Double.parseDouble(value.trim()));</span>
+        }
+<span class="nc" id="L92">        return location;</span>
+    }
+
+    }
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
