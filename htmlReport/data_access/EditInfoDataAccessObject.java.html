@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EditInfoDataAccessObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">data_access</a> &gt; <span class="el_source">EditInfoDataAccessObject.java</span></div><h1>EditInfoDataAccessObject.java</h1><pre class="source lang-java linenums">package data_access;
+
+import entity.User;
+import data_access.UserSignupDataAccessInterface;
+
+import java.nio.file.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+<span class="nc" id="L15">public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{</span>
+    private File csvFile;
+    private String csvPath;
+    private User currUser;
+    private boolean usernameChanged;
+    private boolean passwordChanged;
+    private boolean locationChanged;
+
+
+    public ArrayList&lt;Double&gt; processLocation(String newLocation){
+<span class="nc" id="L25">        ArrayList&lt;Double&gt; newDoubLocation = new ArrayList&lt;Double&gt;();</span>
+<span class="nc" id="L26">        String[] newStrLocation = newLocation.split(&quot;,&quot;);</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        for (int i = 0; i &lt; newLocation.length(); i++){</span>
+<span class="nc" id="L28">            newDoubLocation.add(Double.parseDouble(newStrLocation[i]));</span>
+        }
+<span class="nc" id="L30">        return newDoubLocation;</span>
+    }
+
+    public void setCurrUserAndChanges(User user, String newUsername, String newPassword, String newLocation){
+<span class="nc" id="L34">        this.currUser = user;</span>
+<span class="nc" id="L35">        this.usernameChanged = user.getUserName().equals(newUsername);</span>
+<span class="nc" id="L36">        this.passwordChanged = user.getPassword().equals(newPassword);</span>
+<span class="nc" id="L37">        this.locationChanged = user.getLocation().equals(processLocation(newLocation));</span>
+<span class="nc" id="L38">    }</span>
+
+<span class="nc" id="L40">    public File getcsvFile(){return this.csvFile;}</span>
+
+<span class="nc" id="L42">    public void setcsvPathAndcsvFile(String csvPath){this.csvPath = csvPath; this.csvFile = new File(csvPath);}</span>
+
+<span class="nc" id="L44">    public String getcsvPath(){return this.csvPath;}</span>
+
+<span class="nc" id="L46">    public User getCurrUser(){return this.currUser;}</span>
+
+    /**
+     * Method that controls process of editing a username and/or password and location.
+     * Writes to UserDatabase and DayplanDatabase.
+     * Checks to see if the new username is already taken.
+     * @param newUsername stores username User wants to switch to.
+     * @param newPassword optional, replace with null if password is unchanged.
+     * @param newLocation optional, replace with null if location is unchanged.
+     */
+    @Override
+    public boolean editUsername(String newUsername, String newPassword, String newLocation) {
+<span class="nc" id="L58">        UserSignupDataAccessInterface userSignupDataAccessInterface = new UserSignupDataAccessObject();</span>
+<span class="nc" id="L59">        boolean userPreExists = userSignupDataAccessInterface.userExists(newUsername);</span>
+        // CASE 1: New username already exists, we do not change data
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (userPreExists){</span>
+<span class="nc" id="L62">            return false;</span>
+        // CASE 2: New username is valid, change data
+        } else{
+            // Change username file using updateDatabase
+            // Update Dayplan DB using updateDatabase
+            // BEFORE CALLING THIS.... csvpath MUST be set to userDB
+<span class="nc" id="L68">            this.setcsvPathAndcsvFile(&quot;./src/main/resources/UserDatabase.csv&quot;);</span>
+<span class="nc" id="L69">            HandleFile(newUsername, newPassword, newLocation);</span>
+            // Change DB to be Dayplan Database
+<span class="nc" id="L71">            this.setcsvPathAndcsvFile(&quot;./src/main/resources/DayplanDatabase.csv&quot;);</span>
+<span class="nc" id="L72">            HandleFile(newUsername, newPassword, newLocation);</span>
+<span class="nc" id="L73">            return true;</span>
+        }
+    }
+
+    /**
+     * Method that controls process of editing only a User's password and/or location.
+     * Writes to only UserDatabase.
+     * @param newPassword optional, replace with null if password is unchanged.
+     * @param newLocation optional, replace with null if location is unchanged.
+     */
+    @Override
+    public void editPasswordOrLocation(String newPassword, String newLocation) {
+<span class="nc" id="L85">        UserSignupDataAccessInterface userSignupDataAccessInterface = new UserSignupDataAccessObject();</span>
+            // Change username file using updateDatabase
+            // Update Dayplan DB using updateDatabase
+            // BEFORE CALLING THIS.... csvpath MUST be set to userDB
+<span class="nc" id="L89">        this.setcsvPathAndcsvFile(&quot;./src/main/resources/UserDatabase.csv&quot;);</span>
+<span class="nc" id="L90">        HandleFile(null, newPassword, newLocation);</span>
+<span class="nc" id="L91">        }</span>
+
+    /**
+     * Helper method that creates a temporary database and calls updateDatabse helper method
+     * Once done updating info, it replaces the old database with the updated temporary one.
+     * @param newUsername optional, replace with null if unchanged.
+     * @param newPassword optional, replace with null if unchanged.
+     * @param newLocation optional, replace with null if unchanged.
+     */
+    public void HandleFile(String newUsername, String newPassword, String newLocation) {
+        try {
+            // Create new temporary database file
+<span class="nc" id="L103">            File tempFile = new File(&quot;./src/main/resources/TempDatabase.csv&quot;);</span>
+            // If successfully created...
+<span class="nc bnc" id="L105" title="All 2 branches missed.">            if (tempFile.createNewFile()) {</span>
+<span class="nc" id="L106">                System.out.println(&quot;File created: &quot; + tempFile.getName());</span>
+                // For every line in old database, write to new database...
+                // UNLESS row[0] is username.
+                // In that case, edit info THEN write to new database.
+<span class="nc" id="L110">                this.updateDatabase(newUsername, newPassword, newLocation, tempFile);</span>
+
+                // Once done writing to temp file, delete old file...
+                // this.DeleteIfExists
+                // BUT don't use this for now, since Path.resolveSibling should work?
+
+                // Rename temp file to old file name
+                try {
+<span class="nc" id="L118">                    Path tempPath = Paths.get(&quot;./src/main/resources/TempDatabase.csv&quot;);</span>
+<span class="nc" id="L119">                    Files.move(tempPath, tempPath.resolveSibling(this.getcsvFile().getName()));</span>
+<span class="nc" id="L120">                } catch (IOException e) {</span>
+<span class="nc" id="L121">                    e.printStackTrace();</span>
+<span class="nc" id="L122">                }</span>
+
+            } else {
+<span class="nc" id="L125">                System.out.println(&quot;File already exists.&quot;);</span>
+            }
+<span class="nc" id="L127">        } catch (IOException e) {</span>
+<span class="nc" id="L128">            System.out.println(&quot;An error occurred.&quot;);</span>
+<span class="nc" id="L129">            e.printStackTrace();</span>
+<span class="nc" id="L130">        }</span>
+<span class="nc" id="L131">    }</span>
+
+    public boolean DeleteIfExists(){
+        try {
+<span class="nc" id="L135">            boolean isDeleted = Files.deleteIfExists(Paths.get(this.getcsvPath()));</span>
+
+<span class="nc bnc" id="L137" title="All 2 branches missed.">            if (isDeleted) {</span>
+<span class="nc" id="L138">                System.out.println(&quot;File is successfully deleted!&quot;);</span>
+            } else {
+<span class="nc" id="L140">                System.out.println(&quot;Sorry, the file was not deleted.&quot;);</span>
+            }
+<span class="nc" id="L142">            return isDeleted;</span>
+        }
+<span class="nc" id="L144">        catch (DirectoryNotEmptyException e) {</span>
+<span class="nc" id="L145">            System.out.println(&quot;Directory is not empty!&quot;);</span>
+        }
+<span class="nc" id="L147">        catch (IOException e) {</span>
+<span class="nc" id="L148">            System.out.println(&quot;I/O error occurred&quot;);</span>
+        }
+<span class="nc" id="L150">        catch (SecurityException e) {</span>
+<span class="nc" id="L151">            System.out.println(&quot;Delete access denied!&quot;);</span>
+<span class="nc" id="L152">        }</span>
+<span class="nc" id="L153">        return false;</span>
+    }
+
+    /**
+     * Helper method that copies over existing database to a temporary one, rewriting info where necessary.
+     * Calls helper method rewriteRow to change specific lines.
+     * @param newUsername optional, replace with null if unchanged.
+     * @param newPassword optional, replace with null if unchanged.
+     * @param newLocation optional, replace with null if unchanged.
+     * @param tempFile optional, replace with null if unchanged.
+     */
+    public void updateDatabase(String newUsername, String newPassword, String newLocation, File tempFile){
+        // For every line in old database, write to new database...
+        // UNLESS row[0] is username.
+        // In that case, edit info THEN write to new database.
+<span class="nc" id="L168">        String currUsername = this.getCurrUser().getUserName();</span>
+<span class="nc" id="L169">        try (FileWriter fw = new FileWriter(tempFile, true)) {</span>
+            // Writing header &amp; switching to next line
+            // Case 1: If csvpath is to UserDB:
+<span class="nc bnc" id="L172" title="All 2 branches missed.">            if (this.getcsvPath().contains(&quot;UserDatabase&quot;)){</span>
+<span class="nc" id="L173">                fw.write(&quot;userName,password,location\n&quot;);</span>
+            }
+                // Write header as username, password, etc.
+            // Case 2: If csvpath is to DayplanDB:
+            else{
+<span class="nc" id="L178">                fw.write(&quot;userName,location,vibe,Dayplan\n&quot;);</span>
+            }
+<span class="nc" id="L180">            try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {</span>
+<span class="nc" id="L181">                String line = br.readLine();</span>
+                // Mutate line to refer to 2nd row... where actual values begin(skipping past row names)
+<span class="nc" id="L183">                line = br.readLine();</span>
+                // While loop that keeps reading file until it's empty
+<span class="nc bnc" id="L185" title="All 2 branches missed.">                while (line != null) {</span>
+                    // Create an array of Strings that stores each value separated by comma as a new object in array
+<span class="nc" id="L187">                    String[] row = line.split(&quot;;&quot;);</span>
+                    // Early return if the userID we put in is equal to the userID in the row
+<span class="nc bnc" id="L189" title="All 2 branches missed.">                    if (currUsername.equals(row[0])){</span>
+                        // Rewriting the row to have updated info
+<span class="nc" id="L191">                        line = rewriteRow(newUsername, newPassword, newLocation, row);</span>
+                    }
+<span class="nc" id="L193">                    fw.write(line);</span>
+<span class="nc" id="L194">                    line = br.readLine();</span>
+<span class="nc" id="L195">                }</span>
+            }
+<span class="nc" id="L197">            catch (IOException e){</span>
+<span class="nc" id="L198">                throw new RuntimeException(e);</span>
+<span class="nc" id="L199">            }</span>
+
+        }
+<span class="nc" id="L202">        catch (IOException e){</span>
+<span class="nc" id="L203">            throw new RuntimeException(e);</span>
+<span class="nc" id="L204">        }</span>
+<span class="nc" id="L205">    }</span>
+
+
+    /**
+     * Helper method that given a row in a DB, rewrites the row in String form with the desired updated user info.
+     * Works differently depending on whether we write to UserDB or DayplanDB.
+     * @param newUsername optional, replace with null if unchanged.
+     * @param newPassword optional, replace with null if unchanged.
+     * @param newLocation optional, replace with null if unchanged.
+     * @param row a String[] from a previous database to alter.
+     * @return a String representation of the updated row, ready to write to the copy of the DB.
+     */
+    public String rewriteRow(String newUsername, String newPassword, String newLocation, String[] row){
+<span class="nc bnc" id="L218" title="All 2 branches missed.">        if (this.getcsvPath().contains(&quot;UserDatabase&quot;)){</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">            if (usernameChanged){</span>
+<span class="nc" id="L220">                row[0] = newUsername;</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">            }if (passwordChanged){</span>
+<span class="nc" id="L222">                row[1] = newPassword;</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">            }if (locationChanged){</span>
+<span class="nc" id="L224">                row[2] = newLocation;</span>
+            }
+        }else{  // Writing to Dayplan DB
+<span class="nc bnc" id="L227" title="All 2 branches missed.">            if (usernameChanged){</span>
+<span class="nc" id="L228">                row[0] = newUsername;</span>
+            }
+        }
+<span class="nc" id="L231">        StringBuilder newRow = new StringBuilder();</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">        for (int i = 0; i &lt; row.length - 1; i++){</span>
+<span class="nc" id="L233">            newRow.append(row[i]).append(&quot;;&quot;);</span>
+        }
+<span class="nc" id="L235">        return newRow + row[row.length - 1];</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

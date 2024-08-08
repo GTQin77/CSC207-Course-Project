@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommonDayplanFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">entity</a> &gt; <span class="el_source">CommonDayplanFactory.java</span></div><h1>CommonDayplanFactory.java</h1><pre class="source lang-java linenums">package entity;
+
+import api.YelpFusion;
+import entity.DayplanFactory;
+import entity.BusinessFactory;
+import entity.Business;
+import entity.Meal;
+import entity.Activity;
+import api.OpenInterface;
+import api.YelpInterface;
+
+import java.util.ArrayList;
+
+<span class="nc" id="L14">public class CommonDayplanFactory implements DayplanFactory{</span>
+
+    OpenInterface openApi;
+    YelpInterface yelpApi;
+    BusinessFactory businessFactory;
+
+<span class="nc" id="L20">    public void setOpenApi(OpenInterface openApi) {this.openApi = openApi;}</span>
+<span class="nc" id="L21">    public OpenInterface getOpenApi(){return this.openApi;}</span>
+
+<span class="nc" id="L23">    public void setYelpApi(YelpInterface yelpApi){this.yelpApi = yelpApi;}</span>
+<span class="nc" id="L24">    public YelpInterface getYelpApi(){return this.yelpApi;}</span>
+
+<span class="nc" id="L26">    public void setBusinessFactory(BusinessFactory businessFactory){this.businessFactory = businessFactory;}</span>
+
+
+    /**
+     * A method that holds implementation for creation of new Dayplan object.
+     * @param user User that owns the dayplan.
+     * @param location Location that the dayplan surrounds.
+     * @param city City that the user's location is in.
+     * @param numMeals Number of meals User wants in dayplan.
+     * @param numActivities Number of activities User wants in dayplan.
+     * @param description Abstract input the user inputs at the beginning of program.
+     * @return Dayplan object with all businesses initialized.
+     */
+    @Override
+    public Dayplan create(User user, ArrayList&lt;Double&gt; location, String city, int numMeals, int numActivities, String description) {
+<span class="nc" id="L41">        Dayplan dayplan = new Dayplan();</span>
+<span class="nc" id="L42">        dayplan.setUser(user);</span>
+<span class="nc" id="L43">        dayplan.setLocation(location);</span>
+<span class="nc" id="L44">        dayplan.setCity(city);</span>
+<span class="nc" id="L45">        dayplan.setNumMeals(numMeals);</span>
+<span class="nc" id="L46">        dayplan.setnumActivities(numActivities);</span>
+<span class="nc" id="L47">        dayplan.setDescription(description);</span>
+
+        // 1. Call OpenAI API, receive category from description
+<span class="nc" id="L50">        String activityCategory = this.openApi.getCategory(description, false);</span>
+<span class="nc" id="L51">        String mealCategory = this.openApi.getCategory(description, true);</span>
+
+        // 2. Calling Yelp API with the category
+<span class="nc" id="L54">        ArrayList&lt;String&gt; mealsIDs = this.yelpApi.getBusinessIDs(mealCategory, city, numMeals);</span>
+<span class="nc" id="L55">        ArrayList&lt;String&gt; activityIDs = this.yelpApi.getBusinessIDs(activityCategory, city, numActivities);</span>
+
+        // 3. Calling Yelp API to create Business objects for each Business
+<span class="nc" id="L58">        ArrayList&lt;Business&gt; plan = new ArrayList&lt;Business&gt;();</span>
+<span class="nc" id="L59">        ArrayList&lt;String&gt; businessIDs = new ArrayList&lt;String&gt;();</span>
+        // For ACTIVITIES
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        for (int i = 0; i &lt; numActivities; i++){</span>
+<span class="nc" id="L62">            String businessID = activityIDs.get(i);</span>
+            // NOTE TO SELF: Do we need to pass in the api??
+<span class="nc" id="L64">            Business activity = this.businessFactory.createBusiness(businessID, user.getLocation());  // Casting Business to Activity</span>
+            // Adding the Activity object to ArrayList
+<span class="nc" id="L66">            plan.add(activity);</span>
+<span class="nc" id="L67">            businessIDs.add(businessID);</span>
+        }
+        // For MEALS
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        for (int i = 0; i &lt; numMeals; i++){</span>
+<span class="nc" id="L71">            String businessID = mealsIDs.get(i);</span>
+<span class="nc" id="L72">            Business meal = this.businessFactory.createBusiness(businessID, user.getLocation());</span>
+<span class="nc" id="L73">            plan.add(meal);</span>
+<span class="nc" id="L74">            businessIDs.add(businessID);</span>
+        }
+<span class="nc" id="L76">        dayplan.setPlan(plan);</span>
+<span class="nc" id="L77">        dayplan.setBusinessIDs(businessIDs);</span>
+
+        // 4. Calling OpenAI API to get the vibe attribute
+        // Must create 1 String that contains sequence of all business names
+<span class="nc" id="L81">        StringBuilder collectionNames = new StringBuilder();</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        for (int i = 0; i &lt; plan.size(); i++){</span>
+<span class="nc" id="L83">            Business currBusiness = plan.get(i);</span>
+<span class="nc" id="L84">            collectionNames.append(&quot;, &quot;).append(currBusiness.getName());</span>
+        }
+<span class="nc" id="L86">        String businessNames = collectionNames.toString();</span>
+
+<span class="nc" id="L88">        String vibe = this.openApi.getVibe(&quot;\&quot;&quot; + businessNames + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L89">        dayplan.setVibe(vibe);</span>
+
+<span class="nc" id="L91">        return dayplan;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class UserSignupDataAccessObject implements UserSignupDataAccessInterface {
@@ -102,9 +103,21 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
     public String userToString(User user){
         String stringUser = user.getUserName() + ";" + user.getPassword() + ";";
 
-        String location = user.getLocation().toString();
+        String location = listToString(user.getLocation());
 
         return stringUser + location.substring(1, location.length() - 2);
     }
+
+
+    /**
+     * Helper method taking in an ArrayList<Double> location and converts it to a String.
+     * Used in userToString to prep a User's location for writing to the DAO.
+     */
+    public static String listToString(ArrayList<Double> location){
+        return location.getFirst() + "," + location.getLast();
+    }
+
+
+
 
 }

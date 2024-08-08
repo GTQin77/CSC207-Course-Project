@@ -3,6 +3,7 @@ package data_access;
 import entity.Business;
 import entity.Dayplan;
 import entity.User;
+import data_access.UserSignupDataAccessObject;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,8 +46,11 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
             // Switching to new line
             fw.write("\n");
             // Processing Dayplan.location into a String
-            String stringLocation = dayplan.getLocation().toString();
+
+            String stringLocation = UserSignupDataAccessObject.listToString(dayplan.getLocation());
             String finalLocation = "\"" + stringLocation.substring(1, stringLocation.length() - 2) + "\"";
+
+
             // Writing preliminary Dayplan attributes to csv
             fw.write(dayplan.getUser().getUserName() + ";" + finalLocation + ";" + dayplan.getVibe() + ";");
             // Iterate through Businesses in Dayplan and write them to csv
@@ -72,8 +76,8 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
      * @return String version of a Business, with attributes separated by commas
      */
     public String businessToString(Business business){
-        return business.getName() + "," + business.getLocation().toString() + "," +
-                business.getDistance() + "," + business.getContactNum() + "," + business.getPrice() + ","
+        return business.getName() + "," + business.getLocation().getFirst() + "," + business.getLocation().getLast()
+                + "," + business.getDistance() + "," + business.getContactNum() + "," + business.getPrice() + ","
                 + business.getRatings();
     }
 }

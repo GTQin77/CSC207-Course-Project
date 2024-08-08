@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserSignupInputData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">use_case.user_signup</a> &gt; <span class="el_source">UserSignupInputData.java</span></div><h1>UserSignupInputData.java</h1><pre class="source lang-java linenums">package use_case.user_signup;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserSignupInputData {
+
+    final private String username;
+    final private String password;
+    final private String repeatPassword;
+    final private ArrayList&lt;String&gt; location;
+
+
+    /**
+     * Input data of the user sign up use case.
+     * &lt;p&gt;
+     * This implementation referenced the Paulgries' Clean Architecture code for SignupInputData on
+     * &lt;a href=&quot;https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/use_case/SignupInputData.java&quot;&gt;github.com&lt;/a&gt;.
+     * &lt;/p&gt;
+     *
+     * @param username Username of the account.
+     * @param password Password of the account.
+     * @param repeatPassword Repeated password of the account.
+     * @param location String representation of 2 coordinates, separated by a comma.
+     */
+<span class="nc" id="L27">    public UserSignupInputData(String username, String password, String repeatPassword, String location) {</span>
+<span class="nc" id="L28">        this.username = username;</span>
+<span class="nc" id="L29">        this.password = password;</span>
+<span class="nc" id="L30">        this.repeatPassword = repeatPassword;</span>
+<span class="nc" id="L31">        this.location = new ArrayList&lt;String&gt;((List.of(location.split(&quot;,&quot;))));</span>
+<span class="nc" id="L32">    }</span>
+
+<span class="nc" id="L34">    public String getUsername() { return this.username;}</span>
+
+<span class="nc" id="L36">    public String getPassword() { return this.password;}</span>
+
+<span class="nc" id="L38">    public String getRepeatPassword() {return this.repeatPassword;}</span>
+
+<span class="nc" id="L40">    public ArrayList&lt;String&gt; getLocation() {return this.location;}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

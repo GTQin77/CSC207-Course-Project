@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DayplanInputPresenter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">interface_adapter.DayplanInput</a> &gt; <span class="el_source">DayplanInputPresenter.java</span></div><h1>DayplanInputPresenter.java</h1><pre class="source lang-java linenums">package interface_adapter.DayplanInput;
+
+import interface_adapter.Dayplan.DayplanViewModel;
+import interface_adapter.ViewManagerModel;
+import use_case.dayplanList.UserDayPlanOutputBoundary;
+import use_case.dayplanList.UserDayPlanOutputData;
+
+public class DayplanInputPresenter implements UserDayPlanOutputBoundary {
+    private final DayplanInputViewModel dayplanInputViewModel;
+    private final DayplanViewModel dayplanViewModel;
+    private ViewManagerModel viewManagerModel;
+
+<span class="nc" id="L13">    public DayplanInputPresenter(ViewManagerModel viewManagerModel, DayplanInputViewModel dayplanInputViewModel, DayplanViewModel dayplanViewModel) {</span>
+<span class="nc" id="L14">        this.viewManagerModel = viewManagerModel;</span>
+<span class="nc" id="L15">        this.dayplanInputViewModel = dayplanInputViewModel;</span>
+<span class="nc" id="L16">        this.dayplanViewModel = dayplanViewModel;</span>
+<span class="nc" id="L17">    }</span>
+
+    /**
+     * This switch to dayplan view.
+     * @param data response from the UserDayPlanOutputData.
+     */
+    @Override
+    public void prepareDayplanView(UserDayPlanOutputData data) {
+//        DayplanInputState dayplanInputState = dayplanInputViewModel.getState();
+//        DayplanState dayplanState = dayplanViewModel.getState();
+//        dayplanState.setDayplan(data.getDayplan());
+//
+//        this.dayplanViewModel.setState(dayplanState);
+//        dayplanViewModel.firePropertyChanged();
+<span class="nc" id="L31">        viewManagerModel.setActiveView(dayplanViewModel.getViewName());</span>
+<span class="nc" id="L32">        viewManagerModel.firePropertyChanged();</span>
+<span class="nc" id="L33">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

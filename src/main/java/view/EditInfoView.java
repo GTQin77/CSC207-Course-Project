@@ -87,6 +87,7 @@ public class EditInfoView extends JPanel implements PropertyChangeListener{
                                 JOptionPane.showMessageDialog(EditInfoView.this, e.getMessage());
                             }
                         }
+
                     }
                 }
         );

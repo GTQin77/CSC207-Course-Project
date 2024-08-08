@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DayPlanDataAccessObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">data_access</a> &gt; <span class="el_source">DayPlanDataAccessObject.java</span></div><h1>DayPlanDataAccessObject.java</h1><pre class="source lang-java linenums">package data_access;
+
+import entity.Business;
+import entity.Dayplan;
+import entity.User;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+<span class="nc" id="L13">public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{</span>
+
+    private File csvFile;
+    private String csvPath;
+    private User user;
+
+    // csvFile attribute has no individual setter
+<span class="nc" id="L20">    public File getcsvFile(){return this.csvFile;}</span>
+
+    // Method is a setter for both csvPath and csvFile
+    public void setcsvPathAndcsvFile(String csvPath){
+<span class="nc" id="L24">        this.csvPath = csvPath;</span>
+<span class="nc" id="L25">        this.csvFile = new File(csvPath);</span>
+<span class="nc" id="L26">    }</span>
+
+<span class="nc" id="L28">    public String getcsvPath(){return this.csvPath;}</span>
+
+<span class="nc" id="L30">    public void setUser(User user){this.user = user;}</span>
+
+<span class="nc" id="L32">    public User getUser(){return this.user;}</span>
+
+    /**
+     * Method that writes a newly created Dayplan to the DayplanDatabase csv.
+     * Each row in the csv refers to 1 Dayplan object.
+     * Each cell corresponds to 1 Business object within Dayplan.
+     * @param dayplan a Dayplan object that we want to save to a csv with an associated User.
+     */
+    public void saveDayPlan(Dayplan dayplan){
+        // Same structure as existsByName, using try/catch block
+        // Use FileWriter class
+        // Try block automatically closes FileWriter class
+<span class="nc" id="L44">        try (FileWriter fw = new FileWriter(this.getcsvFile(), true)) {</span>
+            // Switching to new line
+<span class="nc" id="L46">            fw.write(&quot;\n&quot;);</span>
+            // Processing Dayplan.location into a String
+<span class="nc" id="L48">            String stringLocation = dayplan.getLocation().toString();</span>
+<span class="nc" id="L49">            String finalLocation = &quot;\&quot;&quot; + stringLocation.substring(1, stringLocation.length() - 2) + &quot;\&quot;&quot;;</span>
+            // Writing preliminary Dayplan attributes to csv
+<span class="nc" id="L51">            fw.write(dayplan.getUser().getUserName() + &quot;;&quot; + finalLocation + &quot;;&quot; + dayplan.getVibe() + &quot;;&quot;);</span>
+            // Iterate through Businesses in Dayplan and write them to csv
+            // Each new Business goes in individual cell
+<span class="nc" id="L54">            Business business = dayplan.getPlan().getFirst();</span>
+<span class="nc" id="L55">            fw.write(this.businessToString(business));</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">            for (int i = 1; i &lt; dayplan.getPlan().size(); i++){</span>
+<span class="nc" id="L57">                business = dayplan.getPlan().get(i);</span>
+<span class="nc" id="L58">                fw.write(&quot;~&quot; + this.businessToString(business));</span>
+            }
+<span class="nc" id="L60">            System.out.println(&quot;Dayplan saved successfully!&quot;);</span>
+        }
+
+        // &quot;Catch&quot; block to accompany &quot;Try&quot; block
+<span class="nc" id="L64">        catch (IOException e){</span>
+<span class="nc" id="L65">            throw new RuntimeException(e);</span>
+<span class="nc" id="L66">        }</span>
+<span class="nc" id="L67">    }</span>
+
+    /**
+     * Method that returns a String version of a Business object.
+     * @param business Business object, example of Liskov Substitution Principle
+     * @return String version of a Business, with attributes separated by commas
+     */
+    public String businessToString(Business business){
+<span class="nc" id="L75">        return business.getName() + &quot;,&quot; + business.getLocation().toString() + &quot;,&quot; +</span>
+<span class="nc" id="L76">                business.getDistance() + &quot;,&quot; + business.getContactNum() + &quot;,&quot; + business.getPrice() + &quot;,&quot;</span>
+<span class="nc" id="L77">                + business.getRatings();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

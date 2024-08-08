@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>YelpFusionTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">api</a> &gt; <span class="el_source">YelpFusionTest.java</span></div><h1>YelpFusionTest.java</h1><pre class="source lang-java linenums">package api;
+import java.util.ArrayList;
+import org.json.JSONArray;
+
+import static org.junit.jupiter.api.Assertions.*;
+<span class="nc" id="L6">class YelpFusionTest {</span>
+
+    @org.junit.jupiter.api.Test
+    void getApiToken() {
+<span class="nc" id="L10">        String token = YelpFusion.getApiToken();</span>
+<span class="nc" id="L11">        assertNotNull(token);</span>
+<span class="nc" id="L12">    }</span>
+
+    @org.junit.jupiter.api.Test
+    void getBusinessID() {
+<span class="nc" id="L16">        String category = &quot;food&quot;;</span>
+<span class="nc" id="L17">        String cityName = &quot;Toronto&quot;;</span>
+
+<span class="nc" id="L19">        int numIDs = 20;</span>
+
+<span class="nc" id="L21">        YelpFusion yelpFusion = new YelpFusion();</span>
+<span class="nc" id="L22">        ArrayList&lt;String&gt; businessIDs = yelpFusion.getBusinessIDs(category, cityName, numIDs);</span>
+<span class="nc" id="L23">        System.out.println(businessIDs);</span>
+
+<span class="nc" id="L25">        assertNotNull(businessIDs);</span>
+<span class="nc" id="L26">        assertEquals(numIDs, businessIDs.size());</span>
+
+<span class="nc" id="L28">    }</span>
+
+    @org.junit.jupiter.api.Test
+    void getBusiness() {
+        // this ID is taken from Yelp Fusion api website, it is an example they have there
+<span class="nc" id="L33">        String businessID = &quot;north-india-restaurant-san-francisco&quot;;</span>
+
+<span class="nc" id="L35">        YelpFusion yelpFusion = new YelpFusion();</span>
+<span class="nc" id="L36">        ArrayList&lt;Object&gt; businessDetails = yelpFusion.getBusiness(businessID);</span>
+
+<span class="nc" id="L38">        assertNotNull(businessDetails);</span>
+<span class="nc" id="L39">        assertEquals(5, businessDetails.size());</span>
+
+<span class="nc" id="L41">        assertInstanceOf(String.class, businessDetails.get(0));</span>
+<span class="nc" id="L42">        assertInstanceOf(Float.class, businessDetails.get(1));</span>
+<span class="nc" id="L43">        assertInstanceOf(String.class, businessDetails.get(2));</span>
+<span class="nc" id="L44">        assertInstanceOf(String.class, businessDetails.get(3));</span>
+<span class="nc" id="L45">        assertInstanceOf(ArrayList.class, businessDetails.get(4));</span>
+
+<span class="nc" id="L47">    }</span>
+
+    @org.junit.jupiter.api.Test
+    void getBusinessReviews() {
+<span class="nc" id="L51">        String businessID = &quot;north-india-restaurant-san-francisco&quot;;</span>
+<span class="nc" id="L52">        YelpFusion yelpFusion = new YelpFusion();</span>
+
+<span class="nc" id="L54">        JSONArray businessReviews = yelpFusion.getBusinessReviews(businessID);</span>
+<span class="nc" id="L55">        assertNotNull(businessReviews);</span>
+<span class="nc" id="L56">        assertEquals(3, businessReviews.length());</span>
+<span class="nc" id="L57">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
