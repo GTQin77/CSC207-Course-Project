@@ -18,7 +18,7 @@ import java.beans.PropertyChangeListener;
 
 
 
-public class EditInfoView extends JPanel implements PropertyChangeListener{
+public class EditInfoView extends JPanel implements PropertyChangeListener, ActionListener{
     public final String viewName = "EditUserInfo";
     private final EditInfoViewModel editInfoViewModel;
     private final ViewManagerModel viewManagerModel;
@@ -124,19 +124,21 @@ public class EditInfoView extends JPanel implements PropertyChangeListener{
 
     }
 
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        this.viewManagerModel.setActiveView(editInfoViewModel.getViewName());
-//        this.viewManagerModel.firePropertyChanged();
-//    }
-//
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.viewManagerModel.setActiveView(editInfoViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
+    }
+
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         EditInfoState state = (EditInfoState) evt.getNewValue();
         if (state.getUsernameError() != null) {
             JOptionPane.showMessageDialog(this, state.getUsernameError());
+        } else {
+            JOptionPane.showMessageDialog(this, "Information updated successfully!");
         }
-
-
     }
+
 }

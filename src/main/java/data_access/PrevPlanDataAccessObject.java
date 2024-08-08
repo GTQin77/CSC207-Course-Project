@@ -7,7 +7,7 @@ import java.io.*;
 import java.io.File;
 import java.util.ArrayList;
 
-public class PrevPlanDataAccessObject {
+public class PrevPlanDataAccessObject implements PrevPlanDataAccessInterface{
 
     private File csvFile;
     private String csvPath;
@@ -26,6 +26,7 @@ public class PrevPlanDataAccessObject {
 
     public User getUser(){return this.user;}
 
+    @Override
     public String getPreviousDayplan(User user) {
         String separator = ";";
         String userName = user.getUserName();

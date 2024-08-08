@@ -4,7 +4,5 @@ import entity.Dayplan;
 import entity.User;
 
 public interface PrevPlanDataAccessInterface {
-    Dayplan getPreviousDayplan();
-
-    void getPreviousDayplan(User user);
+    String getPreviousDayplan(User user);
 }
