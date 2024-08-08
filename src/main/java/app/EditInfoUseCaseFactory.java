@@ -34,7 +34,7 @@ public class EditInfoUseCaseFactory {
 
         try {
             EditInfoController editInfoController = createEditInfoUseCase(viewManagerModel, editInfoViewModel, userService);
-            return new EditInfoView(editInfoController, editInfoViewModel, viewManagerModel);
+            return new EditInfoView(editInfoController, editInfoViewModel, viewManagerModel, userService);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error.");
         }
