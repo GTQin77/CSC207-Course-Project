@@ -1,7 +1,10 @@
 package services;
 
+import data_access.DayPlanDataAccessInterface;
+import data_access.UserSignupDataAccessInterface;
 import entity.Business;
 import entity.Dayplan;
+import entity.PreviousPlan;
 import entity.User;
 
 import java.beans.PropertyChangeListener;
@@ -14,15 +17,62 @@ public class UserService {
     private ArrayList<String> currentLocation;
     private Dayplan dayplan;
     private PropertyChangeSupport support;
+    private PreviousPlan previousPlan;
+    private UserSignupDataAccessInterface userSignupDAO;
+    private DayPlanDataAccessInterface dayplanDAO;
 
 
-    public UserService() {
+    public UserService(UserSignupDataAccessInterface userSignupDAO, DayPlanDataAccessInterface dayplanDAO) {
+        this.userSignupDAO = userSignupDAO;
+        this.dayplanDAO = dayplanDAO;
         this.dayplan = loadInitialDayplan();
+        this.currentUser = loadInitialUser();
         support = new PropertyChangeSupport(this);
     }
 
+    private User loadInitialUser() {
+        ArrayList<Double> mockLocation = new ArrayList<>();
+        mockLocation.add(43.6598);
+        mockLocation.add(79.3973);
+        User user = new User("naleraoei4ujrnakahfejf87340", "123", mockLocation);
+        Dayplan dayplan1 = loadInitialDayplan();
+        ArrayList<Dayplan> dayplans = new ArrayList<>();
+        dayplans.add(dayplan1);
+        user.setDayPlans(dayplans);
+        if (!userSignupDAO.userExists("naleraoei4ujrnakahfejf87340")) {
+            userSignupDAO.saveUser(user);
+        }
+
+        return user;
+    }
+
     private Dayplan loadInitialDayplan() {
-        return new Dayplan();
+        dayplan = new Dayplan();
+        ArrayList<Double> location = new ArrayList<>();
+        location.add(22.3344);
+        location.add(-22.3344);
+        User user = new User("naleraoei4ujrnakahfejf87340", "123",location);
+
+        ArrayList<Business> plan = new ArrayList<>();
+
+        plan.add(new Business("mockOne", location, 11.0, "223-334-5566", "$", 3.9f, "meal"));
+        plan.add(new Business("mockTwo", location, 13.0, "443-334-5566", "$$$", 4.7f, "activity"));
+
+        ArrayList<String> businessIDs = new ArrayList<>();
+        businessIDs.add("123");
+        businessIDs.add("456");
+
+        dayplan.setBusinessIDs(businessIDs);
+        dayplan.setUser(user);
+        dayplan.setPlan(plan);
+        dayplan.setLocation(location);
+        dayplan.setDescription("A happy day");
+        dayplan.setnumActivities(1);
+        dayplan.setNumMeals(1);
+        dayplan.setVibe("Active, Inspiring, Motivational");
+        dayplan.setCity("Toronto");
+        dayplanDAO.saveDayPlan(dayplan);
+        return dayplan;
     }
 
     public Business getBusiness() {
@@ -75,4 +125,15 @@ public class UserService {
     public void setCurrentUser(User user) {
         this.currentUser = user;
     }
+
+    public PreviousPlan getPreviousPlan() {
+        return previousPlan;
+    }
+
+    public void setPreviousPlan(PreviousPlan previousPlan) {
+        this.previousPlan = previousPlan;
+    }
+
+
+
 }

@@ -33,6 +33,12 @@ public class DayplanPresenter implements  UserDayPlanOutputBoundary, RefreshOutp
         viewManagerModel.firePropertyChanged();
     }
 
+    public void navigateToPreviousDayplan() {
+        userService.setPrevView("DayplanView");
+        viewManagerModel.setActiveView("PastDayplan");
+        viewManagerModel.firePropertyChanged();
+    }
+
 
     public void navigateToEditUser() {
         userService.setPrevView("DayplanView");
@@ -49,4 +55,6 @@ public class DayplanPresenter implements  UserDayPlanOutputBoundary, RefreshOutp
     public void prepareAllSuccessView(RefreshOutputData refresh) {
 
     }
+
+
 }

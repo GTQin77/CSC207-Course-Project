@@ -136,5 +136,7 @@ public class EditInfoView extends JPanel implements PropertyChangeListener{
         if (state.getUsernameError() != null) {
             JOptionPane.showMessageDialog(this, state.getUsernameError());
         }
+
+
     }
 }
