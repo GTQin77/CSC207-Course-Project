@@ -36,12 +36,10 @@ class UserSignupInteractorTest {
         String username = "Hannah24";
         String password = "password123";
         String repeatPassword = "password123";
-        ArrayList<Double> location = new ArrayList<>();
-        location.add(1.23);
-        location.add(4.56);
+        String location = "1.23,4.56";
 
         UserSignupInputData inputData = new UserSignupInputData(username, password, repeatPassword, location);
-        User user = new User(username, password, location);
+        User user = new User(username, password, inputData.getLocation());
 
         when(userDataAccessObject.userExists(username)).thenReturn(false);
         when(userFactory.create(username, password, location)).thenReturn(user);
@@ -60,9 +58,9 @@ class UserSignupInteractorTest {
         String username = "existingUser";
         String password = "password123";
         String repeatPassword = "password123";
-        ArrayList<Double> location = new ArrayList<>();
-        location.add(1.23);
-        location.add(4.56);
+        ArrayList<String> location = new ArrayList<>();
+        location.add("1.23");
+        location.add("4.56");
 
         UserSignupInputData inputData = new UserSignupInputData(username, password, repeatPassword, location);
 
@@ -82,9 +80,9 @@ class UserSignupInteractorTest {
         String username = "newUser";
         String password = "password123";
         String repeatPassword = "password456";
-        ArrayList<Double> location = new ArrayList<>();
-        location.add(1.23);
-        location.add(4.56);
+        ArrayList<String> location = new ArrayList<>();
+        location.add("1.23");
+        location.add("4.56");
 
         UserSignupInputData inputData = new UserSignupInputData(username, password, repeatPassword, location);
 

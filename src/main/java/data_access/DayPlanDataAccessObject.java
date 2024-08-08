@@ -3,6 +3,7 @@ package data_access;
 import entity.Business;
 import entity.Dayplan;
 import entity.User;
+import data_access.UserSignupDataAccessObject;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -72,7 +73,7 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
      * @return String version of a Business, with attributes separated by commas
      */
     public String businessToString(Business business){
-        return business.getName() + "," + business.getLocation().toString() + "," +
+        return business.getName() + "," + UserSignupDataAccessObject.listToString(business.getLocation()) + "," +
                 business.getDistance() + "," + business.getContactNum() + "," + business.getPrice() + ","
                 + business.getRatings();
     }
