@@ -62,7 +62,6 @@ class UserLoginInteractorTest {
         UserLoginInputData inputData = new UserLoginInputData(username, password);
 
         User user = userLoginInteractor.loginUser(inputData);
-
         assertNotNull(user);
         assertEquals(username, user.getUserName());
 
