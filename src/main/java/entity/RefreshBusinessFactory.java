@@ -1,6 +1,8 @@
 package entity;
 
+import java.util.Map;
+
 public interface RefreshBusinessFactory {
-    Business generateNewBusiness(Dayplan dayplan, String type);
+    Map.Entry<Business, String> generateNewBusiness(Dayplan dayplan, String type);
     boolean isMeal(String type);
 }
