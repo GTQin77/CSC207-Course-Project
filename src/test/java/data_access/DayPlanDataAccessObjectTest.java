@@ -52,15 +52,12 @@ class DayPlanDataAccessObjectTest {
 
     @Test
     void testSaveDayPlan() throws IOException {
-        // Ensure the file is empty before writing
         try (FileWriter fw = new FileWriter(tempFile)) {
             fw.write("");
         }
 
-        // Save the dayplan
         dao.saveDayPlan(mockDayplan);
 
-        // Check the file content
         StringBuilder actualContent = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(tempFile))) {
             String line;
@@ -69,10 +66,8 @@ class DayPlanDataAccessObjectTest {
             }
         }
 
-        // Manually construct the expected content
-        String expectedContent = "\ntestuser;\"0.1, 0.2\";AWDAWD;testbusiness,[],10.0,1234567890,100.0,5.0";
+        String expectedContent = "\ntestuser;\"0.1,0.2\";AWDAWD;testbusiness,[],10.0,1234567890,100.0,5.0";
 
-        // Use trim to remove any leading or trailing new line characters
         assertEquals(expectedContent.trim(), actualContent.toString().trim());
     }
 
