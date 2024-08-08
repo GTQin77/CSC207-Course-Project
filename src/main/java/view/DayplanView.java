@@ -2,8 +2,10 @@ package view;
 
 import entity.Business;
 import interface_adapter.BusinessDetails.BusinessDetailsController;
+import interface_adapter.BusinessDetails.BusinessDetailsPresenter;
 import interface_adapter.Dayplan.DayplanController;
 import interface_adapter.Dayplan.DayplanPresenter;
+import services.UserService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,28 +13,28 @@ import java.util.ArrayList;
 
 public class DayplanView extends JPanel {
     public final String viewName = "DayplanView";
-    private ArrayList<Business> businesses;
     private BusinessDetailsView businessDetailsView;
     private DayplanController dayplanController;
     private DayplanPresenter dayplanPresenter;
-    private BusinessDetailsController businessDetailsController;
+    private UserService userService;
+    private BusinessDetailsPresenter businessDetailsPresenter;
 
-    public DayplanView(ArrayList<Business> businesses, BusinessDetailsView businessDetailsView, DayplanController dayplanController, BusinessDetailsController businessDetailsController) {
-        this.businesses = businesses;
+    public DayplanView(BusinessDetailsView businessDetailsView, DayplanController dayplanController, UserService userService) {
         this.businessDetailsView = businessDetailsView;
         this.dayplanController = dayplanController;
-        this.businessDetailsController = businessDetailsController;
+        this.userService = userService;
         initializeUI();
     }
 
     private void initializeUI() {
         setLayout(new BorderLayout());
+        ArrayList<Business> businesses = userService.getDayplan().getPlan();
 
         JPanel businessPanel = new JPanel();
         businessPanel.setLayout(new GridLayout(businesses.size(), 1));
         for (Business business : businesses) {
             JButton button = new JButton(business.getName());
-            button.addActionListener(e -> businessDetailsController.loadBusinessDetails(business));
+            button.addActionListener(e -> businessDetailsPresenter.loadBusinessDetails(business));
             businessPanel.add(button);
         }
         add(new JScrollPane(businessPanel), BorderLayout.CENTER);

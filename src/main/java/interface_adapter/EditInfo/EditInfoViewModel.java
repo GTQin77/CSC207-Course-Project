@@ -21,7 +21,7 @@ public class EditInfoViewModel extends ViewModel{
     private EditInfoState state = new EditInfoState();
 
     public EditInfoViewModel() {
-        super("edit info");
+        super("EditUserInfo");
     }
 
     public void setState(EditInfoState state) {

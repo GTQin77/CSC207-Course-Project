@@ -6,9 +6,13 @@
 //import interface_adapter.Dayplan.DayplanController;
 //import interface_adapter.Dayplan.DayplanPresenter;
 //import interface_adapter.Dayplan.DayplanViewModel;
+//import interface_adapter.ViewManagerModel;
 //import use_case.dayplanList.UserDayPlanInputBoundary;
 //import use_case.dayplanList.UserDayPlanInteractor;
 //import use_case.dayplanList.UserDayPlanOutputBoundary;
+//import use_case.refresh.RefreshInteractor;
+//import use_case.refresh.RefreshOutputBoundary;
+//import view.BusinessDetailsView;
 //import view.DayplanView;
 //
 //public class DayPlanUseCaseFactory {
@@ -21,30 +25,28 @@
 //
 //    /**
 //     * Create method that controls flow of Use Case.
-//     * @param user User object that the dayplan should belong to, carried over from User SignUp case.
 //     * @param dayplanViewModel View Model for dayplan info.
 //     * @return a DayplanView
 //     */
-//    public static DayplanView create(User user, DayplanViewModel dayplanViewModel){
-//        DayplanController dayplanController = createDayplanUseCase(dayplanViewModel);
-//        return new DayplanView(dayplanController, dayplanViewModel, user);
+//    public static DayplanView create(DayplanViewModel dayplanViewModel, BusinessDetailsView businessDetailsView, ViewManagerModel viewManagerModel){
+//        DayplanController dayplanController = createDayplanUseCase(viewManagerModel);
+//        return new DayplanView(businessDetailsView, dayplanController);
 //    }
 //
 //    /**
 //     * Helper method for .create, instantiates Interactor and relevant factories.
-//     * @param dayplanViewModel View model for dayplan info.
 //     * @return a DayplanView
 //     */
-//    public static DayplanController createDayplanUseCase(DayplanViewModel dayplanViewModel){
+//    public static DayplanController createDayplanUseCase(ViewManagerModel viewManagerModel){
 //        DayPlanDataAccessInterface dayplanDAO = new DayPlanDataAccessObject();
 //        ((DayPlanDataAccessObject) dayplanDAO).setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");
 //
-//        UserDayPlanOutputBoundary dayplanOutputBoundary = new DayplanPresenter(dayplanViewModel);
+//        RefreshOutputBoundary refreshOutputBoundary = new DayplanPresenter(viewManagerModel);
 //
 //        DayplanFactory dayplanFactory = new CommonDayplanFactory();
+//        RefreshBusinessFactory refreshBusinessFactory = new CommonRefreshBusinessFactory();
 //
-//        UserDayPlanInputBoundary dayplanInteractor = new UserDayPlanInteractor(dayplanDAO,
-//                dayplanOutputBoundary, dayplanFactory);
+//        UserDayPlanInputBoundary dayplanInteractor = new DayplanInteractor(dayplanDAO, refreshOutputBoundary, dayplanFactory, );
 //
 //        return new DayplanController(dayplanInteractor);
 //    }
