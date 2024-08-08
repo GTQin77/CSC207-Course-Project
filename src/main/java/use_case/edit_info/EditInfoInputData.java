@@ -42,7 +42,7 @@ public class EditInfoInputData {
      * @param location String form of a location. May contain spaces, or none.
      * @return a stirng that is the same as location, but with spaces removed.
      */
-    public String removeLocationSpaces(String location){
+    public static String removeLocationSpaces(String location){
         while (location.contains(" ")){
             int index = location.indexOf(" ");
             location = location.substring(0, index) + location.substring(index+1);
