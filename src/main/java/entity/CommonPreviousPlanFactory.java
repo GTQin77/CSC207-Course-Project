@@ -16,7 +16,7 @@ public class CommonPreviousPlanFactory implements PreviousPlanFactory {
         String rating = "";
 
         for (String business : businessMaster) {
-            String[] singleBusiness = business.split(",");
+            String[] singleBusiness = business.split(";");
             nameBusiness = singleBusiness[0];
             locationBusiness = singleBusiness[1];
             distanceBusiness = singleBusiness[2];
