@@ -8,19 +8,13 @@ import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
-import org.mockito.Mockito;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DayPlanDataAccessObjectTest {
 
-    private DayPlanDataAccessObject dao;
+    private DayPlanDataAccessObject dayDAO;
     private File tempFile;
     private User mockUser;
     private Dayplan mockDayplan;
@@ -28,11 +22,11 @@ class DayPlanDataAccessObjectTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        dao = new DayPlanDataAccessObject();
+        dayDAO = new DayPlanDataAccessObject();
 
         // Create a temporary file to use as the csv file
         tempFile = File.createTempFile("test", ".csv");
-        dao.setcsvPathAndcsvFile(tempFile.getAbsolutePath());
+        dayDAO.setcsvPathAndcsvFile(tempFile.getAbsolutePath());
 
         mockUser = new User("testuser", "test", new ArrayList<>());
         mockBusiness = new Business("testbusiness", new ArrayList<>(), 10.0, "1234567890", "100.0", 5.0f, "hello?");
@@ -53,10 +47,10 @@ class DayPlanDataAccessObjectTest {
     @Test
     void testSaveDayPlan() throws IOException {
         try (FileWriter fw = new FileWriter(tempFile)) {
-            fw.write("");
+            fw.write("userName,location,vibe,Dayplan" + "\n");
         }
 
-        dao.saveDayPlan(mockDayplan);
+        dayDAO.saveDayPlan(mockDayplan);
 
         StringBuilder actualContent = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(tempFile))) {
@@ -74,7 +68,7 @@ class DayPlanDataAccessObjectTest {
     @Test
     void testBusinessToString() {
         String expected = "testbusiness,[],10.0,1234567890,100.0,5.0";
-        String actual = dao.businessToString(mockBusiness);
+        String actual = dayDAO.businessToString(mockBusiness);
 
         assertEquals(expected, actual);
     }
