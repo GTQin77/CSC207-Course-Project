@@ -16,7 +16,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class DayplanInputView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "dayplan input";
+    public final String viewName = "DayplanInput";
 
     private final DayplanInputViewModel dayplanInputViewModel;
     private final JTextField cityInputField = new JTextField(15);

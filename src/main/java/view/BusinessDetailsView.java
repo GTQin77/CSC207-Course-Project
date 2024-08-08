@@ -54,7 +54,7 @@ public class BusinessDetailsView extends JPanel implements BusinessDetailsViewIn
         returnButton = new JButton("Return");
         editUserButton = new JButton("Edit User");
 
-        returnButton.addActionListener(e -> presenter.navigateToBusinessDetails());
+        returnButton.addActionListener(e -> presenter.nagivateToDayplan());
         editUserButton.addActionListener(e -> presenter.navigateToEditUserInfo());
 
         buttonPanel.add(returnButton);
@@ -65,7 +65,7 @@ public class BusinessDetailsView extends JPanel implements BusinessDetailsViewIn
     }
 
     @Override
-    public void updateDetails(BusinessDetailsViewModel viewModel) {
+    public void displayDetails(BusinessDetailsViewModel viewModel) {
         nameLabel.setText(viewModel.getName());
         locationLabel.setText(viewModel.getLocation());
         distanceLabel.setText(viewModel.getDistance());

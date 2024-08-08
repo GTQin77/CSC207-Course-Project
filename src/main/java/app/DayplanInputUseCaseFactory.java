@@ -3,6 +3,7 @@ package app;
 import data_access.DayPlanDataAccessObject;
 import entity.CommonDayplanFactory;
 import entity.DayplanFactory;
+import interface_adapter.Dayplan.DayplanViewModel;
 import interface_adapter.DayplanInput.DayplanInputController;
 import interface_adapter.DayplanInput.DayplanInputPresenter;
 import interface_adapter.DayplanInput.DayplanInputViewModel;
