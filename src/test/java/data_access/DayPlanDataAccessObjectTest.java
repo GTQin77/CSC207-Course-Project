@@ -66,7 +66,7 @@ class DayPlanDataAccessObjectTest {
             }
         }
 
-        String expectedContent = "\ntestuser;\"0.1,0.2\";AWDAWD;testbusiness,[],10.0,1234567890,100.0,5.0";
+        String expectedContent = "\ntestuser;\"0.1,0.2\";AWDAWD;testbusiness,,10.0,1234567890,100.0,5.0";
 
         assertEquals(expectedContent.trim(), actualContent.toString().trim());
     }
