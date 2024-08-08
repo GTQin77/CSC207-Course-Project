@@ -40,19 +40,13 @@ public class UserLoginPresenter implements UserLoginOutputBoundary {
 
         LoginState loginState = loginViewModel.getState();
         DayplanInputState dayplanInputState = dayplanInputViewModel.getState();
-        dayplanInputState.setCity("placeholder");
+//        dayplanInputState.setCity("placeholder");
+//
+//        this.dayplanInputViewModel.setState(dayplanInputState);
+//        dayplanInputViewModel.firePropertyChanged();
 
-//        loginState.setUsername(response.getUser().getUserName());
-//        loginState.setLoginTime(response.getLoginTime());
-//        loginState.setLoginSuccessful(true);
-//        loginViewModel.setState(loginState);
-//        loginViewModel.firePropertyChanged();
-
-        this.dayplanInputViewModel.setState(dayplanInputState);
-        dayplanInputViewModel.firePropertyChanged();
-
-        viewManagerModel.setActiveView(dayplanInputViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+        this.viewManagerModel.setActiveView(dayplanInputViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 
     @Override

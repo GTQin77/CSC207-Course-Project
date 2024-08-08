@@ -2,6 +2,7 @@ package interface_adapter.Dayplan;
 
 import entity.Business;
 import entity.Dayplan;
+import services.RefreshService;
 import services.UserService;
 import use_case.refresh.RefreshInputBoundary;
 import use_case.refresh.RefreshInputData;
@@ -15,14 +16,14 @@ public class DayplanController {
     private DayplanViewModel viewModel;
     private ViewManager viewManager;
     private UserService userService;
+    private RefreshService refreshService;
     private DayplanView view;
-    final RefreshInputBoundary refreshInteractor;
 
-    public DayplanController(DayplanViewModel viewModel, ViewManager viewManager, UserService userService, RefreshInputBoundary refreshInteractor) {
+    public DayplanController(DayplanViewModel viewModel, ViewManager viewManager, UserService userService, RefreshService refreshService) {
         this.viewModel = viewModel;
         this.viewManager = viewManager;
         this.userService = userService;
-        this.refreshInteractor = refreshInteractor;
+        this.refreshService = refreshService;
     }
 
     public void loadBusinesses() {
@@ -35,7 +36,7 @@ public class DayplanController {
     public void handleRefresh() {
         Dayplan dayplan = userService.getDayplan();
         RefreshInputData refreshInputData = new RefreshInputData(dayplan);
-        Dayplan refreshedDayplan = refreshInteractor.execute(refreshInputData);
+        Dayplan refreshedDayplan = refreshService.refreshDayplan(refreshInputData);
         ArrayList<Business> updatedBusinesses = refreshedDayplan.getPlan();
         userService.setDayplan(refreshedDayplan);
         view.updateBusinessButtons(updatedBusinesses);

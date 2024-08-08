@@ -23,9 +23,11 @@ public class BusinessDetailsView extends JPanel implements BusinessDetailsViewIn
     private JButton editUserButton;
     private BusinessDetailsPresenter presenter;
 
-    public BusinessDetailsView(Runnable onReturnClick, Runnable onEditUserClick, BusinessDetailsPresenter presenter) {
+    public BusinessDetailsView(BusinessDetailsPresenter presenter) {
         this.presenter = presenter;
         setLayout(new BorderLayout());
+
+
 
         JPanel detailsPanel = new JPanel(new GridLayout(7, 2, 10, 10));
         nameLabel = new JLabel();
