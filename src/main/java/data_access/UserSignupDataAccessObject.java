@@ -114,11 +114,7 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
      * Used in userToString to prep a User's location for writing to the DAO.
      */
     public static String listToString(ArrayList<Double> location){
-        String stringLocation = "";
-        for (int i = 0; i < location.size(); i++){
-            stringLocation = stringLocation + Double.toString(location.get(i)) + ",";   // Eliminates spaces as well.
-        }
-        return stringLocation;
+        return location.getFirst() + "," + location.getLast();
     }
 
 
