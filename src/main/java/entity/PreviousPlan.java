@@ -16,4 +16,8 @@ public class PreviousPlan {
     public PreviousBusiness getBusinesses(int index) {
         return this.businesses.get(index);
     }
+
+    public int getSize() {
+        return this.businesses.size();
+    }
 }
