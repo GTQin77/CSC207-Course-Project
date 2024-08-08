@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import entity.User;
 
+import java.io.BufferedReader;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;

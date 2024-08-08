@@ -71,7 +71,5 @@ class CommonDayplanFactoryTest {
         Dayplan testDayplan = testFactory.create(testUser,location,"Toronto",0,1,
                 "wahahahah im so funny");
         assertEquals(testDayplan.getnumActivities(), testDayplan.getPlan().size());
-
     }
-
 }
