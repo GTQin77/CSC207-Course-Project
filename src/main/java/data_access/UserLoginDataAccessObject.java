@@ -83,7 +83,7 @@ public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
      * @param locationStr the location string.
      * @return the parsed location as an ArrayList of Doubles.
      */
-    private ArrayList<Double> parseLocation(String locationStr) {
+    public ArrayList<Double> parseLocation(String locationStr) {
         ArrayList<Double> location = new ArrayList<>();
         String[] values = locationStr.replace("\"", "").split(",");
         for (String value : values) {
