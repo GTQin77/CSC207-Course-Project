@@ -103,9 +103,9 @@ public class YelpFusion implements YelpInterface{
                 double latitude = coordinates.getDouble("latitude");
                 double longitude = coordinates.getDouble("longitude");
 
-                ArrayList<Float> locationBusiness = new ArrayList<>();
-                locationBusiness.add((float) latitude);
-                locationBusiness.add((float) longitude);
+                ArrayList<Double> locationBusiness = new ArrayList<>();
+                locationBusiness.add(latitude);
+                locationBusiness.add(longitude);
 
                 ArrayList<Object> details = new ArrayList<>();
                 details.add(name);

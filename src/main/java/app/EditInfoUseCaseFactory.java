@@ -53,7 +53,7 @@ public class EditInfoUseCaseFactory {
         EditInfoInputBoundary editInfoInteractor = new EditInfoInteractor(
                 editInfoDAO, editInfoOutputBoundary, userService.getCurrentUser()); // Need to input an actual user object here
 
-        return new EditInfoController(editInfoInteractor);
+        return new EditInfoController(userService, editInfoInteractor);
     }
 
 
