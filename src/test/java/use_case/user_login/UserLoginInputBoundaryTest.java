@@ -35,6 +35,8 @@ class UserLoginInputBoundaryTest {
 
         ArrayList<Double> expectedCoordinates = new ArrayList<>(Arrays.asList(40.7128, -74.0060));
 
+
+
         User expectedUser = new User(username, "Test User", expectedCoordinates);
         when(loginInputBoundary.loginUser(loginInputData)).thenReturn(expectedUser);
 

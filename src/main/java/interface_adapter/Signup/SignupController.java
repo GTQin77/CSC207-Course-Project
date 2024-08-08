@@ -50,7 +50,7 @@ public class SignupController {
                 username, password1, password2, location);
 
         userSignupInteractor.execute(signupInputData);
-        this.userService.setCurrentLocation(location);
+        userService.setCurrentLocation(location);
 
 //        this.setUser(user);
     }

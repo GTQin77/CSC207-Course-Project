@@ -20,8 +20,8 @@ public class DayplanInputView extends JPanel implements ActionListener, Property
 
     private final DayplanInputViewModel dayplanInputViewModel;
     private final JTextField cityInputField = new JTextField(15);
-    private final JPasswordField numMealsInputField = new JPasswordField(15);
-    private final JPasswordField numActivitiesInputField = new JPasswordField(15);
+    private final JTextField numMealsInputField = new JTextField(15);
+    private final JTextField numActivitiesInputField = new JTextField(15);
     private final JTextField descriptionInputField = new JTextField(15);
     private final DayplanInputController dayplanInputController;
     private final ViewManagerModel viewManagerModel;
