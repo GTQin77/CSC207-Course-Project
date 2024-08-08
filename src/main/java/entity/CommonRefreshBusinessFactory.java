@@ -17,14 +17,17 @@ public class CommonRefreshBusinessFactory implements RefreshBusinessFactory{
     public void setYelpApi(YelpInterface yelpApi){this.yelpApi = yelpApi;}
     public YelpInterface getYelpApi(){return this.yelpApi;}
 
-    public void setBusinessFactory(BusinessFactory businessFactory){this.businessFactory = businessFactory;}
-
-    /**
-     * Generates a new business meant to replace a pre-existing business in a given dayplan.
-     * @param dayplan a user's pre-existing dayplan that we want to generate a new business for.
-     * @param type the type of a business(Activity or Meal)
-     * @return a new Business object.
-     */
+    public CommonRefreshBusinessFactory(OpenInterface openApi, YelpInterface yelpApi, BusinessFactory businessFactory) {
+        this.openApi = openApi;
+        this.yelpApi = yelpApi;
+        this.businessFactory = businessFactory;
+    }
+        /**
+         * Generates a new business meant to replace a pre-existing business in a given dayplan.
+         * @param dayplan a user's pre-existing dayplan that we want to generate a new business for.
+         * @param type the type of a business(Activity or Meal)
+         * @return a new Business object.
+         */
     @Override
     public Business generateNewBusiness(Dayplan dayplan, String type) {
         User user = dayplan.getUser();

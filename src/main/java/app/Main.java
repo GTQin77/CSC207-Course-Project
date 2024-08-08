@@ -1,8 +1,16 @@
 package app;
 
+import api.OpenAI;
+import api.OpenInterface;
+import api.YelpFusion;
+import api.YelpInterface;
+import data_access.DayPlanDataAccessInterface;
+import data_access.DayPlanDataAccessObject;
+import entity.*;
 import interface_adapter.BusinessDetails.BusinessDetailsPresenter;
 import interface_adapter.BusinessDetails.BusinessDetailsViewModel;
 import interface_adapter.Dayplan.DayplanController;
+import interface_adapter.Dayplan.DayplanPresenter;
 import interface_adapter.Dayplan.DayplanViewModel;
 import interface_adapter.DayplanInput.DayplanInputViewModel;
 import interface_adapter.EditInfo.EditInfoViewModel;
@@ -12,6 +20,8 @@ import interface_adapter.Welcome.WelcomeViewManagerModel;
 import interface_adapter.Welcome.WelcomeViewModel;
 import services.RefreshService;
 import services.UserService;
+import use_case.refresh.RefreshInteractor;
+import use_case.refresh.RefreshOutputBoundary;
 import view.*;
 
 
@@ -46,16 +56,34 @@ public class Main {
         ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel);
 
         UserService userService = new UserService();
-        RefreshService refreshService = new RefreshService();
+
+        DayPlanDataAccessInterface dayplanDAO = new DayPlanDataAccessObject();
+        ((DayPlanDataAccessObject) dayplanDAO).setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");
+        DayplanFactory dayplanFactory = new CommonDayplanFactory();
+
+        OpenInterface openApi = new OpenAI();
+        YelpInterface yelpApi = new YelpFusion();
+        YelpFusion yelpFusion = new YelpFusion();
+        BusinessFactory businessFactory = new YelpBusinessFactory(yelpFusion);
+
+        RefreshBusinessFactory refreshBusinessFactory = new CommonRefreshBusinessFactory(openApi, yelpApi, businessFactory);
+
+
+        RefreshInteractor refreshInteractor = new RefreshInteractor(dayplanDAO, dayplanFactory, refreshBusinessFactory);
+        RefreshService refreshService = new RefreshService(refreshInteractor);
         BusinessDetailsPresenter businessDetailsPresenter = new BusinessDetailsPresenter(viewManagerModel);
         DayplanController dayplanController = new DayplanController(dayplanViewModel, viewManager, userService, refreshService);
+        DayplanPresenter dayplanPresenter = new DayplanPresenter(viewManagerModel);
 
         SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, welcomeViewModel, userService);
         LoginView loginView = UserLoginUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel, signupViewModel, userService);
         DayplanInputView dayplanInputView = DayplanInputUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel,dayplanViewModel, userService);
         EditInfoView editInfoView = EditInfoUseCaseFactory.create(viewManagerModel, editInfoViewModel, userService);
         BusinessDetailsView businessDetailsView = new BusinessDetailsView(businessDetailsPresenter);
-        DayplanView dayplanView = new DayplanView(businessDetailsView, dayplanController, userService);
+        DayplanView dayplanView = new DayplanView(userService, dayplanPresenter, dayplanController, businessDetailsPresenter);
+        userService.addPropertyChangeListener(dayplanView);
+        dayplanController.setView(dayplanView);
+
 
         views.add(signupView, signupView.viewName);
         views.add(loginView, loginView.viewName);

@@ -31,10 +31,9 @@ public class DayplanInputController {
 //        User user = loginController.getUser();
 //        ArrayList<String> coordinates = signupController.getLocation();
         User user = userService.getCurrentUser();
-        ArrayList<String> coordinates = this.userService.getCurrentLocation();
-        String latitude = coordinates.get(0);
-        String longitude = coordinates.get(1);
-        String location = latitude + ", " + longitude;
+
+        ArrayList<Double> coordinates = user.getLocation();
+        String location = coordinates.getFirst() + "," + coordinates.getLast();
 
         UserDayPlanInputData userDayPlanInputData = new UserDayPlanInputData(
                 user, location, city, numMeals, numActivities, description);

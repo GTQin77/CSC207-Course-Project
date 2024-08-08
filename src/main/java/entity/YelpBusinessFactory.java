@@ -31,7 +31,7 @@ public class YelpBusinessFactory implements BusinessFactory {
 
 
 
-        Double distance = getDifference(location, userLocation);
+        Double distance = (Double) getDifference(location, userLocation);
         String type = "";
 
         return new Business(name, location, distance, contactNum, price, rating, type);
@@ -43,7 +43,7 @@ public class YelpBusinessFactory implements BusinessFactory {
      * @param location2 is at ArrayList[1]. Negative numbers are south.
      * @return a double that is the distance between the two locations
      * */
-    private static double getDifference(ArrayList<Double> location1, ArrayList<Double> location2) {
+    private static Double getDifference(ArrayList<Double> location1, ArrayList<Double> location2) {
         double differenceNm;
         double radLong1;
         double radLong2;

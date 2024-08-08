@@ -41,4 +41,8 @@ public class DayplanController {
         userService.setDayplan(refreshedDayplan);
         view.updateBusinessButtons(updatedBusinesses);
     }
+
+    public void setView(DayplanView view) {
+        this.view = view;
+    }
 }
