@@ -18,7 +18,6 @@ public class BusinessDetailsView extends JPanel implements BusinessDetailsViewIn
     private JLabel contactNumLabel;
     private JLabel priceLabel;
     private JLabel ratingsLabel;
-    private JLabel typeLabel;
     private JButton returnButton;
     private JButton editUserButton;
     private BusinessDetailsPresenter presenter;
@@ -27,31 +26,35 @@ public class BusinessDetailsView extends JPanel implements BusinessDetailsViewIn
         this.presenter = presenter;
         setLayout(new BorderLayout());
 
-
-
-        JPanel detailsPanel = new JPanel(new GridLayout(7, 2, 10, 10));
+        JPanel detailsPanel = new JPanel(new GridLayout(6, 2, 10, 10));
         nameLabel = new JLabel();
         locationLabel = new JLabel();
         distanceLabel = new JLabel();
         contactNumLabel = new JLabel();
         priceLabel = new JLabel();
         ratingsLabel = new JLabel();
-        typeLabel = new JLabel();
 
-        detailsPanel.add(new JLabel("Name:"));
-        detailsPanel.add(nameLabel);
-        detailsPanel.add(new JLabel("Location:"));
-        detailsPanel.add(locationLabel);
-        detailsPanel.add(new JLabel("Distance:"));
-        detailsPanel.add(distanceLabel);
-        detailsPanel.add(new JLabel("Contact Number:"));
-        detailsPanel.add(contactNumLabel);
-        detailsPanel.add(new JLabel("Price:"));
-        detailsPanel.add(priceLabel);
-        detailsPanel.add(new JLabel("Ratings:"));
-        detailsPanel.add(ratingsLabel);
-        detailsPanel.add(new JLabel("Type:"));
-        detailsPanel.add(typeLabel);
+        JLabel[] labels = {
+                new JLabel("Name:", JLabel.RIGHT),
+                nameLabel,
+                new JLabel("Location:", JLabel.RIGHT),
+                locationLabel,
+                new JLabel("Distance:", JLabel.RIGHT),
+                distanceLabel,
+                new JLabel("Contact Number:", JLabel.RIGHT),
+                contactNumLabel,
+                new JLabel("Price:", JLabel.RIGHT),
+                priceLabel,
+                new JLabel("Ratings:", JLabel.RIGHT),
+                ratingsLabel
+        };
+
+
+        for (JLabel label : labels) {
+            label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+            detailsPanel.add(label);
+        }
+
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         returnButton = new JButton("Return");
@@ -75,6 +78,7 @@ public class BusinessDetailsView extends JPanel implements BusinessDetailsViewIn
         contactNumLabel.setText(viewModel.getContactNum());
         priceLabel.setText(viewModel.getPrice());
         ratingsLabel.setText(viewModel.getRatings());
-        typeLabel.setText(viewModel.getType());
+
+        presenter.navigateToBusinessDetails();
     }
 }

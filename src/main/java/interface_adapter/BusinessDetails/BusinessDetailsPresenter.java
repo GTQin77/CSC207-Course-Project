@@ -11,14 +11,17 @@ public class BusinessDetailsPresenter {
     private BusinessDetailsViewModel viewModel;
     private BusinessDetailsViewInterface view;
 
-    public BusinessDetailsPresenter(ViewManagerModel viewManagerModel) {
+
+    public BusinessDetailsPresenter(ViewManagerModel viewManagerModel, BusinessDetailsViewModel viewModel, UserService userService) {
         this.viewManagerModel = viewManagerModel;
+        this.viewModel = viewModel;
+        this.userService = userService;
     }
 
-//    public void navigateToBusinessDetails() {
-//        viewManagerModel.setActiveView("BusinessDetails");
-//        viewManagerModel.firePropertyChanged();
-//    }
+    public void navigateToBusinessDetails() {
+        viewManagerModel.setActiveView("BusinessDetails");
+        viewManagerModel.firePropertyChanged();
+    }
 
     public void navigateToEditUserInfo() {
         userService.setPrevView("BusinessDetails");
@@ -29,11 +32,6 @@ public class BusinessDetailsPresenter {
     public void nagivateToDayplan() {
         viewManagerModel.setActiveView("DayplanView");
         viewManagerModel.firePropertyChanged();
-    }
-
-    public void loadBusinessDetails(Business business) {
-        viewModel.updateBusinessDetails(business);
-        view.displayDetails(viewModel);
     }
 
 }

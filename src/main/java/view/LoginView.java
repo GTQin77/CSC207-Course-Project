@@ -5,6 +5,7 @@ import interface_adapter.Login.LoginController;
 import interface_adapter.Login.LoginState;
 import interface_adapter.Login.LoginViewModel;
 import interface_adapter.Signup.SignupController;
+import interface_adapter.Signup.SignupState;
 import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 
@@ -126,15 +127,24 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         }
     }
 
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LoginState state = (LoginState) evt.getNewValue();
-        setFields(state);
+        if (state.getErrorMessage() != null) {
+            JOptionPane.showMessageDialog(this, state.getErrorMessage());
+        }
     }
 
-    private void setFields(LoginState state) {
-        usernameInputField.setText(state.getUsername());
-        passwordInputField.setText(state.getPassword());
-    }
+//    @Override
+//    public void propertyChange(PropertyChangeEvent evt) {
+//        LoginState state = (LoginState) evt.getNewValue();
+//        setFields(state);
+//    }
+//
+//    private void setFields(LoginState state) {
+//        usernameInputField.setText(state.getUsername());
+//        passwordInputField.setText(state.getPassword());
+//    }
 
 }
