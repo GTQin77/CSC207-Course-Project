@@ -24,6 +24,7 @@ public class CommonDayplanFactory implements DayplanFactory{
     public YelpInterface getYelpApi(){return this.yelpApi;}
 
     public void setBusinessFactory(BusinessFactory businessFactory){this.businessFactory = businessFactory;}
+    public BusinessFactory getBusinessFactory(){return this.businessFactory;}
 
 
     /**

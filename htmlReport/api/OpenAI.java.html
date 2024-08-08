@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OpenAI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">api</a> &gt; <span class="el_source">OpenAI.java</span></div><h1>OpenAI.java</h1><pre class="source lang-java linenums">package api;
+
+import okhttp3.*;
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.IOException;
+
+<span class="nc" id="L10">public class OpenAI implements OpenInterface{</span>
+    private static final String URL = &quot;https://api.openai.com/v1/chat/completions&quot;;
+<span class="nc" id="L12">    private static final String API_TOKEN = System.getenv(&quot;API_TOKEN_2&quot;);</span>
+    public static String getApiToken() {
+<span class="nc" id="L14">        return API_TOKEN;</span>
+    }
+
+    /**
+     * Get a category from OpenAI GPT-4o-mini model.
+     * &lt;p&gt;
+     * This implementation closely follows the grade-api in Tutorial 3 on
+     * &lt;a href=&quot;https://github.com/Yasamanro/grade-api&quot;&gt;github.com&lt;/a&gt;.
+     * &lt;/p&gt;
+     *
+     * @param userMessage User description of the day that he/she wants.
+     * @return a category name.
+     */
+    @Override
+    public String getCategory(String userMessage, boolean isMeal) {
+<span class="nc" id="L29">        OkHttpClient client = new OkHttpClient().newBuilder()</span>
+<span class="nc" id="L30">                .build();</span>
+
+        // setting up the input to GPT
+<span class="nc" id="L33">        String model = &quot;gpt-4o-mini&quot;;</span>
+<span class="nc" id="L34">        JSONObject callBody = getObject(userMessage, model, isMeal);</span>
+
+        // build request
+<span class="nc" id="L37">        return getAPICallString(client, callBody);</span>
+    }
+
+
+    /**
+     * Get the three words descriptor of the user's dayplan.
+     * &lt;p&gt;
+     * This implementation closely follows the grade-api in Tutorial 3 on
+     * &lt;a href=&quot;https://github.com/Yasamanro/grade-api&quot;&gt;github.com&lt;/a&gt;.
+     * &lt;/p&gt;
+     *
+     * @param businessesNames A string containing the businesses name in user's dayplan.
+     * @return three words describing the vibe of today.
+     */
+    @Override
+    public String getVibe(String businessesNames) {
+<span class="nc" id="L53">        OkHttpClient client = new OkHttpClient().newBuilder()</span>
+<span class="nc" id="L54">                .build();</span>
+
+        // again, setting up the input to GPT
+<span class="nc" id="L57">        String model = &quot;gpt-4o-mini&quot;;</span>
+<span class="nc" id="L58">        JSONObject callBody = getJsonObject(businessesNames, model);</span>
+
+        // build request
+<span class="nc" id="L61">        return getAPICallString(client, callBody);</span>
+    }
+
+
+    /**
+     * Helper method for getCategory and getVibe.
+     * @param client Http client for calling the API.
+     * @param callBody the body of API call.
+     * @return a category name or three words description of the day.
+     */
+    @NotNull
+    private String getAPICallString(OkHttpClient client, JSONObject callBody) {
+<span class="nc" id="L73">        RequestBody body = RequestBody.create(callBody.toString(), MediaType.parse(&quot;application/json&quot;));</span>
+<span class="nc" id="L74">        Request request = new Request.Builder()</span>
+<span class="nc" id="L75">                .url(&quot;https://api.openai.com/v1/chat/completions&quot;)</span>
+<span class="nc" id="L76">                .addHeader(&quot;Authorization&quot;, &quot;Bearer &quot; + API_TOKEN)</span>
+<span class="nc" id="L77">                .addHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
+<span class="nc" id="L78">                .post(body)</span>
+<span class="nc" id="L79">                .build();</span>
+
+        try {
+<span class="nc" id="L82">            Response response = client.newCall(request).execute();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">            assert response.body() != null;</span>
+<span class="nc" id="L84">            JSONObject responseBody = new JSONObject(response.body().string());</span>
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (response.isSuccessful()) {</span>
+<span class="nc" id="L87">                JSONArray choices = responseBody.getJSONArray(&quot;choices&quot;);</span>
+<span class="nc" id="L88">                JSONObject choiceOne = choices.getJSONObject(0);</span>
+<span class="nc" id="L89">                JSONObject GPTresponse = choiceOne.getJSONObject(&quot;message&quot;);</span>
+<span class="nc" id="L90">                String responseContent = GPTresponse.getString(&quot;content&quot;);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                return responseContent.replace(&quot;\n&quot;, &quot;&quot;);</span>
+
+            } else {
+<span class="nc" id="L94">                throw new RuntimeException(&quot;Failed to call OpenAI API.&quot;);</span>
+            }
+<span class="nc" id="L96">        } catch (IOException | JSONException e) {</span>
+<span class="nc" id="L97">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Helper method of the getCategory, this builds the API call.
+     *
+     * @param userMessage User description of the day that he/she wants.
+     * @param model       Model of GPT that is using, always gpt-4o-mini in our case.
+     * @return the body of the API call for get Category.
+     */
+    private static @NotNull JSONObject getObject(String userMessage, String model, boolean isMeal) {
+<span class="nc" id="L109">        JSONObject callBody = new JSONObject();</span>
+<span class="nc" id="L110">        callBody.put(&quot;model&quot;, model); // model that you want to use</span>
+
+<span class="nc" id="L112">        JSONObject message = new JSONObject();</span>
+<span class="nc" id="L113">        JSONArray messages = new JSONArray();</span>
+<span class="nc" id="L114">        message.put(&quot;role&quot;, &quot;user&quot;);</span>
+        String note;
+        String categories;
+<span class="nc" id="L117">        String warn = &quot;. Only return the category name.&quot;;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (isMeal){</span>
+<span class="nc" id="L119">            note = &quot;, select one category of food from the following that matches the prompt most: &quot;;</span>
+<span class="nc" id="L120">            categories = &quot;\&quot;african, tradamerican, arabian, bbq, bistros, breakfast_brunch, buffets, burgers, cafes, &quot; +</span>
+                    &quot;carribean, chickenshop, chinese, cuban, diners, dumplings, hotdogs, filipino, fishnchips, &quot; +
+                    &quot;french, greek, halal, indian, italian, japanese, korean, mexican, mediterranean, noodles, &quot; +
+                    &quot;oriental, panasian, pubfood, salad, seafood, soulfood, soup, steakhouses, sushi bars, vegan, &quot; +
+                    &quot;vegetarian, vietnamese, thai, sandwiches, portuguese, mideastern\&quot;&quot;;
+        }
+        else{
+<span class="nc" id="L127">            note = &quot;, select one category from the following that matches the prompt most: &quot;;</span>
+<span class="nc" id="L128">            categories = &quot;\&quot;active, arts, beautysvc, nightlife, shopping\&quot;&quot;;</span>
+        }
+<span class="nc" id="L130">        String prompt = &quot;Given the prompt:&quot; + &quot;\&quot;&quot; + userMessage + &quot;\&quot;&quot; + note + categories + warn;</span>
+<span class="nc" id="L131">        message.put(&quot;content&quot;, prompt);</span>
+<span class="nc" id="L132">        messages.put(message);</span>
+
+<span class="nc" id="L134">        callBody.put(&quot;messages&quot;, messages);</span>
+<span class="nc" id="L135">        callBody.put(&quot;temperature&quot;, 0.2); // set to 0.2 to gives strict response</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        return callBody;</span>
+    }
+
+
+    /**
+     * Helper method of the getVibe.
+     * @param businessesNames A string containing the businesses name in user's dayplan.
+     * @param model Model of GPT that is using, always gpt-4o-mini in our case.
+     * @return the body of the API call for getVibe.
+     */
+    private static @NotNull JSONObject getJsonObject(String businessesNames, String model) {
+<span class="nc" id="L147">        JSONObject callBody = new JSONObject();</span>
+<span class="nc" id="L148">        callBody.put(&quot;model&quot;, model); // model that you want to use</span>
+
+<span class="nc" id="L150">        JSONObject message = new JSONObject();</span>
+<span class="nc" id="L151">        JSONArray messages = new JSONArray();</span>
+<span class="nc" id="L152">        message.put(&quot;role&quot;, &quot;user&quot;);</span>
+<span class="nc" id="L153">        String pre = &quot;Suppose that a person went to the following locations in his day: &quot;;</span>
+<span class="nc" id="L154">        String note = &quot;. Please return three words that you think suit this person's day.&quot;;</span>
+<span class="nc" id="L155">        String prompt = pre + businessesNames + note;</span>
+<span class="nc" id="L156">        message.put(&quot;content&quot;, prompt);</span>
+<span class="nc" id="L157">        messages.put(message);</span>
+
+<span class="nc" id="L159">        callBody.put(&quot;messages&quot;, messages);</span>
+<span class="nc" id="L160">        callBody.put(&quot;temperature&quot;, 0.2); // set to 0.2 to gives strict response</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        return callBody;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

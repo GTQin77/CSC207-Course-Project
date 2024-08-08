@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserLoginOutputData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">use_case.user_login</a> &gt; <span class="el_source">UserLoginOutputData.java</span></div><h1>UserLoginOutputData.java</h1><pre class="source lang-java linenums">package use_case.user_login;
+
+import entity.User;
+
+/**
+ * &lt;p&gt;
+ * This implementation referenced the Pualgries' Clean Architecture code for SignupInputBoundary on
+ * &lt;a href=&quot;https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/use_case/SignupInputBoundary.java&quot;&gt;github.com&lt;/a&gt;.
+ * &lt;/p&gt;
+ * Output data of the user login use case.
+ */
+public class UserLoginOutputData {
+    private final User user;
+    private final boolean loginSuccessful;
+    private String loginTime;
+
+    /**
+     *
+     * @param user The user object if login is successful, null otherwise.
+     * @param loginSuccessful Whether the login was successful.
+     * @param loginTime When the login occurred.
+     */
+<span class="nc" id="L23">    public UserLoginOutputData(User user, boolean loginSuccessful, String loginTime) {</span>
+<span class="nc" id="L24">        this.user = user;</span>
+<span class="nc" id="L25">        this.loginSuccessful = loginSuccessful;</span>
+<span class="nc" id="L26">        this.loginTime = loginTime;</span>
+<span class="nc" id="L27">    }</span>
+
+    public User getUser() {
+<span class="nc" id="L30">        return user;</span>
+    }
+
+    public boolean isLoginSuccessful() {
+<span class="nc" id="L34">        return loginSuccessful;</span>
+    }
+
+    public String getLoginTime() {
+<span class="nc" id="L38">        return loginTime;</span>
+    }
+
+    public void setLoginTime(String loginTime) {
+<span class="nc" id="L42">        this.loginTime = loginTime;</span>
+<span class="nc" id="L43">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

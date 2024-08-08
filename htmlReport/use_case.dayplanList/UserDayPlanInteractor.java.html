@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserDayPlanInteractor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">use_case.dayplanList</a> &gt; <span class="el_source">UserDayPlanInteractor.java</span></div><h1>UserDayPlanInteractor.java</h1><pre class="source lang-java linenums">package use_case.dayplanList;
+
+import api.OpenAI;
+import api.YelpFusion;
+import data_access.DayPlanDataAccessInterface;
+import entity.*;
+// NOTE TO SELF: Should import a DayplanFactory interface instead, no time :(
+
+import java.util.ArrayList;
+
+public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
+
+    final DayPlanDataAccessInterface dayPlanDataAccessObject;
+    final UserDayPlanOutputBoundary dayplanPresenter;
+
+    public DayplanFactory getDayplanFactory() {
+<span class="nc" id="L17">        return dayplanFactory;</span>
+    }
+
+    public void setDayplanFactory(DayplanFactory dayplanFactory) {
+<span class="nc" id="L21">        this.dayplanFactory = dayplanFactory;</span>
+<span class="nc" id="L22">    }</span>
+
+    private DayplanFactory dayplanFactory;
+
+    public UserDayPlanInteractor(DayPlanDataAccessInterface dayPlanDataAccessInterface,
+                                UserDayPlanOutputBoundary userDayPlanOutputBoundary,
+<span class="nc" id="L28">                                DayplanFactory dayplanFactory) {</span>
+<span class="nc" id="L29">        this.dayPlanDataAccessObject = dayPlanDataAccessInterface;</span>
+<span class="nc" id="L30">        this.dayplanPresenter = userDayPlanOutputBoundary;</span>
+<span class="nc" id="L31">        this.dayplanFactory = dayplanFactory;</span>
+<span class="nc" id="L32">    }</span>
+
+    /**
+     * Interactor method that creates a dayplan, creates all API objects, and factories necessary for flow.
+     *
+     * @param input UserDayPlanInputData.
+     * @return
+     */
+    @Override
+    public Dayplan execute(UserDayPlanInputData input) {
+        // 1. Process Input Data
+<span class="nc" id="L43">        ArrayList&lt;Double&gt; location = new ArrayList&lt;Double&gt;();</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        for (int i = 0; i &lt; input.getLocation().size(); i++){</span>
+<span class="nc" id="L45">            Double coord = Double.valueOf(input.getLocation().get(i));</span>
+<span class="nc" id="L46">            location.add(coord);</span>
+        }
+        // 2. Initialize API objects and set our attributes to them
+<span class="nc" id="L49">        OpenAI openAI = new OpenAI();</span>
+<span class="nc" id="L50">        YelpFusion yelpFusion = new YelpFusion();</span>
+
+        // 3. Initialize our DayplanFactory trait using the API objects we made previously
+<span class="nc" id="L53">        CommonDayplanFactory commonDayplanFactory = new CommonDayplanFactory();</span>
+<span class="nc" id="L54">        BusinessFactory businessFactory = new YelpBusinessFactory(yelpFusion);</span>
+<span class="nc" id="L55">        commonDayplanFactory.setOpenApi(openAI);</span>
+<span class="nc" id="L56">        commonDayplanFactory.setYelpApi(yelpFusion);</span>
+<span class="nc" id="L57">        commonDayplanFactory.setBusinessFactory(businessFactory);</span>
+
+        // 4. Create a new Dayplan object using factories
+<span class="nc" id="L60">        Dayplan dayplan = commonDayplanFactory.create(input.getUser(), location, input.getCity(), input.getNumMeals(),</span>
+<span class="nc" id="L61">                input.getNumActivities(), input.getDescription());</span>
+
+        // 5. Write new Dayplan to database using DAO
+<span class="nc" id="L64">        this.dayPlanDataAccessObject.saveDayPlan(dayplan);</span>
+        // 6. Prepare Output Data
+<span class="nc" id="L66">        UserDayPlanOutputData outputData = new UserDayPlanOutputData(dayplan);</span>
+<span class="nc" id="L67">        this.dayplanPresenter.prepareDayplanView(outputData);</span>
+<span class="nc" id="L68">        return dayplan;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EditInfoUseCaseFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">app</a> &gt; <span class="el_source">EditInfoUseCaseFactory.java</span></div><h1>EditInfoUseCaseFactory.java</h1><pre class="source lang-java linenums">package app;
+
+import data_access.EditInfoDataAccessObject;
+import data_access.EditInfoDataAccessInterface;
+import data_access.UserSignupDataAccessObject;
+import entity.*;
+import interface_adapter.EditInfo.*;
+import interface_adapter.Login.LoginViewModel;
+import interface_adapter.Signup.SignupController;
+import interface_adapter.Signup.SignupPresenter;
+import interface_adapter.Signup.SignupViewModel;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.Welcome.WelcomeViewModel;
+import services.UserService;
+import use_case.edit_info.EditInfoInputBoundary;
+import use_case.edit_info.EditInfoInteractor;
+import use_case.edit_info.EditInfoOutputBoundary;
+import use_case.user_signup.UserSignupInputBoundary;
+import use_case.user_signup.UserSignupInteractor;
+import use_case.user_signup.UserSignupOutputBoundary;
+import view.SignupView;
+import view.EditInfoView;
+
+import javax.swing.*;
+import java.io.IOException;
+
+
+public class EditInfoUseCaseFactory {
+
+    /** Prevent instantiation. */
+    private EditInfoUseCaseFactory() {}
+
+    public static EditInfoView create(ViewManagerModel viewManagerModel, EditInfoViewModel editInfoViewModel, UserService userService) {
+
+        try {
+<span class="nc" id="L36">            EditInfoController editInfoController = createEditInfoUseCase(viewManagerModel, editInfoViewModel, userService);</span>
+<span class="nc" id="L37">            return new EditInfoView(editInfoController, editInfoViewModel, viewManagerModel, userService);</span>
+<span class="nc" id="L38">        } catch (IOException e) {</span>
+<span class="nc" id="L39">            JOptionPane.showMessageDialog(null, &quot;Error.&quot;);</span>
+        }
+<span class="nc" id="L41">        return null;</span>
+    }
+
+    private static EditInfoController createEditInfoUseCase(ViewManagerModel viewManagerModel, EditInfoViewModel editInfoViewModel, UserService userService) throws IOException {
+        // UserService at this point stores previous unedited old User object
+        // DAO must take in old User, new Username, new Password, new Location
+<span class="nc" id="L47">        EditInfoDataAccessObject editInfoDAO = new EditInfoDataAccessObject();</span>
+
+<span class="nc" id="L49">        editInfoDAO.setcsvPathAndcsvFile(&quot;./src/main/resources/UserDatabase.csv&quot;);</span>
+        // Notice how we pass this method's parameters to the Presenter.
+<span class="nc" id="L51">        EditInfoOutputBoundary editInfoOutputBoundary = new EditInfoPresenter(viewManagerModel, editInfoViewModel);</span>
+
+<span class="nc" id="L53">        EditInfoInputBoundary editInfoInteractor = new EditInfoInteractor(</span>
+<span class="nc" id="L54">                editInfoDAO, editInfoOutputBoundary, userService.getCurrentUser()); // Need to input an actual user object here</span>
+
+<span class="nc" id="L56">        return new EditInfoController(editInfoInteractor);</span>
+    }
+
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

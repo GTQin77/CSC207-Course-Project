@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EditInfoViewModel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">interface_adapter.EditInfo</a> &gt; <span class="el_source">EditInfoViewModel.java</span></div><h1>EditInfoViewModel.java</h1><pre class="source lang-java linenums">package interface_adapter.EditInfo;
+
+import interface_adapter.EditInfo.EditInfoState;
+import interface_adapter.ViewModel;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+
+public class EditInfoViewModel extends ViewModel{
+
+<span class="nc" id="L12">    public final String TITLE_LABEL = &quot;Edit Info View&quot;;</span>
+<span class="nc" id="L13">    public final String USERNAME_LABEL = &quot;Username(Optional)&quot;;</span>
+<span class="nc" id="L14">    public final String PASSWORD_LABEL = &quot;Password(Optional)&quot;;</span>
+<span class="nc" id="L15">    public final String REPEAT_PASSWORD_LABEL = &quot;Repeat password(Optional unless changing password)&quot;;</span>
+<span class="nc" id="L16">    public final String LOCATION_LABEL = &quot;Location (Optional)&quot;;</span>
+
+<span class="nc" id="L18">    public final String SUBMIT_CHANGES_BUTTON_LABEL = &quot;Submit Changes&quot;;</span>
+<span class="nc" id="L19">    public final String CANCEL_BUTTON_LABEL = &quot;Cancel&quot;;</span>
+
+<span class="nc" id="L21">    private EditInfoState state = new EditInfoState();</span>
+
+    public EditInfoViewModel() {
+<span class="nc" id="L24">        super(&quot;edit info&quot;);</span>
+<span class="nc" id="L25">    }</span>
+
+    public void setState(EditInfoState state) {
+<span class="nc" id="L28">        this.state = state;</span>
+<span class="nc" id="L29">    }</span>
+
+<span class="nc" id="L31">    private final PropertyChangeSupport support = new PropertyChangeSupport(this);</span>
+
+    // This is what the Presenter will call to let the ViewModel know
+    // to alert the View
+    public void firePropertyChanged() {
+<span class="nc" id="L36">        support.firePropertyChange(&quot;state&quot;, null, this.state);</span>
+<span class="nc" id="L37">    }</span>
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+<span class="nc" id="L40">        support.addPropertyChangeListener(listener);</span>
+<span class="nc" id="L41">    }</span>
+
+    public EditInfoState getState() {
+<span class="nc" id="L44">        return state;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

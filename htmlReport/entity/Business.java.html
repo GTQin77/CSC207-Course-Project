@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Business.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">entity</a> &gt; <span class="el_source">Business.java</span></div><h1>Business.java</h1><pre class="source lang-java linenums">package entity;
+
+import java.util.ArrayList;
+
+public class Business {
+    private String name;
+    private ArrayList&lt;Double&gt; location;
+    private Double distance;
+    private String contactNum;
+    private String price;
+    private Float ratings;
+    private String type;
+
+    public Business(String name, ArrayList&lt;Double&gt; location, Double distance, String contactNum,
+<span class="nc" id="L15">                    String price, Float rating, String type) {</span>
+<span class="nc" id="L16">        this.name = name;</span>
+<span class="nc" id="L17">        this.location = location;</span>
+<span class="nc" id="L18">        this.distance = distance;</span>
+<span class="nc" id="L19">        this.contactNum = contactNum;</span>
+<span class="nc" id="L20">        this.price = price;</span>
+<span class="nc" id="L21">        this.ratings = rating;</span>
+<span class="nc" id="L22">        this.type = type;</span>
+<span class="nc" id="L23">    }</span>
+
+<span class="nc" id="L25">    public String getName() { return name; }</span>
+
+<span class="nc" id="L27">    public void setName(String name) { this.name = name; }</span>
+
+    public ArrayList&lt;Double&gt; getLocation() {
+<span class="nc" id="L30">        return location;</span>
+    }
+
+    public void setLocation(ArrayList&lt;Double&gt; location) {
+<span class="nc" id="L34">        this.location = location;</span>
+<span class="nc" id="L35">    }</span>
+
+    public Double getDistance() {
+<span class="nc" id="L38">        return distance;</span>
+    }
+
+    public void setDistance(Double distance) {
+<span class="nc" id="L42">        this.distance = distance;</span>
+<span class="nc" id="L43">    }</span>
+
+    public String getContactNum() {
+<span class="nc" id="L46">        return contactNum;</span>
+    }
+
+    public void setContactNum(String contactNum) {
+<span class="nc" id="L50">        this.contactNum = contactNum;</span>
+<span class="nc" id="L51">    }</span>
+
+    public String getPrice() {
+<span class="nc" id="L54">        return price;</span>
+    }
+
+    public void setPrice(String price) {
+<span class="nc" id="L58">        this.price = price;</span>
+<span class="nc" id="L59">    }</span>
+
+<span class="nc" id="L61">    public Float getRatings() { return ratings; }</span>
+
+<span class="nc" id="L63">    public void setRatings(Float ratings) { this.ratings = ratings; }</span>
+
+<span class="nc" id="L65">    public String getType() {return type; }</span>
+<span class="nc" id="L66">    public void setType(String type) { this.type = type; }</span>
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
