@@ -33,7 +33,7 @@ class CommonRefreshBusinessFactoryTest {
         commonDayplanFactory.setOpenApi(openAI);
         commonDayplanFactory.setYelpApi(yelpFusion);
         commonRefreshBusinessFactory = new CommonRefreshBusinessFactory(openAI,yelpFusion, yelpBusinessFactory);
-        testUser = new User("test","test",new ArrayList<>(2));
+        testUser = new User("test","test",new ArrayList<>(2){{add(0.0);add(0.0);}});
         ArrayList<Double> location = new ArrayList<>() {{
             add(0.0);
             add(0.0);
@@ -46,9 +46,5 @@ class CommonRefreshBusinessFactoryTest {
     void testRefreshBusiness() {
         Business newBusiness = commonRefreshBusinessFactory.generateNewBusiness(dayplan, "Meal");
         assertNotEquals(businessName, newBusiness.getName());
-    }
-
-    @Test
-    void isMeal() {
     }
 }
