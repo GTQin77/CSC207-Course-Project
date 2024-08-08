@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>YelpFusion.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">api</a> &gt; <span class="el_source">YelpFusion.java</span></div><h1>YelpFusion.java</h1><pre class="source lang-java linenums">package api;
+
+import java.util.ArrayList;
+import okhttp3.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.IOException;
+
+
+<span class="nc" id="L11">public class YelpFusion implements YelpInterface{</span>
+    private static final String URL = &quot;https://api.yelp.com/v3&quot;;
+<span class="nc" id="L13">    private static final String API_TOKEN = System.getenv(&quot;API_TOKEN&quot;);</span>
+    public static String getApiToken() {
+<span class="nc" id="L15">        return API_TOKEN;</span>
+    }
+
+    /**
+     * Get the ids of businesses within a specified category and near the user's location.
+     * &lt;p&gt;
+     * This implementation closely follows the grade-api in Tutorial 3 on
+     * &lt;a href=&quot;https://github.com/Yasamanro/grade-api&quot;&gt;github.com&lt;/a&gt;.
+     * &lt;/p&gt;
+     *
+     * @param category Category chosen by ChatGPT.
+     * @param city The city's name of where the user is at.
+     * @param i        Number of business ID that you want.
+     * @return the ids of the businesses.
+     * @throws RuntimeException If API call failed or failed to extract businessID.
+     */
+    @Override
+    public ArrayList&lt;String&gt; getBusinessIDs(String category, String city, Integer i) {
+<span class="nc" id="L33">        OkHttpClient client = new OkHttpClient().newBuilder()</span>
+<span class="nc" id="L34">                .build();</span>
+<span class="nc" id="L35">        Request request = new Request.Builder()</span>
+<span class="nc" id="L36">                .url(String.format(&quot;https://api.yelp.com/v3/businesses/search?categories=%s&amp;location=%s&quot;,</span>
+                        category, city))
+<span class="nc" id="L38">                .addHeader(&quot;Authorization&quot;, &quot;Bearer &quot; + API_TOKEN)</span>
+<span class="nc" id="L39">                .addHeader(&quot;accept&quot;, &quot;application/json&quot;)</span>
+<span class="nc" id="L40">                .build();</span>
+
+        try {
+<span class="nc" id="L43">            Response response = client.newCall(request).execute();</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">            assert response.body() != null;</span>
+<span class="nc" id="L45">            JSONObject responseBody = new JSONObject(response.body().string());</span>
+
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            if (response.isSuccessful()) {</span>
+<span class="nc" id="L48">                JSONArray businessList = responseBody.getJSONArray(&quot;businesses&quot;);</span>
+
+<span class="nc" id="L50">                ArrayList&lt;String&gt; businessIds = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">                for (int ind = 0; ind &lt; i; ind++) {</span>
+<span class="nc" id="L52">                    JSONObject business = businessList.getJSONObject(ind);</span>
+<span class="nc" id="L53">                    businessIds.add(business.getString(&quot;id&quot;));</span>
+                }
+<span class="nc" id="L55">                return businessIds;</span>
+
+            } else {
+<span class="nc" id="L58">                throw new RuntimeException(responseBody.getString(&quot;code&quot;));</span>
+            }
+<span class="nc" id="L60">        } catch (IOException | JSONException e) {</span>
+<span class="nc" id="L61">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Get the information of a business when given the businessID.
+     * &lt;p&gt;
+     * This implementation closely follows the grade-api in Tutorial 3 on
+     * &lt;a href=&quot;https://github.com/Yasamanro/grade-api&quot;&gt;github.com&lt;/a&gt;.
+     * &lt;/p&gt;
+     *
+     * @param businessID ID of the business.
+     * @return the name, rating, price, contact number, distance to user and location of the business.
+     * @throws RuntimeException If API call failed or failed to extract business details.
+     */
+    @Override
+    public ArrayList&lt;Object&gt; getBusiness(String businessID) {
+<span class="nc" id="L78">        OkHttpClient client = new OkHttpClient().newBuilder()</span>
+<span class="nc" id="L79">                .build();</span>
+<span class="nc" id="L80">        Request request = new Request.Builder()</span>
+<span class="nc" id="L81">                .url(String.format(&quot;https://api.yelp.com/v3/businesses/%s&quot;,</span>
+                        businessID))
+<span class="nc" id="L83">                .addHeader(&quot;Authorization&quot;, &quot;Bearer &quot; + API_TOKEN)</span>
+<span class="nc" id="L84">                .addHeader(&quot;accept&quot;, &quot;application/json&quot;)</span>
+<span class="nc" id="L85">                .build();</span>
+        try {
+<span class="nc" id="L87">            Response response = client.newCall(request).execute();</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">            assert response.body() != null;</span>
+<span class="nc" id="L89">            JSONObject responseBody = new JSONObject(response.body().string());</span>
+
+<span class="nc bnc" id="L91" title="All 2 branches missed.">            if (response.isSuccessful()) {</span>
+<span class="nc" id="L92">                String name = responseBody.getString(&quot;name&quot;);</span>
+<span class="nc" id="L93">                Float rating = responseBody.getFloat(&quot;rating&quot;);</span>
+                String price; // sometimes the price information is not available on Yelp
+<span class="nc bnc" id="L95" title="All 2 branches missed.">                if (responseBody.has(&quot;price&quot;)) {</span>
+<span class="nc" id="L96">                    price = responseBody.getString(&quot;price&quot;);</span>
+                } else {
+<span class="nc" id="L98">                    price = &quot;Information unavailable&quot;; // use this to prevent price from being not defined</span>
+                }
+<span class="nc" id="L100">                String contactNum = responseBody.getString(&quot;phone&quot;);</span>
+
+<span class="nc" id="L102">                JSONObject coordinates = responseBody.getJSONObject(&quot;coordinates&quot;);</span>
+<span class="nc" id="L103">                double latitude = coordinates.getDouble(&quot;latitude&quot;);</span>
+<span class="nc" id="L104">                double longitude = coordinates.getDouble(&quot;longitude&quot;);</span>
+
+<span class="nc" id="L106">                ArrayList&lt;Float&gt; locationBusiness = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L107">                locationBusiness.add((float) latitude);</span>
+<span class="nc" id="L108">                locationBusiness.add((float) longitude);</span>
+
+<span class="nc" id="L110">                ArrayList&lt;Object&gt; details = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L111">                details.add(name);</span>
+<span class="nc" id="L112">                details.add(rating);</span>
+<span class="nc" id="L113">                details.add(price);</span>
+<span class="nc" id="L114">                details.add(contactNum);</span>
+<span class="nc" id="L115">                details.add(locationBusiness);</span>
+
+<span class="nc" id="L117">                return details;</span>
+
+            } else {
+<span class="nc" id="L120">                throw new RuntimeException(responseBody.getString(&quot;message&quot;));</span>
+            }
+<span class="nc" id="L122">        } catch (IOException | JSONException e) {</span>
+<span class="nc" id="L123">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Get three reviews of a business corresponding to a specific businessID.
+     * &lt;p&gt;
+     * This implementation closely follows the grade-api in Tutorial 3 on
+     * &lt;a href=&quot;https://github.com/Yasamanro/grade-api&quot;&gt;github.com&lt;/a&gt;.
+     * &lt;/p&gt;
+     * @param businessID ID of the business.
+     * @return three reviews of the business.
+     * @throws RuntimeException If API call failed or failed to extract reviews.
+     */
+    @Override
+    public JSONArray getBusinessReviews(String businessID) {
+<span class="nc" id="L139">        OkHttpClient client = new OkHttpClient().newBuilder()</span>
+<span class="nc" id="L140">                .build();</span>
+<span class="nc" id="L141">        Request request = new Request.Builder()</span>
+<span class="nc" id="L142">                .url(String.format(&quot;https://api.yelp.com/v3/businesses/%s/reviews&quot;,</span>
+                        businessID))
+<span class="nc" id="L144">                .addHeader(&quot;Authorization&quot;, &quot;Bearer &quot; + API_TOKEN)</span>
+<span class="nc" id="L145">                .addHeader(&quot;accept&quot;, &quot;application/json&quot;)</span>
+<span class="nc" id="L146">                .build();</span>
+        try {
+<span class="nc" id="L148">            Response response = client.newCall(request).execute();</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">            assert response.body() != null;</span>
+<span class="nc" id="L150">            JSONObject responseBody = new JSONObject(response.body().string());</span>
+
+<span class="nc bnc" id="L152" title="All 2 branches missed.">            if (response.isSuccessful()) {</span>
+<span class="nc" id="L153">                return responseBody.getJSONArray(&quot;reviews&quot;);</span>
+
+            } else {
+<span class="nc" id="L156">                throw new RuntimeException(responseBody.getString(&quot;message&quot;));</span>
+            }
+<span class="nc" id="L158">        } catch (IOException | JSONException e) {</span>
+<span class="nc" id="L159">            throw new RuntimeException(e);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

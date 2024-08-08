@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EditInfoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">interface_adapter.EditInfo</a> &gt; <span class="el_source">EditInfoController.java</span></div><h1>EditInfoController.java</h1><pre class="source lang-java linenums">package interface_adapter.EditInfo;
+
+import entity.User;
+import services.UserService;
+import use_case.edit_info.EditInfoInputBoundary;
+import use_case.edit_info.EditInfoInteractor;
+import use_case.edit_info.EditInfoInputData;
+import use_case.user_signup.UserSignupInputBoundary;
+import use_case.user_signup.UserSignupInputData;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
+public class EditInfoController {
+    private User user;
+
+<span class="nc" id="L17">    public User getUser() {return user;}</span>
+
+<span class="nc" id="L19">    public void setUser(User user) {this.user = user;}</span>
+
+    final EditInfoInputBoundary editInfoInteractor;
+
+<span class="nc" id="L23">    public EditInfoController(EditInfoInputBoundary editInfoInteractor) {</span>
+<span class="nc" id="L24">        this.editInfoInteractor = editInfoInteractor;</span>
+<span class="nc" id="L25">    }</span>
+
+    /**
+     * Controller for edit user info use case that calls Interactor's execute method.
+     * @param username from input
+     * @param password1 from input
+     * @param password2 from input, repeated password
+     * @param location from input.
+     */
+    public void execute(String username, String password1, String password2, String location, UserService userService) {
+<span class="nc" id="L35">        EditInfoInputData editInfoInputData = new EditInfoInputData(</span>
+                username, password1, password2, location, user);
+
+<span class="nc" id="L38">        this.user = editInfoInteractor.execute(editInfoInputData, userService);</span>
+
+<span class="nc" id="L40">        this.setUser(user);</span>
+<span class="nc" id="L41">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

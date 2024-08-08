@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DayplanController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">interface_adapter.Dayplan</a> &gt; <span class="el_source">DayplanController.java</span></div><h1>DayplanController.java</h1><pre class="source lang-java linenums">package interface_adapter.Dayplan;
+
+import entity.Business;
+import entity.Dayplan;
+import services.UserService;
+import use_case.refresh.RefreshInputBoundary;
+import use_case.refresh.RefreshInputData;
+import view.DayplanView;
+import view.ViewManager;
+
+import java.util.ArrayList;
+
+
+public class DayplanController {
+    private DayplanViewModel viewModel;
+    private ViewManager viewManager;
+    private UserService userService;
+    private DayplanView view;
+    final RefreshInputBoundary refreshInteractor;
+
+<span class="nc" id="L21">    public DayplanController(DayplanViewModel viewModel, ViewManager viewManager, UserService userService, RefreshInputBoundary refreshInteractor) {</span>
+<span class="nc" id="L22">        this.viewModel = viewModel;</span>
+<span class="nc" id="L23">        this.viewManager = viewManager;</span>
+<span class="nc" id="L24">        this.userService = userService;</span>
+<span class="nc" id="L25">        this.refreshInteractor = refreshInteractor;</span>
+<span class="nc" id="L26">    }</span>
+
+    public void loadBusinesses() {
+<span class="nc" id="L29">        Dayplan dayplan = userService.getDayplan();</span>
+<span class="nc" id="L30">        ArrayList&lt;Business&gt; businesses = dayplan.getPlan();</span>
+<span class="nc" id="L31">        viewModel.setBusinesses(businesses);</span>
+
+<span class="nc" id="L33">    }</span>
+
+    public void handleRefresh() {
+<span class="nc" id="L36">        Dayplan dayplan = userService.getDayplan();</span>
+<span class="nc" id="L37">        RefreshInputData refreshInputData = new RefreshInputData(dayplan);</span>
+<span class="nc" id="L38">        Dayplan refreshedDayplan = refreshInteractor.execute(refreshInputData);</span>
+<span class="nc" id="L39">        ArrayList&lt;Business&gt; updatedBusinesses = refreshedDayplan.getPlan();</span>
+<span class="nc" id="L40">        userService.setDayplan(refreshedDayplan);</span>
+<span class="nc" id="L41">        view.updateBusinessButtons(updatedBusinesses);</span>
+<span class="nc" id="L42">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

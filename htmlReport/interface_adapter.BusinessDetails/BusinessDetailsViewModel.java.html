@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BusinessDetailsViewModel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">interface_adapter.BusinessDetails</a> &gt; <span class="el_source">BusinessDetailsViewModel.java</span></div><h1>BusinessDetailsViewModel.java</h1><pre class="source lang-java linenums">package interface_adapter.BusinessDetails;
+
+import interface_adapter.ViewModel;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+public class BusinessDetailsViewModel extends ViewModel {
+    private String name;
+    private String location;
+    private String distance;
+    private String contactNum;
+    private String price;
+    private String ratings;
+    private String type;
+    private PropertyChangeSupport support;
+
+
+    public BusinessDetailsViewModel(String name, String location, String distance,
+                                    String contactNum, String price, String ratings, String type) {
+<span class="nc" id="L21">        super(&quot;BusinessDetails&quot;);</span>
+<span class="nc" id="L22">        this.name = name;</span>
+<span class="nc" id="L23">        this.location = location;</span>
+<span class="nc" id="L24">        this.distance = distance;</span>
+<span class="nc" id="L25">        this.contactNum = contactNum;</span>
+<span class="nc" id="L26">        this.price = price;</span>
+<span class="nc" id="L27">        this.ratings = ratings;</span>
+<span class="nc" id="L28">        this.type = type;</span>
+<span class="nc" id="L29">        this.support = new PropertyChangeSupport(this);</span>
+
+<span class="nc" id="L31">    }</span>
+
+    public String getName() {
+<span class="nc" id="L34">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="nc" id="L38">        this.name = name;</span>
+<span class="nc" id="L39">    }</span>
+
+    public String getLocation() {
+<span class="nc" id="L42">        return location;</span>
+    }
+
+    public void setLocation(String location) {
+<span class="nc" id="L46">        this.location = location;</span>
+<span class="nc" id="L47">    }</span>
+
+    public String getDistance() {
+<span class="nc" id="L50">        return distance;</span>
+    }
+
+    public void setDistance(String distance) {
+<span class="nc" id="L54">        this.distance = distance;</span>
+<span class="nc" id="L55">    }</span>
+
+    public String getContactNum() {
+<span class="nc" id="L58">        return contactNum;</span>
+    }
+
+    public void setContactNum(String contactNum) {
+<span class="nc" id="L62">        this.contactNum = contactNum;</span>
+<span class="nc" id="L63">    }</span>
+
+    public String getPrice() {
+<span class="nc" id="L66">        return price;</span>
+    }
+
+    public void setPrice(String price) {
+<span class="nc" id="L70">        this.price = price;</span>
+<span class="nc" id="L71">    }</span>
+
+    public String getRatings() {
+<span class="nc" id="L74">        return ratings;</span>
+    }
+
+    public void setRatings(String ratings) {
+<span class="nc" id="L78">        this.ratings = ratings;</span>
+<span class="nc" id="L79">    }</span>
+
+    public String getType() {
+<span class="nc" id="L82">        return type;</span>
+    }
+
+    public void setType(String type) {
+<span class="nc" id="L86">        this.type = type;</span>
+<span class="nc" id="L87">    }</span>
+
+    @Override
+    public void firePropertyChanged() {
+        // This method could be used to notify all listeners of a generic change.
+<span class="nc" id="L92">        support.firePropertyChange(&quot;modelUpdated&quot;, null, this);</span>
+<span class="nc" id="L93">    }</span>
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+<span class="nc" id="L97">        support.addPropertyChangeListener(listener);</span>
+<span class="nc" id="L98">    }</span>
+}
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

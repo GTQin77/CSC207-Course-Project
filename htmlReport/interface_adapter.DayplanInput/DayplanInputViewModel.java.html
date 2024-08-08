@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DayplanInputViewModel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main Coverage Results</a> &gt; <a href="index.source.html" class="el_package">interface_adapter.DayplanInput</a> &gt; <span class="el_source">DayplanInputViewModel.java</span></div><h1>DayplanInputViewModel.java</h1><pre class="source lang-java linenums">package interface_adapter.DayplanInput;
+
+import interface_adapter.ViewModel;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+public class DayplanInputViewModel extends ViewModel {
+<span class="fc" id="L9">    public final String TITLE_LABEL = &quot;Dayplan Input&quot;;</span>
+<span class="fc" id="L10">    public final String CITY_LABEL = &quot;Input City and Province&quot;;</span>
+<span class="fc" id="L11">    public final String MEALS_LABEL = &quot;Number of Meals&quot;;</span>
+<span class="fc" id="L12">    public final String ACTIVITIES_LABEL = &quot;Number of Activities&quot;;</span>
+<span class="fc" id="L13">    public final String DESCRIPTION_LABEL = &quot;Describe Your Day&quot;;</span>
+
+<span class="fc" id="L15">    public final String OK_BUTTON_LABEL = &quot;OK&quot;;</span>
+
+<span class="fc" id="L17">    private DayplanInputState state = new DayplanInputState();</span>
+
+<span class="fc" id="L19">    public DayplanInputViewModel() {super(&quot;DayplanInput&quot;);}</span>
+
+<span class="nc" id="L21">    public void setState(DayplanInputState state) { this.state = state;     }</span>
+
+<span class="fc" id="L23">    private final PropertyChangeSupport support = new PropertyChangeSupport(this);</span>
+
+
+    public void firePropertyChanged() {
+<span class="nc" id="L27">        support.firePropertyChange(&quot;state&quot;, null, this.state);</span>
+<span class="nc" id="L28">    }</span>
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+<span class="nc" id="L31">        support.addPropertyChangeListener(listener);</span>
+<span class="nc" id="L32">    }</span>
+
+<span class="nc" id="L34">    public DayplanInputState getState() { return state; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
