@@ -36,6 +36,9 @@ public class RefreshInteractor implements RefreshInputBoundary{
         Map.Entry<Business, String> newBusinessEntry = refreshBusinessFactory.generateNewBusiness(dayplan, type);
         Business newBusiness = newBusinessEntry.getKey();
         String newBusinessID = newBusinessEntry.getValue();
+
+        // Update business ID if necessary, assuming Dayplan can store IDs
+
         dayplan.replaceBusiness(refreshIndex, newBusiness, newBusinessID);
     }
 
