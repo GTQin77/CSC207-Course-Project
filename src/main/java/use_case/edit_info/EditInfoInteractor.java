@@ -51,7 +51,7 @@ public class EditInfoInteractor implements EditInfoInputBoundary{
             editInfoPresenter.prepareFailView("Passwords don't match.");
         }
         else if (!user.getUserName().equals(input.getUserName())) { // Call DAO.editUsername
-            boolean infoChanged = editInfoDAO.editUsername(input.getUserName(), input.getPassword(), input.getLocation());
+            boolean infoChanged = editInfoDAO.editUsername(input.getUserName(), input.getPassword(), input.getLocation(), "./src/main/resources/UserDatabase.csv", "./src/main/resources/DayplanDatabase.csv");
             if (infoChanged) {
                 user.setUserName(input.getUserName());
                 user.setPassword(input.getPassword());
@@ -67,7 +67,7 @@ public class EditInfoInteractor implements EditInfoInputBoundary{
             // PROCESS USERNAME... set empty string "" to current existing username, etc.
             // Process password, etc. any unchanged fields.
             ArrayList<String> newUserInfo = processInput(input);
-            editInfoDAO.editPasswordOrLocation(newUserInfo.get(1), newUserInfo.get(2));
+            editInfoDAO.editPasswordOrLocation(newUserInfo.get(1), newUserInfo.get(2), "./src/main/resources/UserDatabase.csv", "./src/main/resources/DayplanDatabase.csv");
             user.setPassword(input.getPassword());
             user.setLocation(locationToArrayList(input, input.getLocation()));
             EditInfoOutputData editInfoOutputData = new EditInfoOutputData(user, "Successfully updated info.", false);

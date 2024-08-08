@@ -58,8 +58,12 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
      * @param newLocation optional, replace with null if location is unchanged.
      */
     @Override
-    public boolean editUsername(String newUsername, String newPassword, String newLocation) {
+    public boolean editUsername(String newUsername, String newPassword, String newLocation, String userPath, String dayplanPath) {
         UserSignupDataAccessInterface userSignupDataAccessInterface = new UserSignupDataAccessObject();
+
+        // must assign/set the csv file
+        ((UserSignupDataAccessObject) userSignupDataAccessInterface).setcsvPathAndcsvFile(userPath);
+
         boolean userPreExists = userSignupDataAccessInterface.userExists(newUsername);
         // CASE 1: New username already exists, we do not change data
         if (userPreExists){
@@ -69,11 +73,26 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
             // Change username file using updateDatabase
             // Update Dayplan DB using updateDatabase
             // BEFORE CALLING THIS.... csvpath MUST be set to userDB
-            this.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
+
+
+//            this.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
+//            HandleFile(newUsername, newPassword, newLocation);
+
+            this.setcsvPathAndcsvFile(userPath);
             HandleFile(newUsername, newPassword, newLocation);
+
+
+
             // Change DB to be Dayplan Database
-            this.setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");
+//            this.setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");
+//            HandleFile(newUsername, newPassword, newLocation);
+
+            this.setcsvPathAndcsvFile(dayplanPath);
             HandleFile(newUsername, newPassword, newLocation);
+
+
+
+
             return true;
         }
     }
@@ -85,18 +104,22 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
      * @param newLocation optional, replace with null if location is unchanged.
      */
     @Override
-    public void editPasswordOrLocation(String newPassword, String newLocation) {
+    public void editPasswordOrLocation(String newPassword, String newLocation, String userPath, String dayplanPath) {
         UserSignupDataAccessInterface userSignupDataAccessInterface = new UserSignupDataAccessObject();
             // Change username file using updateDatabase
             // Update Dayplan DB using updateDatabase
             // BEFORE CALLING THIS.... csvpath MUST be set to userDB
-        this.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
-        HandleFile(null, newPassword, newLocation);
+        // this.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
+
+        this.setcsvPathAndcsvFile(userPath);
+        HandleFile("placeholder", newPassword, newLocation);
 
 
         // COMMENT OUT IF NEEDED... NEW STUFF???
-        this.setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");
-        HandleFile(null, newPassword, newLocation);
+        // this.setcsvPathAndcsvFile("./src/main/resources/DayplanDatabase.csv");
+
+        this.setcsvPathAndcsvFile(dayplanPath);
+        HandleFile("placeholder", newPassword, newLocation);
 
 
         }
@@ -219,6 +242,9 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
         }else{  // Writing to Dayplan DB
             if (usernameChanged){
                 row[0] = newUsername;
+                row[1] = newLocation.replaceAll("\\s", "");
+            }
+            else{
                 row[1] = newLocation.replaceAll("\\s", "");
             }
         }

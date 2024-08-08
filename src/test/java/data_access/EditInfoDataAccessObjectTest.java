@@ -82,6 +82,11 @@ public class EditInfoDataAccessObjectTest {
 
     @Test
     void rewriteRow(){
+        ArrayList<Double> location = new ArrayList<Double>();
+        location.add(1.23);
+        location.add(4.56);
+        User testUser = new User("martha", "caldwell", location);
+        editDAO.setCurrUserAndChanges(testUser, "madeline", "cookie", "3.14,1.59");
         editDAO.setcsvPathAndcsvFile("src/test/test_resources/test_userDatabase.csv");
         String[] row = {"martha", "caldwell", "1.23,4.59"};
         String expected = "madeline;cookie;3.14,1.59";
@@ -181,8 +186,42 @@ public class EditInfoDataAccessObjectTest {
     }
 
     @Test
-    void editPasswordorLocation(){
+    void editUsername(){
+        // Should take every instance of KEVIN within both test_database and test_userDatabase.
+        // Should change every KEVIN to JESS.
+        // No temporary files other than the 2 in prev. test cases should be created.
+        //
+        editDAO.setcsvPathAndcsvFile("src/test/test_resources/test_userDatabase.csv");
+        signupDAO.setcsvPathAndcsvFile("src/test/test_resources/test_userDatabase.csv");
 
+        // CREATING USER
+        ArrayList<Double> location = new ArrayList<Double>();
+        location.add(1.23);
+        location.add(4.56);
+        User testUser = new User("kevin", "caldwell", location);
+        //////////
+
+
+        editDAO.setCurrUserAndChanges(testUser, "jess", "smith", "3.33,3.33");
+        editDAO.editUsername("jess", "smith", "3.33,3.33", "src/test/test_resources/test_userDatabase.csv", "src/test/test_resources/test_database.csv");
+        assertFalse(editDAO.editUsername("jess", "smith", "3.33,3.33", "src/test/test_resources/test_userDatabase.csv", "src/test/test_resources/test_database.csv"));
+    }
+
+    @Test
+    void editPasswordOrLocation(){
+        // Should replace JESS's rows in userDB and dayplanDB with coco, and 9.99.
+        editDAO.setcsvPathAndcsvFile("src/test/test_resources/test_userDatabase.csv");
+        signupDAO.setcsvPathAndcsvFile("src/test/test_resources/test_userDatabase.csv");
+
+        // CREATING USER
+        ArrayList<Double> location = new ArrayList<Double>();
+        location.add(3.33);
+        location.add(3.33);
+        User testUser = new User("jess", "smith", location);
+        //////////
+
+        editDAO.setCurrUserAndChanges(testUser, "jess", "coco", "9.99,9.99");
+        editDAO.editPasswordOrLocation("coco", "9.99,9.99", "src/test/test_resources/test_userDatabase.csv", "src/test/test_resources/test_database.csv");
     }
 
 
