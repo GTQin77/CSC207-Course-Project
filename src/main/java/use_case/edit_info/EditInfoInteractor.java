@@ -13,6 +13,7 @@ import use_case.user_signup.UserSignupOutputData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EditInfoInteractor implements EditInfoInputBoundary{
     final EditInfoDataAccessInterface editInfoDAO;
@@ -42,8 +43,11 @@ public class EditInfoInteractor implements EditInfoInputBoundary{
     public User execute(EditInfoInputData input, UserService userService){
 
         handleDAO(input, userService);
+        User user1 = userService.getCurrentUser();
+        ArrayList<Double> coordinates = user.getLocation();
+        String reLocation = coordinates.getFirst() + "," + coordinates.getLast();
 
-        if (input.getUserName().isEmpty() && input.getLocation().isEmpty() && input.getPassword().isEmpty()) { // just return current this.user
+        if (Objects.equals(input.getUserName(), user1.getUserName()) && Objects.equals(input.getPassword(), user1.getPassword()) && Objects.equals(input.getLocation(), reLocation)) { // just return current this.user
             EditInfoOutputData editInfoOutputData = new EditInfoOutputData(user, "No changes made. Continue program.", false);
             editInfoPresenter.prepareSuccessView(editInfoOutputData);
         }
@@ -90,9 +94,9 @@ public class EditInfoInteractor implements EditInfoInputBoundary{
         newUserInfo.add(input.getUserName());
         newUserInfo.add(input.getPassword());
         newUserInfo.add(input.getLocation());
-        if (input.getUserName().isEmpty()){newUserInfo.set(0, user.getUserName());}    // setting current username to old username
-        if (input.getPassword().isEmpty()){newUserInfo.set(1, user.getUserName());}
-        if (input.getLocation().isEmpty()){newUserInfo.set(2, input.removeLocationSpaces(user.getLocation().toString()));}
+//        if (input.getUserName().isEmpty()){newUserInfo.set(0, user.getUserName());}    // setting current username to old username
+//        if (input.getPassword().isEmpty()){newUserInfo.set(1, user.getUserName());}
+//        if (input.getLocation().isEmpty()){newUserInfo.set(2, input.removeLocationSpaces(user.getLocation().toString()));}
         return newUserInfo;
     }
 

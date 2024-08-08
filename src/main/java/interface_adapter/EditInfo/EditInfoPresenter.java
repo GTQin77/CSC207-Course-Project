@@ -27,9 +27,10 @@ public class EditInfoPresenter implements EditInfoOutputBoundary {
         EditInfoState editInfoState = editInfoViewModel.getState();
 
         editInfoState.setUsername(output.getUser().getUserName());
+        editInfoState.setUsernameError(null);
         this.editInfoViewModel.setState(editInfoState);
         editInfoViewModel.firePropertyChanged();
-        viewManagerModel.setActiveView(editInfoViewModel.getViewName());
+        viewManagerModel.setActiveView("log in");
         viewManagerModel.firePropertyChanged();
     }
 
@@ -37,6 +38,10 @@ public class EditInfoPresenter implements EditInfoOutputBoundary {
     public void prepareFailView(String errorMessage) {
         EditInfoState editInfoState = editInfoViewModel.getState();
         editInfoState.setUsernameError(errorMessage);
+        this.editInfoViewModel.setState(editInfoState);  // Make sure this method notifies the view.
         editInfoViewModel.firePropertyChanged();
+//        EditInfoState editInfoState = editInfoViewModel.getState();
+//        editInfoState.setUsernameError(errorMessage);
+//        editInfoViewModel.firePropertyChanged();
     }
 }

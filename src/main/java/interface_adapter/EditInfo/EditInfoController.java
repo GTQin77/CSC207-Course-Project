@@ -34,12 +34,18 @@ public class EditInfoController {
      * @param location from input.
      */
     public void execute(String username, String password1, String password2, String location, UserService userService) {
+        User user1 = userService.getCurrentUser();
+        if (Objects.equals(username, "")){username = userService.getCurrentUser().getUserName();}    // setting current username to old username
+        if (Objects.equals(password1, "")){password1 = user1.getPassword();}
+        if (Objects.equals(password2, "")){password2 = user1.getPassword();}
+
+        ArrayList<Double> coordinates = user1.getLocation();
+        String reLocation = coordinates.getFirst() + "," + coordinates.getLast();
+        if (Objects.equals(location, "")){location = reLocation;}
+
         EditInfoInputData editInfoInputData = new EditInfoInputData(
                 username, password1, password2, location, user);
-
         this.user = editInfoInteractor.execute(editInfoInputData, userService);
-
-
         this.setUser(user);
         userService.setCurrentUser(user);
     }
