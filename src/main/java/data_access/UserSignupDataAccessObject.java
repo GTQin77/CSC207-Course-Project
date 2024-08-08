@@ -105,7 +105,7 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
 
         String location = listToString(user.getLocation());
 
-        return stringUser + location.substring(1, location.length() - 2);
+        return stringUser + location;
     }
 
 
