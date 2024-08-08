@@ -40,6 +40,6 @@ public class LoginController {
     public void execute(String username, String password) {
         UserLoginInputData loginInputData = new UserLoginInputData(username, password);
         User user = userLoginInteractor.loginUser(loginInputData);
-        this.userService.setCurrentUser(user);
+        userService.setCurrentUser(user);
     }
 }

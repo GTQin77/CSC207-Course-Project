@@ -8,13 +8,13 @@ import entity.RefreshBusinessFactory;
 
 public class RefreshInteractor implements RefreshInputBoundary{
     final DayPlanDataAccessInterface dayPlanDataAccessObject;
-    final RefreshOutputBoundary refreshPresenter;
+//    final RefreshOutputBoundary refreshPresenter;
     final DayplanFactory dayplanFactory;
     final RefreshBusinessFactory refreshBusinessFactory;
 
-    public RefreshInteractor(DayPlanDataAccessInterface dayPlanDataAccessObject, RefreshOutputBoundary refreshPresenter, DayplanFactory dayplanFactory, RefreshBusinessFactory businessFactory) {
+    public RefreshInteractor(DayPlanDataAccessInterface dayPlanDataAccessObject, DayplanFactory dayplanFactory, RefreshBusinessFactory businessFactory) {
         this.dayPlanDataAccessObject = dayPlanDataAccessObject;
-        this.refreshPresenter = refreshPresenter;
+//        this.refreshPresenter = refreshPresenter;
         this.dayplanFactory = dayplanFactory;
         this.refreshBusinessFactory = businessFactory;
     }

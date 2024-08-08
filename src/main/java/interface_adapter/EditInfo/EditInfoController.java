@@ -13,6 +13,7 @@ import java.util.Objects;
 
 public class EditInfoController {
     private User user;
+    private UserService userService;
 
     public User getUser() {return user;}
 
@@ -20,7 +21,8 @@ public class EditInfoController {
 
     final EditInfoInputBoundary editInfoInteractor;
 
-    public EditInfoController(EditInfoInputBoundary editInfoInteractor) {
+    public EditInfoController(UserService userService, EditInfoInputBoundary editInfoInteractor) {
+        this.userService = userService;
         this.editInfoInteractor = editInfoInteractor;
     }
 
@@ -37,7 +39,9 @@ public class EditInfoController {
 
         this.user = editInfoInteractor.execute(editInfoInputData, userService);
 
+
         this.setUser(user);
+        userService.setCurrentUser(user);
     }
 
 }

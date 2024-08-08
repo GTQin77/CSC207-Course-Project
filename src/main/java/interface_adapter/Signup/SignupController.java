@@ -44,13 +44,13 @@ public class SignupController {
      */
     public void execute(String username, String password1, String password2, String location) {
         if (Objects.equals(location, "")) {
-            location = "43.6598, 79.3973";
+            location = "43.6598,79.3973";
         }
         UserSignupInputData signupInputData = new UserSignupInputData(
                 username, password1, password2, location);
 
         userSignupInteractor.execute(signupInputData);
-        this.userService.setCurrentLocation(location);
+        userService.setCurrentLocation(location);
 
 //        this.setUser(user);
     }

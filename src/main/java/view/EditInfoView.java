@@ -3,13 +3,7 @@ package view;
 import interface_adapter.EditInfo.EditInfoController;
 import interface_adapter.EditInfo.EditInfoViewModel;
 import entity.User;
-import interface_adapter.EditInfo.EditInfoViewModel;
-import interface_adapter.EditInfo.EditInfoController;
 import interface_adapter.EditInfo.EditInfoState;
-import interface_adapter.EditInfo.EditInfoViewModel;
-import interface_adapter.Login.LoginViewModel;
-import interface_adapter.Signup.SignupController;
-import interface_adapter.Signup.SignupState;
 import interface_adapter.ViewManagerModel;
 import services.UserService;
 
@@ -24,7 +18,8 @@ import java.beans.PropertyChangeListener;
 
 
 
-public class EditInfoView extends JPanel implements ActionListener, PropertyChangeListener{
+public class EditInfoView extends JPanel implements PropertyChangeListener{
+    public final String viewName = "EditUserInfo";
     private final EditInfoViewModel editInfoViewModel;
     private final ViewManagerModel viewManagerModel;
     private final JTextField usernameInputField = new JTextField(15);
@@ -32,6 +27,8 @@ public class EditInfoView extends JPanel implements ActionListener, PropertyChan
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private final JTextField locationInputField = new JTextField(15);
     private final EditInfoController editInfoController;
+    private UserService userService;
+
 
     private final JButton submitChanges;
     private final JButton cancel;
@@ -94,12 +91,11 @@ public class EditInfoView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
-        cancel.addActionListener(this);
+        cancel.addActionListener(e -> {
+            viewManagerModel.setActiveView(userService.getPrevView());
+            viewManagerModel.firePropertyChanged();
+        });
 
-        // This makes a new KeyListener implementing class, instantiates it, and
-        // makes it listen to keystrokes in the usernameInputField.
-        //
-        // Notice how it has access to instance variables in the enclosing class!
         usernameInputField.addKeyListener(
                 new KeyListener() {
                     @Override
@@ -128,12 +124,12 @@ public class EditInfoView extends JPanel implements ActionListener, PropertyChan
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        this.viewManagerModel.setActiveView(editInfoViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
-    }
-
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        this.viewManagerModel.setActiveView(editInfoViewModel.getViewName());
+//        this.viewManagerModel.firePropertyChanged();
+//    }
+//
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         EditInfoState state = (EditInfoState) evt.getNewValue();

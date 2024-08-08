@@ -1,5 +1,6 @@
 package interface_adapter.BusinessDetails;
 
+import entity.Business;
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
@@ -15,20 +16,26 @@ public class BusinessDetailsViewModel extends ViewModel {
     private String type;
     private PropertyChangeSupport support;
 
-
-    public BusinessDetailsViewModel(String name, String location, String distance,
-                                    String contactNum, String price, String ratings, String type) {
+    public BusinessDetailsViewModel() {
         super("BusinessDetails");
-        this.name = name;
-        this.location = location;
-        this.distance = distance;
-        this.contactNum = contactNum;
-        this.price = price;
-        this.ratings = ratings;
-        this.type = type;
         this.support = new PropertyChangeSupport(this);
-
     }
+
+
+
+//    public BusinessDetailsViewModel(String name, String location, String distance,
+//                                    String contactNum, String price, String ratings, String type) {
+//        super("BusinessDetails");
+//        this.name = name;
+//        this.location = location;
+//        this.distance = distance;
+//        this.contactNum = contactNum;
+//        this.price = price;
+//        this.ratings = ratings;
+//        this.type = type;
+//        this.support = new PropertyChangeSupport(this);
+//
+//    }
 
     public String getName() {
         return name;
@@ -84,6 +91,17 @@ public class BusinessDetailsViewModel extends ViewModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public void updateBusinessDetails(Business business) {
+        setName(business.getName());
+        setLocation(String.format("%.2f, %.2f", business.getLocation().get(0), business.getLocation().get(1)));
+        setDistance(String.format("%.2f km", business.getDistance()));
+        setContactNum(business.getContactNum());
+        setPrice(business.getPrice());
+        setRatings(String.format("%.1f / 5.0", business.getRatings()));
+        setType(business.getType());
+        firePropertyChanged();
     }
 
     @Override

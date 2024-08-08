@@ -30,18 +30,16 @@ public class DayplanInputController {
     public void execute(String city, int numMeals, int numActivities, String description){
 //        User user = loginController.getUser();
 //        ArrayList<String> coordinates = signupController.getLocation();
-        User user = this.userService.getCurrentUser();
-        ArrayList<String> coordinates = this.userService.getCurrentLocation();
-        String latitude = coordinates.get(0);
-        String longitude = coordinates.get(1);
-        String location = latitude + ", " + longitude;
+        User user = userService.getCurrentUser();
+
+        ArrayList<Double> coordinates = user.getLocation();
+        String location = coordinates.getFirst() + "," + coordinates.getLast();
 
         UserDayPlanInputData userDayPlanInputData = new UserDayPlanInputData(
                 user, location, city, numMeals, numActivities, description);
 
         Dayplan dayplan = userDayPlanInteractor.execute(userDayPlanInputData);
-
-        this.userService.setDayplan(dayplan);
+        userService.setDayplan(dayplan);
     }
 
 }
