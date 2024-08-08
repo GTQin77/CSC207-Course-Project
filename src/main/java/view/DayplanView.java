@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class DayplanView extends JPanel {
+    public final String viewName = "DayplanView";
     private ArrayList<Business> businesses;
     private BusinessDetailsView businessDetailsView;
     private DayplanController dayplanController;
@@ -62,51 +63,4 @@ public class DayplanView extends JPanel {
     }
 }
 
-
-
-//public class DayplanView extends JPanel implements IDayplanView, PropertyChangeListener {
-//    private DayplanController controller;
-//    private DayplanPresenter presenter;
-//    private DayplanViewModel viewModel;
-//
-//    public DayplanView(DayplanController controller, DayplanPresenter presenter, DayplanViewModel viewModel) {
-//        this.controller = controller;
-//        this.presenter = presenter;
-//        this.viewModel = viewModel;
-//        this.viewModel.addPropertyChangeListener(this);
-//        setupUI();
-//        controller.loadBusinesses(); // Initial loading of businesses
-//    }
-//
-//    private void setupUI() {
-//        // Setup UI components such as buttons and register action listeners
-//        JButton detailsButton = new JButton("View Details");
-//        detailsButton.addActionListener(e -> presenter.navigateToBusinessDetails());
-//        add(detailsButton);
-//
-//        JButton editButton = new JButton("Edit User");
-//        editButton.addActionListener(e -> presenter.navigateToEditUser());
-//        add(editButton);
-//    }
-//
-//    @Override
-//    public void propertyChange(PropertyChangeEvent evt) {
-//        if ("businesses".equals(evt.getPropertyName())) {
-//            updateBusinessList((ArrayList<Business>) evt.getNewValue());
-//        }
-//    }
-//
-//    @Override
-//    public void updateBusinessList(ArrayList<Business> businesses) {
-//        // Updates the UI with the list of businesses
-//        removeAll();
-//        businesses.forEach(business -> {
-//            JButton button = new JButton(business.getName());
-//            button.addActionListener(e -> presenter.navigateToBusinessDetails());
-//            add(button);
-//        });
-//        revalidate();
-//        repaint();
-//    }
-//}
 

@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BusinessDetailsView extends JPanel implements BusinessDetailsViewInterface {
+    public final String viewName = "BusinessDetails";
     private JLabel nameLabel;
     private JLabel locationLabel;
     private JLabel distanceLabel;
