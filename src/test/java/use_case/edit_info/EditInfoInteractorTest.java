@@ -4,11 +4,7 @@ import data_access.EditInfoDataAccessObject;
 import interface_adapter.EditInfo.EditInfoPresenter;
 import interface_adapter.EditInfo.EditInfoViewModel;
 import interface_adapter.ViewManagerModel;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import entity.User;
 import org.mockito.Mockito;
 import services.UserService;
@@ -64,7 +60,14 @@ class EditInfoInteractorTest {
         editInteractor = new EditInfoInteractor(editDAO, editPresenter, testUser);
     }
 
-
+    @Test
+    void execute(){
+        ArrayList<Double> location = new ArrayList<Double>();
+        location.add(1.55);
+        location.add(4.11);
+        User user = new User("megan", "12345", location);
+        assertEquals(user, editInteractor.execute(input, userService));
+    }
 
 
 
