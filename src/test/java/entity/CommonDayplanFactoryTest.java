@@ -23,14 +23,14 @@ class CommonDayplanFactoryTest {
 
     @BeforeEach
     void setUp() {
-        YelpInterface YelpAPI = new YelpFusion();
-        OpenInterface OpenAI = new OpenAI();
-        BusinessFactory YelpBusinessFactory = new YelpBusinessFactory((YelpFusion) YelpAPI);
-        CommonDayplanFactory commonDayplanFactoryTest = new CommonDayplanFactory();
-        ArrayList<Double> location = new ArrayList<>();
+        YelpAPI = new YelpFusion();
+        OpenAI = new OpenAI();
+        YelpBusinessFactory = new YelpBusinessFactory((YelpFusion) YelpAPI);
+        commonDayplanFactoryTest = new CommonDayplanFactory();
+        location = new ArrayList<>();
         location.add(0.0);
         location.add(0.0);
-        User testUser = new User("testJosh", "testPass",location);
+        testUser = new User("testJosh", "testPass", location);
     }
 
     @Test
@@ -53,22 +53,26 @@ class CommonDayplanFactoryTest {
 
     @Test
     void createOneMealZeroActivity() {
-        CommonDayplanFactory testFactory = new CommonDayplanFactory();
-        testFactory.setYelpApi(YelpAPI);
-        testFactory.setOpenApi(OpenAI);
-        testFactory.setBusinessFactory(YelpBusinessFactory);
-        Dayplan testDayplan = testFactory.create(testUser,location,"Toronto",1,0,
-                "wahahahah im so funny");
+        OpenInterface OpenAI2 = new OpenAI();
+        YelpInterface YelpAPI2 = new YelpFusion();
+        commonDayplanFactoryTest.setYelpApi(YelpAPI2);
+        commonDayplanFactoryTest.setOpenApi(OpenAI2);
+        commonDayplanFactoryTest.setBusinessFactory(YelpBusinessFactory);
+        //RUNTIME EXCEPTION WITH THIS ONE TOO FIX SOMETIME
+        Dayplan testDayplan = commonDayplanFactoryTest.create(testUser, location, "Toronto", 1, 0,
+                "test");
         assertEquals(testDayplan.getNumMeals(), testDayplan.getPlan().size());
     }
 
     @Test
     void createZeroMealOneActivity() {
-        CommonDayplanFactory testFactory = new CommonDayplanFactory();
-        testFactory.setYelpApi(YelpAPI);
-        testFactory.setOpenApi(OpenAI);
-        testFactory.setBusinessFactory(YelpBusinessFactory);
-        Dayplan testDayplan = testFactory.create(testUser,location,"Toronto",0,1,
+        OpenInterface OpenAI2 = new OpenAI();
+        YelpInterface YelpAPI2 = new YelpFusion();
+        commonDayplanFactoryTest.setYelpApi(YelpAPI2);
+        commonDayplanFactoryTest.setOpenApi(OpenAI2);
+        commonDayplanFactoryTest.setBusinessFactory(YelpBusinessFactory);
+        //RUNTIME EXCEPTION FROM THIS FIX SOMETIME
+        Dayplan testDayplan = commonDayplanFactoryTest.create(testUser, location, "Toronto", 0, 1,
                 "wahahahah im so funny");
         assertEquals(testDayplan.getnumActivities(), testDayplan.getPlan().size());
     }
