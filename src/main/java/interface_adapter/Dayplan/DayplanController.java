@@ -1,56 +1,43 @@
 package interface_adapter.Dayplan;
 
-import entity.User;
-import services.UserService;
-import use_case.business_detail.BusinessInputBoundary;
-import use_case.dayplanList.UserDayPlanInputBoundary;
-import use_case.dayplanList.UserDayPlanInputData;
-import use_case.edit_info.EditInfoInputBoundary;
-import use_case.edit_info.EditInfoInputData;
-import use_case.refresh.RefreshInputBoundary;
+import entity.Business;
 import entity.Dayplan;
+import services.UserService;
+import use_case.refresh.RefreshInputBoundary;
 import use_case.refresh.RefreshInputData;
-import use_case.refresh.RefreshInteractor;
+import view.DayplanView;
+import view.ViewManager;
 
 import java.util.ArrayList;
 
+
 public class DayplanController {
-
-    ArrayList<String> businessNames = new ArrayList<>();
-    int dayplanLength;
+    private DayplanViewModel viewModel;
+    private ViewManager viewManager;
+    private UserService userService;
+    private DayplanView view;
     final RefreshInputBoundary refreshInteractor;
-    final BusinessInputBoundary businessInteractor;
-    UserService userService;
 
-    public DayplanController(RefreshInputBoundary refreshInteractor,
-                             BusinessInputBoundary businessInteractor,
-                             UserService userService) {
-        this.refreshInteractor = refreshInteractor;
+    public DayplanController(DayplanViewModel viewModel, ViewManager viewManager, UserService userService, RefreshInputBoundary refreshInteractor) {
+        this.viewModel = viewModel;
+        this.viewManager = viewManager;
         this.userService = userService;
-        this.businessInteractor = businessInteractor;
-    }
-    /**
-     * Refreshes the current Dayplan assuming that User would like to refresh all.
-     * */
-    public void refresh() {
-        Dayplan currentDayplan = this.userService.getDayplan();
-        RefreshInputData refreshInputData = new RefreshInputData(currentDayplan, true, 0);
-        Dayplan refreshedPlan = this.refreshInteractor.execute(refreshInputData);
-        this.userService.setDayplan(refreshedPlan);
+        this.refreshInteractor = refreshInteractor;
     }
 
-    public void dayplanInfo() {
-        ;;
+    public void loadBusinesses() {
+        Dayplan dayplan = userService.getDayplan();
+        ArrayList<Business> businesses = dayplan.getPlan();
+        viewModel.setBusinesses(businesses);
+
     }
 
-    public int getDayplanLength() {
-        this.dayplanLength = this.userService.getDayplan().getPlan().size();
-        return this.dayplanLength;
+    public void handleRefresh() {
+        Dayplan dayplan = userService.getDayplan();
+        RefreshInputData refreshInputData = new RefreshInputData(dayplan);
+        Dayplan refreshedDayplan = refreshInteractor.execute(refreshInputData);
+        ArrayList<Business> updatedBusinesses = refreshedDayplan.getPlan();
+        userService.setDayplan(refreshedDayplan);
+        view.updateBusinessButtons(updatedBusinesses);
     }
-
-    public ArrayList<String> getBusinessNames() {
-        this.businessNames = this.userService.getDayplan().getBusinessNames();
-        return this.businessNames;
-    }
-
 }

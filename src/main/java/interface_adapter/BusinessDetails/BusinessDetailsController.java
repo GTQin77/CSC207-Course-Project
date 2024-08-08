@@ -26,7 +26,7 @@ public class BusinessDetailsController {
         viewModel.setRatings(String.format("%.1f / 5.0", business.getRatings()));
         viewModel.setType(business.getType());
 
-        view.updateDetails(viewModel);
+        view.displayDetails(viewModel);
     }
 
 

@@ -14,13 +14,18 @@ public class BusinessDetailsPresenter {
         this.viewManagerModel = viewManagerModel;
     }
 
-    public void navigateToBusinessDetails() {
-        viewManagerModel.setActiveView("BusinessDetails");
-        viewManagerModel.firePropertyChanged();
-    }
+//    public void navigateToBusinessDetails() {
+//        viewManagerModel.setActiveView("BusinessDetails");
+//        viewManagerModel.firePropertyChanged();
+//    }
 
     public void navigateToEditUserInfo() {
         viewManagerModel.setActiveView("EditUserInfo");
+        viewManagerModel.firePropertyChanged();
+    }
+
+    public void nagivateToDayplan() {
+        viewManagerModel.setActiveView("DayplanView");
         viewManagerModel.firePropertyChanged();
     }
 

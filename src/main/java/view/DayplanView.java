@@ -1,95 +1,64 @@
 package view;
 
+import entity.Business;
+import interface_adapter.BusinessDetails.BusinessDetailsController;
 import interface_adapter.Dayplan.DayplanController;
-import interface_adapter.Dayplan.DayplanViewModel;
-import entity.User;
-import interface_adapter.DayplanInput.DayplanInputController;
-import org.jetbrains.annotations.NotNull;
+import interface_adapter.Dayplan.DayplanPresenter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class DayplanView extends JPanel {
+    public final String viewName = "DayplanView";
+    private ArrayList<Business> businesses;
+    private BusinessDetailsView businessDetailsView;
+    private DayplanController dayplanController;
+    private DayplanPresenter dayplanPresenter;
+    private BusinessDetailsController businessDetailsController;
 
-    ArrayList<String> businessNames = new ArrayList<>();
-    private int numBusinesses;
-
-    private final DayplanController dayplanController;
-    private final DayplanViewModel dayplanViewModel;
-
-    public DayplanView(DayplanController dayplanController,
-                       DayplanViewModel dayplanViewModel) {
+    public DayplanView(ArrayList<Business> businesses, BusinessDetailsView businessDetailsView, DayplanController dayplanController, BusinessDetailsController businessDetailsController) {
+        this.businesses = businesses;
+        this.businessDetailsView = businessDetailsView;
         this.dayplanController = dayplanController;
-        this.dayplanViewModel = dayplanViewModel;
-        this.numBusinesses = dayplanController.getDayplanLength();
-
-        JLabel title = new JLabel(dayplanViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-
-        businessNames = dayplanController.getBusinessNames();
-
-        JPanel dayplanPanel = new JPanel();
-        dayplanPanel.setLayout(new BoxLayout(dayplanPanel, BoxLayout.PAGE_AXIS));
-
-        for (String business : businessNames) {
-            JButton singleBusiness = getjButton(business);
-
-            dayplanPanel.add(singleBusiness);
-        }
-        mainPanel.add(dayplanPanel);
+        this.businessDetailsController = businessDetailsController;
+        initializeUI();
     }
 
-    private static @NotNull JButton getjButton(String business) {
-        JButton singleBusiness = new JButton(business);
-        singleBusiness.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(singleBusiness)) {
-                            // if the button clicked is a business button do something
-                            // if the button label matches whichever business
-                        }
-                    }
-                }
-        );
-        return singleBusiness;
+    private void initializeUI() {
+        setLayout(new BorderLayout());
+
+        JPanel businessPanel = new JPanel();
+        businessPanel.setLayout(new GridLayout(businesses.size(), 1));
+        for (Business business : businesses) {
+            JButton button = new JButton(business.getName());
+            button.addActionListener(e -> businessDetailsController.loadBusinessDetails(business));
+            businessPanel.add(button);
+        }
+        add(new JScrollPane(businessPanel), BorderLayout.CENTER);
+
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JButton returnButton = new JButton("Return");
+        JButton editUserButton = new JButton("Edit User Info");
+        returnButton.addActionListener(e -> dayplanPresenter.navigateToDayplanInput());
+        editUserButton.addActionListener(e -> dayplanPresenter.navigateToEditUser());
+        topPanel.add(returnButton);
+        topPanel.add(editUserButton);
+
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton refreshButton = new JButton("Refresh");
+        refreshButton.addActionListener(e -> dayplanController.handleRefresh());
+        bottomPanel.add(refreshButton);
+
+        add(topPanel, BorderLayout.NORTH);
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setSize(420,420);
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.LINE_AXIS));
-        mainPanel.add(Box.createHorizontalGlue());
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
-        JPanel rightside = new JPanel();
 
-        ArrayList<String> test = new ArrayList<>();
-        test.add("hello");
-        test.add("arg");
-
-        for (String business : test) {
-            JButton butt = new JButton(business);
-            buttonPanel.add(butt);
-        }
-
-        JButton test2 = new JButton();
-        rightside.add(test2);
-
-        mainPanel.add(buttonPanel);
-        mainPanel.add(rightside);
-
-        frame.add(mainPanel);
-        buttonPanel.setVisible(true);
-        rightside.setVisible(true);
-        mainPanel.setVisible(true);
-        frame.setVisible(true);
-
+    public void updateBusinessButtons(ArrayList<Business> updatedBusinesses) {
+        removeAll();
+        initializeUI();
+        revalidate();
+        repaint();
     }
 }

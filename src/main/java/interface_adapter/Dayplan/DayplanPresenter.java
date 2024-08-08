@@ -1,20 +1,24 @@
 package interface_adapter.Dayplan;
 
+import interface_adapter.ViewManagerModel;
 import use_case.dayplanList.UserDayPlanOutputBoundary;
 import use_case.dayplanList.UserDayPlanOutputData;
+import view.ViewManager;
 
-public class DayplanPresenter implements UserDayPlanOutputBoundary {
+public class DayplanPresenter {
+    private ViewManagerModel viewManagerModel;
 
-    private final DayplanViewModel dayplanViewModel;
-
-    public DayplanPresenter(DayplanViewModel dayplanViewModel) {
-        this.dayplanViewModel = dayplanViewModel;
+    public DayplanPresenter(ViewManagerModel viewManagerModel) {
+        this.viewManagerModel = viewManagerModel;
     }
 
-    // this is where the dayplan gets the input data from the other s
-    @Override
-    public void prepareDayplanView(UserDayPlanOutputData data) {
-        String dayplan = data.getDayplan().dayplanToString();
-        System.out.println(dayplan);
+    public void navigateToDayplanInput() {
+        viewManagerModel.setActiveView("DayplanInput");
+        viewManagerModel.firePropertyChanged();
+    }
+
+    public void navigateToEditUser() {
+        viewManagerModel.setActiveView("EditUserInfo");
+        viewManagerModel.firePropertyChanged();
     }
 }

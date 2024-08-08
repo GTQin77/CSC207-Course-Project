@@ -16,7 +16,7 @@ public class DayplanInputViewModel extends ViewModel {
 
     private DayplanInputState state = new DayplanInputState();
 
-    public DayplanInputViewModel() {super("dayplan input");}
+    public DayplanInputViewModel() {super("DayplanInput");}
 
     public void setState(DayplanInputState state) { this.state = state;     }
 

@@ -22,13 +22,13 @@ public class DayplanInputPresenter implements UserDayPlanOutputBoundary {
      */
     @Override
     public void prepareDayplanView(UserDayPlanOutputData data) {
-        DayplanInputState dayplanInputState = dayplanInputViewModel.getState();
+//        DayplanInputState dayplanInputState = dayplanInputViewModel.getState();
 //        DayplanState dayplanState = dayplanViewModel.getState();
 //        dayplanState.setDayplan(data.getDayplan());
 //
 //        this.dayplanViewModel.setState(dayplanState);
 //        dayplanViewModel.firePropertyChanged();
-//        dayplanInputViewManagerModel.setActiveView(dayplanViewModel.getViewName());
-//        dayplanInputViewManagerModel.firePropertyChanged();
+        viewManagerModel.setActiveView(dayplanViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }
