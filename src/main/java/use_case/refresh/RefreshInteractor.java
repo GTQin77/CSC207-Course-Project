@@ -6,6 +6,8 @@ import entity.Dayplan;
 import entity.Business;
 import entity.RefreshBusinessFactory;
 
+import java.util.Map;
+
 public class RefreshInteractor implements RefreshInputBoundary{
     final DayPlanDataAccessInterface dayPlanDataAccessObject;
 //    final RefreshOutputBoundary refreshPresenter;
@@ -31,8 +33,10 @@ public class RefreshInteractor implements RefreshInputBoundary{
     private void refreshOneBusiness(Dayplan dayplan, Integer refreshIndex) {
         Business prevBusiness = dayplan.getPlan().get(refreshIndex);
         String type = prevBusiness.getType();
-        Business newBusiness = refreshBusinessFactory.generateNewBusiness(dayplan, type);
-        dayplan.replaceBusiness(refreshIndex, newBusiness);
+        Map.Entry<Business, String> newBusinessEntry = refreshBusinessFactory.generateNewBusiness(dayplan, type);
+        Business newBusiness = newBusinessEntry.getKey();
+        String newBusinessID = newBusinessEntry.getValue();
+        dayplan.replaceBusiness(refreshIndex, newBusiness, newBusinessID);
     }
 
     private void refreshAllBusiness(Dayplan dayplan) {

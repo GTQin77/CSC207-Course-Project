@@ -77,11 +77,12 @@ public class Dayplan {
      * @param newBusiness the new business that we want to input into the dayplan
      * @return true if the business got replaced, false otherwise
      */
-    public boolean replaceBusiness(int index, Business newBusiness) {
+    public boolean replaceBusiness(int index, Business newBusiness, String iD) {
         if (index >= this.plan.size() || index < 0) {
             return false; // invalid index, fail to replace business
         }
         this.plan.set(index, newBusiness);
+        this.businessIDs.set(index, iD);
         return true;
     }
 
