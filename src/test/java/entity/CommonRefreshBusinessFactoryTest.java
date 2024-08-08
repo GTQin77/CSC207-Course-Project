@@ -38,7 +38,7 @@ class CommonRefreshBusinessFactoryTest {
             add(0.0);
             add(0.0);
         }};
-        dayplan = commonDayplanFactory.create(testUser, location, "Toronto", 1, 1, "Fun");
+        dayplan = commonDayplanFactory.create(testUser, location, "Toronto", 1, 0, "Fun");
         String businessName = dayplan.getBusinessNames().getFirst();
     }
 
