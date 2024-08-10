@@ -10,7 +10,7 @@ import interface_adapter.Signup.SignupController;
 import interface_adapter.Signup.SignupPresenter;
 import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.Welcome.WelcomeViewModel;
+//import interface_adapter.Welcome.WelcomeViewModel;
 import services.UserService;
 import use_case.edit_info.EditInfoInputBoundary;
 import use_case.edit_info.EditInfoInteractor;

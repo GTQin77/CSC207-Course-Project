@@ -91,7 +91,6 @@ public class BusinessDetailsViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        // This method could be used to notify all listeners of a generic change.
         support.firePropertyChange("modelUpdated", null, this);
     }
 

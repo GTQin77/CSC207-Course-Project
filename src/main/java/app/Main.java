@@ -17,14 +17,9 @@ import interface_adapter.EditInfo.EditInfoViewModel;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.Signup.SignupViewModel;
-import interface_adapter.Welcome.WelcomeViewManagerModel;
-import interface_adapter.Welcome.WelcomeViewModel;
-import services.PastDayplanService;
 import services.RefreshService;
 import services.UserService;
-import use_case.previous_plan.PreviousPlanInteractor;
 import use_case.refresh.RefreshInteractor;
-import use_case.refresh.RefreshOutputBoundary;
 import view.*;
 
 
@@ -48,12 +43,10 @@ public class Main {
 
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
-        WelcomeViewModel welcomeViewModel = new WelcomeViewModel();
         DayplanInputViewModel dayplanInputViewModel = new DayplanInputViewModel();
         EditInfoViewModel editInfoViewModel = new EditInfoViewModel();
         DayplanViewModel dayplanViewModel = new DayplanViewModel();
         BusinessDetailsViewModel businessDetailsViewModel = new BusinessDetailsViewModel();
-//        PastDayplanViewModel pastDayplanViewModel = new PastDayplanViewModel();
 
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
@@ -84,29 +77,12 @@ public class Main {
         DayplanPresenter dayplanPresenter = new DayplanPresenter(viewManagerModel, userService);
 
 
-
-
-
-        PreviousPlanFactory previousPlanFactory = new CommonPreviousPlanFactory();
-        PrevPlanDataAccessObject prevPlanDataAccessObject = new PrevPlanDataAccessObject();
-
-
-
-        PreviousPlanInteractor previousPlanInteractor = new PreviousPlanInteractor(prevPlanDataAccessObject, previousPlanFactory);
-        PastDayplanService pastDayplanService = new PastDayplanService(previousPlanInteractor);
-//        PastDayplanController pastDayplanController = new PastDayplanController(userService,pastDayplanViewModel, pastDayplanService);
-
-        SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, welcomeViewModel, userService);
+        SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userService);
         LoginView loginView = UserLoginUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel, signupViewModel, userService);
         DayplanInputView dayplanInputView = DayplanInputUseCaseFactory.create(viewManagerModel, loginViewModel, dayplanInputViewModel,dayplanViewModel, userService);
         EditInfoView editInfoView = EditInfoUseCaseFactory.create(viewManagerModel, editInfoViewModel, userService);
         BusinessDetailsView businessDetailsView = new BusinessDetailsView(businessDetailsPresenter);
         BusinessDetailsController businessDetailsController = new BusinessDetailsController(businessDetailsViewModel, businessDetailsView);
-
-//        PastDayplanPresenter pastDayplanPresenter = new PastDayplanPresenter(viewManagerModel,userService);
-//        PastDayplanView pastDayplanView = new PastDayplanView(pastDayplanPresenter, userService, pastDayplanController, viewManagerModel);
-//        PastDayplanView pastDayplanView = PreviousDayplanUseCaseFactory.create(pastDayplanPresenter, userService, viewManagerModel, pastDayplanViewModel);
-//        userService.addPropertyChangeListener(pastDayplanView);
 
         DayplanView dayplanView = new DayplanView(userService, dayplanPresenter, dayplanController, businessDetailsPresenter, businessDetailsController);
         userService.addPropertyChangeListener(dayplanView);
@@ -120,7 +96,6 @@ public class Main {
         views.add(editInfoView, editInfoView.viewName);
         views.add(businessDetailsView, businessDetailsView.viewName);
         views.add(dayplanView, dayplanView.viewName);
-//        views.add(pastDayplanView, pastDayplanView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
