@@ -12,22 +12,7 @@ import java.beans.PropertyChangeSupport;
  */
 public abstract class ViewModel {
 
-//    public enum ViewState {
-//        WELCOME,
-//        SIGNING_UP,
-//        LOGGING_IN,
-//        LOGGED_IN,
-//    }
-//    private ViewState state = ViewState.WELCOME;
-
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-
-//    public void setState(ViewState state) {
-//        ViewState oldState = this.state;
-//        this.state = state;
-//        support.firePropertyChange("state", oldState, this.state);
-//    }
-
 
     private String viewName;
 

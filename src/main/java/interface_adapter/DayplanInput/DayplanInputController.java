@@ -12,24 +12,17 @@ import java.util.ArrayList;
 
 public class DayplanInputController {
     private UserService userService;
-
     final UserDayPlanInputBoundary userDayPlanInteractor;
-//    private final LoginController loginController;
-//    private final SignupController signupController;
 
     public DayplanInputController(UserService userService, UserDayPlanInputBoundary userDayPlanInteractor) {
         this.userService = userService;
         this.userDayPlanInteractor = userDayPlanInteractor;
-//        this.loginController = loginController;
-//        this.signupController = signupController;
     }
 
     /**
      *
      */
     public void execute(String city, int numMeals, int numActivities, String description){
-//        User user = loginController.getUser();
-//        ArrayList<String> coordinates = signupController.getLocation();
         User user = userService.getCurrentUser();
 
         ArrayList<Double> coordinates = user.getLocation();

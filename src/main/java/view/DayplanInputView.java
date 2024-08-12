@@ -25,7 +25,6 @@ public class DayplanInputView extends JPanel implements ActionListener, Property
     private final JTextField descriptionInputField = new JTextField(15);
     private final DayplanInputController dayplanInputController;
     private final ViewManagerModel viewManagerModel;
-//    private final DayplanViewModel dayplanViewModel;
 
     private final JButton OK;
 
@@ -121,7 +120,6 @@ public class DayplanInputView extends JPanel implements ActionListener, Property
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(OK)) {
-//            this.viewManagerModel.setActiveView(dayplanViewModel.getModelName());
             this.viewManagerModel.firePropertyChanged();
         }
 

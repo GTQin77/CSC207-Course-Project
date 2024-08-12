@@ -51,7 +51,5 @@ public class SignupController {
 
         userSignupInteractor.execute(signupInputData);
         userService.setCurrentLocation(location);
-
-//        this.setUser(user);
     }
 }

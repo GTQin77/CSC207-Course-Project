@@ -38,10 +38,7 @@ public class EditInfoPresenter implements EditInfoOutputBoundary {
     public void prepareFailView(String errorMessage) {
         EditInfoState editInfoState = editInfoViewModel.getState();
         editInfoState.setUsernameError(errorMessage);
-        this.editInfoViewModel.setState(editInfoState);  // Make sure this method notifies the view.
+        this.editInfoViewModel.setState(editInfoState);
         editInfoViewModel.firePropertyChanged();
-//        EditInfoState editInfoState = editInfoViewModel.getState();
-//        editInfoState.setUsernameError(errorMessage);
-//        editInfoViewModel.firePropertyChanged();
     }
 }

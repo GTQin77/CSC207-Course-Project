@@ -27,7 +27,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     public final String viewName = "sign up";
 
     private final SignupViewModel signupViewModel;
-//    private final ViewModel viewModel;
     private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
     private final JTextField usernameInputField = new JTextField(15);
@@ -56,7 +55,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.signupViewModel = signupViewModel;
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
-//        this.viewModel = viewModel;
 
 
         signupViewModel.addPropertyChangeListener(this);
@@ -83,7 +81,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
 
         signUp.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
@@ -96,18 +93,11 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                 JOptionPane.showMessageDialog(SignupView.this, e.getMessage());
                             }
                         }
-//                        ViewManagerModel viewManagerModel = new ViewManagerModel();
-//                        LoginViewModel loginViewModel = new LoginViewModel();
-//                        viewManagerModel.setActiveView("log in");
                     }
                 }
         );
         cancel.addActionListener(this);
 
-        // This makes a new KeyListener implementing class, instantiates it, and
-        // makes it listen to keystrokes in the usernameInputField.
-        //
-        // Notice how it has access to instance variables in the enclosing class!
         usernameInputField.addKeyListener(
                 new KeyListener() {
                     @Override

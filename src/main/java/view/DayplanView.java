@@ -29,7 +29,6 @@ public class DayplanView extends JPanel implements PropertyChangeListener {
         this.dayplanController = dayplanController;
         this.businessDetailsPresenter = businessDetailsPresenter;
         this.businessDetailsController = businessDetailsController;
-//        this.pastDayplanController = pastDayplanController;
         this.userService.addPropertyChangeListener(this);
         setLayout(new BorderLayout());
         initializeUI();
@@ -66,11 +65,9 @@ public class DayplanView extends JPanel implements PropertyChangeListener {
 
         returnButton.addActionListener(e -> dayplanPresenter.navigateToDayplanInput());
         editUserButton.addActionListener(e -> dayplanPresenter.navigateToEditUser());
-//        previousDayplanButton.addActionListener(e -> pastDayplanController.execute());
 
         leftButtons.add(returnButton);
         leftButtons.add(editUserButton);
-//        leftButtons.add(previousDayplanButton);
 
         JButton refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(e -> dayplanController.handleRefresh());

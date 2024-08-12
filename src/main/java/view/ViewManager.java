@@ -1,7 +1,7 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.Welcome.WelcomeViewManagerModel;
+//import interface_adapter.Welcome.WelcomeViewManagerModel;
 
 import javax.swing.*;
 import java.awt.*;

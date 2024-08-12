@@ -23,7 +23,7 @@ public class LoginState {
         loginTime = copy.loginTime;
     }
 
-    // Because of the previous copy constructor, the default constructor must be explicit.
+
     public LoginState() {}
 
     public String getUsername() {

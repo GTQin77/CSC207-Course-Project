@@ -47,19 +47,14 @@ public class UserSignupInteractor implements UserSignupInputBoundary {
         User user = this.userFactory.create(input.getUsername(), input.getPassword(), location);
         // 3. Write new User to the DAO
         if (this.userDataAccessObject.userExists(user.getUserName())){
-            // NOTE TO SELF: CHANGE DAO implementation to only take username!!!
-            // So that we avoid having to create a new User object until else block
             userPresenter.prepareFailView("Oops! This username already exists.");
-//            return null;
         } else if (!input.getPassword().equals(input.getRepeatPassword())){
             userPresenter.prepareFailView("Passwords don't match.");
-//            return null;
         } else {
             LocalDateTime now = LocalDateTime.now();
             this.userDataAccessObject.saveUser(user);
             UserSignupOutputData signupOutputData = new UserSignupOutputData(user, now.toString(), false);
             userPresenter.prepareSuccessView(signupOutputData, "%s created.".formatted(input.getUsername()));
-//            return user;
         }
     }
 }

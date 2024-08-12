@@ -6,7 +6,7 @@ import entity.UserFactory;
 import interface_adapter.Signup.*;
 import interface_adapter.Login.*;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.Welcome.WelcomeViewModel;
+//import interface_adapter.Welcome.WelcomeViewModel;
 import services.UserService;
 import use_case.user_signup.UserSignupInputBoundary;
 import use_case.user_signup.UserSignupInteractor;
@@ -27,10 +27,10 @@ public class UserSignupUseCaseFactory {
     /** Prevent instantiation. */
     private UserSignupUseCaseFactory() {}
 
-    public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, WelcomeViewModel welcomeViewModel, UserService userService) {
+    public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, UserService userService) {
 
         try {
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, welcomeViewModel, userService);
+            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userService);
             return new SignupView(signupController, signupViewModel, viewManagerModel, loginViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -39,7 +39,7 @@ public class UserSignupUseCaseFactory {
         return null;
     }
 
-    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, WelcomeViewModel welcomeViewModel, UserService userService) throws IOException {
+    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, UserService userService) throws IOException {
         UserSignupDataAccessObject userDataAccessObject = new UserSignupDataAccessObject();
         userDataAccessObject.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
         // Notice how we pass this method's parameters to the Presenter.
