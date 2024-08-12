@@ -4,7 +4,6 @@ import data_access.DayPlanDataAccessInterface;
 import data_access.UserSignupDataAccessInterface;
 import entity.Business;
 import entity.Dayplan;
-import entity.PreviousPlan;
 import entity.User;
 
 import java.beans.PropertyChangeListener;
@@ -17,7 +16,6 @@ public class UserService {
     private ArrayList<String> currentLocation;
     private Dayplan dayplan;
     private PropertyChangeSupport support;
-    private PreviousPlan previousPlan;
     private UserSignupDataAccessInterface userSignupDAO;
     private DayPlanDataAccessInterface dayplanDAO;
 
@@ -125,15 +123,4 @@ public class UserService {
     public void setCurrentUser(User user) {
         this.currentUser = user;
     }
-
-    public PreviousPlan getPreviousPlan() {
-        return previousPlan;
-    }
-
-    public void setPreviousPlan(PreviousPlan previousPlan) {
-        this.previousPlan = previousPlan;
-    }
-
-
-
 }
