@@ -8,6 +8,9 @@ import entity.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
+import java.util.Map;
+import java.util.AbstractMap;
+
 
 
 import java.util.ArrayList;
@@ -24,7 +27,7 @@ public class RefreshInteractorTest {
     private DayplanFactory dayplanFactory;
 
     @Mock
-    private RefreshBusinessFactory refreshBusinessFactory;
+    private CommonRefreshBusinessFactory refreshBusinessFactory;
 
     @InjectMocks
     private RefreshInteractor refreshInteractor;
@@ -50,8 +53,8 @@ public class RefreshInteractorTest {
         location2.add(34.0522);
         location2.add(-118.2437);
 
-        Business business1 = new Business("Business1", location1, 10.0, "123-456-7890", "$$", 4.5f, "Type1");
-        Business business2 = new Business("Business2", location2, 15.0, "098-765-4321", "$$$", 3.8f, "Type2");
+        Business business1 = new Business("Eaton Centre", location1, 10.0, "123-456-7890", "$$", 4.5f, "Type1");
+        Business business2 = new Business("McDonald's", location2, 15.0, "098-765-4321", "$$$", 3.8f, "Type2");
 
         ArrayList<Business> businesses = new ArrayList<>();
         businesses.add(business1);
@@ -60,31 +63,35 @@ public class RefreshInteractorTest {
         Dayplan dayplan = new Dayplan();
         dayplan.setUser(user);
         dayplan.setPlan(businesses);
-        dayplan.setCity("TestCity");
+        dayplan.setCity("Toronto");
         dayplan.setNumMeals(2);
         dayplan.setnumActivities(3);
         dayplan.setDescription("Test Description");
-        dayplan.setVibe("Test Vibe");
+        dayplan.setVibe("Cozy relaxing day with friends");
+        dayplan.setBusinessIDs(new ArrayList<>());
 
         RefreshInputData refreshInputData = mock(RefreshInputData.class);
         when(refreshInputData.getDayplan()).thenReturn(dayplan);
 
-        Business newBusiness1 = new Business("NewBusiness1", location1, 10.0, "123-456-7890", "$$", 4.5f, "Type1");
-        Business newBusiness2 = new Business("NewBusiness2", location2, 15.0, "098-765-4321", "$$$", 3.8f, "Type2");
+        Business newBusiness1 = new Business("Eaton Centre", location1, 10.0, "123-456-7890", "$$", 4.5f, "Type1");
+        Business newBusiness2 = new Business("McDonald's", location2, 15.0, "098-765-4321", "$$$", 3.8f, "Type2");
 
-        when(refreshBusinessFactory.generateNewBusiness(dayplan, "Type1")).thenReturn(newBusiness1);
-        when(refreshBusinessFactory.generateNewBusiness(dayplan, "Type2")).thenReturn(newBusiness2);
+        Map.Entry<Business, String> newBusinessEntry1 = new AbstractMap.SimpleEntry<>(newBusiness1, "NewBusinessID1");
+        Map.Entry<Business, String> newBusinessEntry2 = new AbstractMap.SimpleEntry<>(newBusiness2, "NewBusinessID2");
 
-        // Execute the method
+        when(refreshBusinessFactory.generateNewBusiness(dayplan, "Type1")).thenReturn(newBusinessEntry1);
+        when(refreshBusinessFactory.generateNewBusiness(dayplan, "Type2")).thenReturn(newBusinessEntry2);
+
         Dayplan result = refreshInteractor.execute(refreshInputData);
 
-        // Verify interactions
         verify(dayPlanDataAccessObject).saveDayPlan(dayplan);
 
-        // Validate the result
+        // Asserting the result
         assertNotNull(result);
         assertEquals(2, result.getPlan().size());
         assertEquals(newBusiness1, result.getPlan().get(0));
         assertEquals(newBusiness2, result.getPlan().get(1));
+        assertEquals("NewBusinessID1", dayplan.getBusinessIDs().get(0));
+        assertEquals("NewBusinessID2", dayplan.getBusinessIDs().get(1));
     }
 }
