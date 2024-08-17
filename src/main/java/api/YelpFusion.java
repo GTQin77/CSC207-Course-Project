@@ -7,11 +7,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.ArrayList;
 
-public class YelpFusion implements YelpInterface{
+public class YelpFusion extends ApiHandler implements YelpInterface {
     private static final String URL = "https://api.yelp.com/v3";
     private static final String API_TOKEN = System.getenv("API_TOKEN");
-    public static String getApiToken() {
+
+    @Override
+    protected String getBaseUrl() {
+        return URL;
+    }
+
+    @Override
+    protected String getApiToken() {
         return API_TOKEN;
     }
 
@@ -30,37 +41,23 @@ public class YelpFusion implements YelpInterface{
      */
     @Override
     public ArrayList<String> getBusinessIDs(String category, String city, Integer i) {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        Request request = new Request.Builder()
-                .url(String.format("https://api.yelp.com/v3/businesses/search?categories=%s&location=%s",
-                        category, city))
-                .addHeader("Authorization", "Bearer " + API_TOKEN)
-                .addHeader("accept", "application/json")
-                .build();
+        String url = String.format("%s/businesses/search?categories=%s&location=%s", getBaseUrl(), category, city);
+        String response = executeApiRequest(url);
 
         try {
-            Response response = client.newCall(request).execute();
-            assert response.body() != null;
-            JSONObject responseBody = new JSONObject(response.body().string());
-
-            if (response.isSuccessful()) {
-                JSONArray businessList = responseBody.getJSONArray("businesses");
-
-                ArrayList<String> businessIds = new ArrayList<>();
-                for (int ind = 0; ind < i; ind++) {
-                    JSONObject business = businessList.getJSONObject(ind);
-                    businessIds.add(business.getString("id"));
-                }
-                return businessIds;
-
-            } else {
-                throw new RuntimeException(responseBody.getString("code"));
+            JSONObject responseBody = new JSONObject(response);
+            JSONArray businessList = responseBody.getJSONArray("businesses");
+            ArrayList<String> businessIds = new ArrayList<>();
+            for (int ind = 0; ind < i && ind < businessList.length(); ind++) {
+                JSONObject business = businessList.getJSONObject(ind);
+                businessIds.add(business.getString("id"));
             }
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+            return businessIds;
+        } catch (JSONException e) {
+            throw new RuntimeException("Failed to extract business IDs", e);
         }
     }
+
 
     /**
      * Get the information of a business when given the businessID.
@@ -75,54 +72,35 @@ public class YelpFusion implements YelpInterface{
      */
     @Override
     public ArrayList<Object> getBusiness(String businessID) {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        Request request = new Request.Builder()
-                .url(String.format("https://api.yelp.com/v3/businesses/%s",
-                        businessID))
-                .addHeader("Authorization", "Bearer " + API_TOKEN)
-                .addHeader("accept", "application/json")
-                .build();
+        String url = String.format("%s/businesses/%s", getBaseUrl(), businessID);
+        String response = executeApiRequest(url);
+        return parseBusinessDetails(response);
+    }
+
+    private ArrayList<Object> parseBusinessDetails(String response) {
         try {
-            Response response = client.newCall(request).execute();
-            assert response.body() != null;
-            JSONObject responseBody = new JSONObject(response.body().string());
+            JSONObject responseBody = new JSONObject(response);
+            ArrayList<Object> details = new ArrayList<>();
 
-            if (response.isSuccessful()) {
-                String name = responseBody.getString("name");
-                Float rating = responseBody.getFloat("rating");
-                String price; // sometimes the price information is not available on Yelp
-                if (responseBody.has("price")) {
-                    price = responseBody.getString("price");
-                } else {
-                    price = "Information unavailable"; // use this to prevent price from being not defined
-                }
-                String contactNum = responseBody.getString("phone");
+            details.add(responseBody.getString("name"));
+            details.add(responseBody.getFloat("rating"));
+            details.add(responseBody.has("price") ? responseBody.getString("price") : "Information unavailable");
+            details.add(responseBody.getString("phone"));
+            details.add(parseCoordinates(responseBody.getJSONObject("coordinates")));
 
-                JSONObject coordinates = responseBody.getJSONObject("coordinates");
-                double latitude = coordinates.getDouble("latitude");
-                double longitude = coordinates.getDouble("longitude");
-
-                ArrayList<Double> locationBusiness = new ArrayList<>();
-                locationBusiness.add(latitude);
-                locationBusiness.add(longitude);
-
-                ArrayList<Object> details = new ArrayList<>();
-                details.add(name);
-                details.add(rating);
-                details.add(price);
-                details.add(contactNum);
-                details.add(locationBusiness);
-
-                return details;
-
-            } else {
-                throw new RuntimeException(responseBody.getString("message"));
-            }
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+            return details;
+        } catch (JSONException e) {
+            throw new RuntimeException("Failed to parse business details", e);
         }
     }
+
+    private ArrayList<Double> parseCoordinates(JSONObject coordinates) throws JSONException {
+        ArrayList<Double> locationBusiness = new ArrayList<>();
+        locationBusiness.add(coordinates.getDouble("latitude"));
+        locationBusiness.add(coordinates.getDouble("longitude"));
+        return locationBusiness;
+    }
+
 
     /**
      * Get three reviews of a business corresponding to a specific businessID.
@@ -136,27 +114,15 @@ public class YelpFusion implements YelpInterface{
      */
     @Override
     public JSONArray getBusinessReviews(String businessID) {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        Request request = new Request.Builder()
-                .url(String.format("https://api.yelp.com/v3/businesses/%s/reviews",
-                        businessID))
-                .addHeader("Authorization", "Bearer " + API_TOKEN)
-                .addHeader("accept", "application/json")
-                .build();
+        String url = String.format("%s/businesses/%s/reviews", getBaseUrl(), businessID);
+        String response = executeApiRequest(url);
+
         try {
-            Response response = client.newCall(request).execute();
-            assert response.body() != null;
-            JSONObject responseBody = new JSONObject(response.body().string());
-
-            if (response.isSuccessful()) {
-                return responseBody.getJSONArray("reviews");
-
-            } else {
-                throw new RuntimeException(responseBody.getString("message"));
-            }
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+            JSONObject responseBody = new JSONObject(response);
+            return responseBody.getJSONArray("reviews");
+        } catch (JSONException e) {
+            throw new RuntimeException("Failed to extract reviews", e);
         }
     }
 }
+

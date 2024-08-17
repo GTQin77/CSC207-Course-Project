@@ -15,10 +15,10 @@ import java.beans.PropertyChangeSupport;
 public class SignupViewModel extends ViewModel {
 
     public final String TITLE_LABEL = "Sign Up View";
-    public final String USERNAME_LABEL = "Username";
-    public final String PASSWORD_LABEL = "Password";
+    public final String USERNAME_LABEL = "Enter Username";
+    public final String PASSWORD_LABEL = "Enter Password";
     public final String REPEAT_PASSWORD_LABEL = "Repeat password";
-    public final String LOCATION_LABEL = "Location (Optional)";
+    public final String LOCATION_LABEL = "Latitude, longitude (Optional)";
 
     public final String SIGNUP_BUTTON_LABEL = "Sign up";
     public final String CANCEL_BUTTON_LABEL = "Cancel";

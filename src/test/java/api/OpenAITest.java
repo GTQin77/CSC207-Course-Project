@@ -8,7 +8,7 @@ class OpenAITest {
 
     @Test
     void getApiToken() {
-        String token = OpenAI.getApiToken();
+        String token = System.getenv("API_TOKEN_2");
         assertNotNull(token);
     }
 

@@ -42,7 +42,6 @@ public class UserSignupUseCaseFactory {
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, UserService userService) throws IOException {
         UserSignupDataAccessObject userDataAccessObject = new UserSignupDataAccessObject();
         userDataAccessObject.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
-        // Notice how we pass this method's parameters to the Presenter.
         UserSignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
         UserFactory userFactory = new CommonUserFactory();
