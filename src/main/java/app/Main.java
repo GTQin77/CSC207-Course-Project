@@ -17,6 +17,7 @@ import interface_adapter.EditInfo.EditInfoViewModel;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.Signup.SignupViewModel;
+import org.jetbrains.annotations.NotNull;
 import services.RefreshService;
 import services.UserService;
 import use_case.refresh.RefreshInteractor;
@@ -62,16 +63,7 @@ public class Main {
         UserService userService = new UserService(userDAO,dayplanDAO);
 
 
-        OpenInterface openApi = new OpenAI();
-        YelpInterface yelpApi = new YelpFusion();
-        YelpFusion yelpFusion = new YelpFusion();
-        BusinessFactory businessFactory = new YelpBusinessFactory(yelpFusion);
-
-        RefreshBusinessFactory refreshBusinessFactory = new CommonRefreshBusinessFactory(openApi, yelpApi, businessFactory);
-
-
-        RefreshInteractor refreshInteractor = new RefreshInteractor(dayplanDAO, dayplanFactory, refreshBusinessFactory);
-        RefreshService refreshService = new RefreshService(refreshInteractor);
+        RefreshService refreshService = getRefreshService(dayplanDAO, dayplanFactory);
         BusinessDetailsPresenter businessDetailsPresenter = new BusinessDetailsPresenter(viewManagerModel, businessDetailsViewModel, userService);
         DayplanController dayplanController = new DayplanController(dayplanViewModel, viewManager, userService, refreshService);
         DayplanPresenter dayplanPresenter = new DayplanPresenter(viewManagerModel, userService);
@@ -103,5 +95,19 @@ public class Main {
         application.pack();
         application.setVisible(true);
 
+    }
+
+    private static @NotNull RefreshService getRefreshService(DayPlanDataAccessInterface dayplanDAO, DayplanFactory dayplanFactory) {
+        OpenInterface openApi = new OpenAI();
+        YelpInterface yelpApi = new YelpFusion();
+        YelpFusion yelpFusion = new YelpFusion();
+        BusinessFactory businessFactory = new YelpBusinessFactory(yelpFusion);
+
+        RefreshBusinessFactory refreshBusinessFactory = new CommonRefreshBusinessFactory(openApi, yelpApi, businessFactory);
+
+
+        RefreshInteractor refreshInteractor = new RefreshInteractor(dayplanDAO, dayplanFactory, refreshBusinessFactory);
+        RefreshService refreshService = new RefreshService(refreshInteractor);
+        return refreshService;
     }
 }

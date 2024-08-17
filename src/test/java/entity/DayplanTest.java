@@ -164,10 +164,11 @@ class DayplanTest {
     @Test
     void replaceBusiness() {
         Business newBusiness = new Business("Replaced Business", location, 9.0, "222-333-4444", "$$$", 4.8f, "meal");
-        assertTrue(dayplan.replaceBusiness(1, newBusiness));
+        String newBusinessID = "newID";
+        assertTrue(dayplan.replaceBusiness(1, newBusiness, newBusinessID));
         assertEquals(newBusiness, dayplan.getPlan().get(1));
 
-        assertFalse(dayplan.replaceBusiness(-1, newBusiness)); // test invalid index
+        assertFalse(dayplan.replaceBusiness(-1, newBusiness, newBusinessID)); // test invalid index
     }
 
     @Test
