@@ -36,10 +36,14 @@ public class UserLoginPresenter implements UserLoginOutputBoundary {
     public void prepareSuccessView(UserLoginOutputData response) {
         // On success, switch to the dayplan input view.
         LocalDateTime responseTime = LocalDateTime.parse(response.getLoginTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        response.setLoginTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
+        String formattedTime = responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
 
         LoginState loginState = loginViewModel.getState();
         DayplanInputState dayplanInputState = dayplanInputViewModel.getState();
+        loginState.setUsername(response.getUser().getUserName());
+        loginState.setLoginSuccessful(true);
+        loginState.setLoginTime(formattedTime);
+        loginViewModel.setState(loginState);
 
         this.viewManagerModel.setActiveView(dayplanInputViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
