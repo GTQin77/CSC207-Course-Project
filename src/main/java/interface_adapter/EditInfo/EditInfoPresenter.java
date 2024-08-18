@@ -1,19 +1,14 @@
 package interface_adapter.EditInfo;
 
-import interface_adapter.Login.LoginState;
-import interface_adapter.Login.LoginViewModel;
-import interface_adapter.Signup.SignupState;
-import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.edit_info.EditInfoOutputBoundary;
 import use_case.edit_info.EditInfoOutputData;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 
 public class EditInfoPresenter implements EditInfoOutputBoundary {
     private final EditInfoViewModel editInfoViewModel;
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
     public EditInfoPresenter(ViewManagerModel viewManagerModel,
                            EditInfoViewModel editInfoViewModel) {

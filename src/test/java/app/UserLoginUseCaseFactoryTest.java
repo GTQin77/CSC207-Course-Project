@@ -1,11 +1,10 @@
 package app;
 
-import interface_adapter.Dayplan.DayplanViewModel;
+import app.usecase_factory.UserLoginUseCaseFactory;
 import interface_adapter.DayplanInput.DayplanInputViewModel;
 import interface_adapter.Login.LoginViewModel;
 import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

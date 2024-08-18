@@ -26,7 +26,6 @@ import java.beans.PropertyChangeListener;
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "sign up";
 
-    private final SignupViewModel signupViewModel;
     private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
     private final JTextField usernameInputField = new JTextField(15);
@@ -52,7 +51,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     public SignupView(SignupController controller, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel, LoginViewModel loginViewModel) {
 
         this.signupController = controller;
-        this.signupViewModel = signupViewModel;
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
 

@@ -18,12 +18,10 @@ import java.beans.PropertyChangeListener;
 public class DayplanInputView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "DayplanInput";
 
-    private final DayplanInputViewModel dayplanInputViewModel;
     private final JTextField cityInputField = new JTextField(15);
     private final JTextField numMealsInputField = new JTextField(15);
     private final JTextField numActivitiesInputField = new JTextField(15);
     private final JTextField descriptionInputField = new JTextField(15);
-    private final DayplanInputController dayplanInputController;
     private final ViewManagerModel viewManagerModel;
 
     private final JButton OK;
@@ -33,8 +31,6 @@ public class DayplanInputView extends JPanel implements ActionListener, Property
     public void setDayplan() {this.dayplan = dayplan;}
 
     public DayplanInputView(DayplanInputController dayplanInputController, DayplanInputViewModel dayplanInputViewModel, ViewManagerModel viewManagerModel) {
-        this.dayplanInputController = dayplanInputController;
-        this.dayplanInputViewModel = dayplanInputViewModel;
         this.viewManagerModel = viewManagerModel;
 
         dayplanInputViewModel.addPropertyChangeListener(this);
@@ -58,24 +54,23 @@ public class DayplanInputView extends JPanel implements ActionListener, Property
         OK = new JButton(dayplanInputViewModel.OK_BUTTON_LABEL);
         buttons.add(OK);
 
-        OK.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(OK)) {
-                            try {
-                                dayplanInputController.execute(cityInputField.getText(),
-                                        Integer.parseInt(numMealsInputField.getText()),
-                                        Integer.parseInt(numActivitiesInputField.getText()),
-                                        descriptionInputField.getText());
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(DayplanInputView.this, e.getMessage());
-                            }
-                        }
+        OK.addActionListener(evt -> {
+            try {
+                int numMeals = Integer.parseInt(numMealsInputField.getText().trim());
+                int numActivities = Integer.parseInt(numActivitiesInputField.getText().trim());
 
-                    }
+                if (numMeals > 5 || numActivities > 5) {
+                    JOptionPane.showMessageDialog(DayplanInputView.this, "Both meals and activities numbers must be less than or equal to 5.");
+                    return;
                 }
-        );
+
+                dayplanInputController.execute(cityInputField.getText(), numMeals, numActivities, descriptionInputField.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(DayplanInputView.this, "Please enter valid integers for meals and activities.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(DayplanInputView.this, e.getMessage());
+            }
+        });
 
         cityInputField.addKeyListener(
                 new KeyListener() {
@@ -122,7 +117,5 @@ public class DayplanInputView extends JPanel implements ActionListener, Property
         if (evt.getSource().equals(OK)) {
             this.viewManagerModel.firePropertyChanged();
         }
-
     }
-
 }

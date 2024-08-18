@@ -2,8 +2,6 @@ package interface_adapter.DayplanInput;
 
 import entity.Dayplan;
 import entity.User;
-import interface_adapter.Login.LoginController;
-import interface_adapter.Signup.SignupController;
 import services.UserService;
 import use_case.dayplanList.UserDayPlanInputBoundary;
 import use_case.dayplanList.UserDayPlanInputData;
@@ -11,7 +9,7 @@ import use_case.dayplanList.UserDayPlanInputData;
 import java.util.ArrayList;
 
 public class DayplanInputController {
-    private UserService userService;
+    private final UserService userService;
     final UserDayPlanInputBoundary userDayPlanInteractor;
 
     public DayplanInputController(UserService userService, UserDayPlanInputBoundary userDayPlanInteractor) {

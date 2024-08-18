@@ -16,6 +16,7 @@ import java.util.AbstractMap;
 
 import java.util.ArrayList;
 
+
 public class RefreshInteractorTest {
 
     @Mock

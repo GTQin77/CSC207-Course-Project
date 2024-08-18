@@ -1,5 +1,6 @@
 package app;
 
+import app.usecase_factory.EditInfoUseCaseFactory;
 import interface_adapter.EditInfo.EditInfoViewModel;
 import interface_adapter.ViewManagerModel;
 import org.junit.jupiter.api.BeforeEach;

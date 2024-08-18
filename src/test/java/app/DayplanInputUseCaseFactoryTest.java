@@ -1,5 +1,6 @@
 package app;
 
+import app.usecase_factory.DayplanInputUseCaseFactory;
 import interface_adapter.Dayplan.DayplanViewModel;
 import interface_adapter.DayplanInput.DayplanInputViewModel;
 import interface_adapter.Login.LoginViewModel;
@@ -8,12 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import services.UserService;
 import view.DayplanInputView;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class DayplanInputUseCaseFactoryTest {
     private ViewManagerModel viewManagerModel;

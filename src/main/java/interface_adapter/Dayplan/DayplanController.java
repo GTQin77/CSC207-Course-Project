@@ -4,9 +4,9 @@ import entity.Business;
 import entity.Dayplan;
 import services.RefreshService;
 import services.UserService;
-import use_case.refresh.RefreshInputBoundary;
 import use_case.refresh.RefreshInputData;
 import view.DayplanView;
+import view.IDayplanView;
 import view.ViewManager;
 
 import java.util.ArrayList;
@@ -14,14 +14,13 @@ import java.util.ArrayList;
 
 public class DayplanController {
     private DayplanViewModel viewModel;
-    private ViewManager viewManager;
     private UserService userService;
     private RefreshService refreshService;
-    private DayplanView view;
+    private IDayplanView view;
 
-    public DayplanController(DayplanViewModel viewModel, ViewManager viewManager, UserService userService, RefreshService refreshService) {
+
+    public DayplanController(DayplanViewModel viewModel, UserService userService, RefreshService refreshService) {
         this.viewModel = viewModel;
-        this.viewManager = viewManager;
         this.userService = userService;
         this.refreshService = refreshService;
     }

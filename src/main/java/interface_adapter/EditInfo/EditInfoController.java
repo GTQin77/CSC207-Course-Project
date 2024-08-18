@@ -33,7 +33,7 @@ public class EditInfoController {
      * @param password2 from input, repeated password
      * @param location from input.
      */
-    public void execute(String username, String password1, String password2, String location, UserService userService) {
+    public void execute(String username, String password1, String password2, String location) {
         User user1 = userService.getCurrentUser();
         if (Objects.equals(username, "")){username = userService.getCurrentUser().getUserName();}    // setting current username to old username
         if (Objects.equals(password1, "")){password1 = user1.getPassword();}

@@ -49,6 +49,7 @@ public class EditInfoView extends JPanel implements PropertyChangeListener, Acti
         this.editInfoController = controller;
         this.editInfoViewModel = editInfoViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.userService = userService;
 
         editInfoViewModel.addPropertyChangeListener(this);
 
@@ -82,7 +83,7 @@ public class EditInfoView extends JPanel implements PropertyChangeListener, Acti
                                 editInfoController.execute(usernameInputField.getText(),
                                         String.valueOf(passwordInputField.getPassword()),
                                         String.valueOf(repeatPasswordInputField.getPassword()),
-                                        locationInputField.getText(), userService);
+                                        locationInputField.getText());
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(EditInfoView.this, e.getMessage());
                             }
