@@ -1,11 +1,5 @@
 package entity;
 
-import api.YelpFusion;
-import entity.DayplanFactory;
-import entity.BusinessFactory;
-import entity.Business;
-import entity.Meal;
-import entity.Activity;
 import api.OpenInterface;
 import api.YelpInterface;
 

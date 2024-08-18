@@ -9,7 +9,6 @@ import okhttp3.RequestBody;
 
 
 public abstract class ApiHandler {
-    protected abstract String getBaseUrl();
     protected abstract String getApiToken();
 
     protected String executeApiRequest(String url) {

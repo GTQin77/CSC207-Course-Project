@@ -1,23 +1,16 @@
 package api;
 
 import java.util.ArrayList;
-import okhttp3.*;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.io.IOException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.ArrayList;
 
 public class YelpFusion extends ApiHandler implements YelpInterface {
     private static final String URL = "https://api.yelp.com/v3";
     private static final String API_TOKEN = System.getenv("API_TOKEN");
 
-    @Override
-    protected String getBaseUrl() {
+    private String getBaseUrl() {
         return URL;
     }
 
