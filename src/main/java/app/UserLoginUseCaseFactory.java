@@ -20,6 +20,8 @@ import java.io.IOException;
 /**
  * Implementation design taken from Paul Gries LoginCleanArchitecture
  * <a href="https://github.com/paulgries/LoginCleanArchitecture/blob/main/src/app/SignupUseCaseFactory.java">github</a>
+ * <p>
+ *  Responsible for creating and assembling the components necessary for the user login use case.</p>
  * */
 
 public class UserLoginUseCaseFactory {

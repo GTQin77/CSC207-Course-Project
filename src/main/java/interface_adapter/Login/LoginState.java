@@ -1,7 +1,7 @@
 package interface_adapter.Login;
 
 /**
- * LoginState for the Signup use case.
+ * LoginState for the Login use case.
  * <p>
  * This implementation referenced the Pualgries' Clean Architecture code for LoginState on
  * <a href="https://github.com/paulgries/LoginCleanArchitecture">github.com</a>.
