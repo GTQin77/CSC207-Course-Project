@@ -4,7 +4,6 @@ package app;
 import interface_adapter.Login.LoginViewModel;
 import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.Welcome.WelcomeViewModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -17,7 +16,6 @@ class UserSignUpUseCaseFactoryTest {
     private ViewManagerModel viewManagerModel;
     private LoginViewModel loginViewModel;
     private SignupViewModel signupViewModel;
-    private WelcomeViewModel welcomeViewModel;
     private UserService userService;
 
     @BeforeEach
@@ -25,14 +23,13 @@ class UserSignUpUseCaseFactoryTest {
         viewManagerModel = Mockito.mock(ViewManagerModel.class);
         loginViewModel = Mockito.mock(LoginViewModel.class);
         signupViewModel = Mockito.mock(SignupViewModel.class);
-        welcomeViewModel = Mockito.mock(WelcomeViewModel.class);
         userService = Mockito.mock(UserService.class);
     }
 
     @Test
     void create() {
-        SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel,
-                welcomeViewModel, userService);
+        SignupView signupView = UserSignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userService);
         assertNotNull(signupView);
     }
 }
+//*
