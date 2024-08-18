@@ -1,7 +1,6 @@
 package interface_adapter.BusinessDetails;
 
 import entity.Business;
-import interface_adapter.ViewManagerModel;
 import view.*;
 
 public class BusinessDetailsController {
@@ -9,7 +8,7 @@ public class BusinessDetailsController {
     private BusinessDetailsViewInterface view;
 
 
-    public BusinessDetailsController(BusinessDetailsViewModel businessDetailsViewModel, BusinessDetailsView view) {
+    public BusinessDetailsController(BusinessDetailsViewModel businessDetailsViewModel, BusinessDetailsViewInterface view) {
         this.viewModel = businessDetailsViewModel;
         this.view = view;
     }
@@ -18,6 +17,5 @@ public class BusinessDetailsController {
         viewModel.updateBusinessDetails(business);
         view.displayDetails(viewModel);
     }
-
 
 }

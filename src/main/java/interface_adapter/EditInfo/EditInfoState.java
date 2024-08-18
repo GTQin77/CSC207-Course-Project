@@ -1,7 +1,5 @@
 package interface_adapter.EditInfo;
 
-import interface_adapter.Signup.SignupState;
-
 public class EditInfoState {
 
     private String username = "";

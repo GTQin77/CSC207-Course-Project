@@ -1,4 +1,4 @@
-package app;
+package app.usecase_factory;
 
 import data_access.UserSignupDataAccessObject;
 import entity.CommonUserFactory;

@@ -15,19 +15,17 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-public class DayplanView extends JPanel implements PropertyChangeListener {
+public class DayplanView extends JPanel implements PropertyChangeListener, IDayplanView {
     public final String viewName = "DayplanView";
-    private UserService userService;
-    private DayplanPresenter dayplanPresenter;
-    private DayplanController dayplanController;
-    private BusinessDetailsPresenter businessDetailsPresenter;
-    private BusinessDetailsController businessDetailsController;
+    private final UserService userService;
+    private final DayplanPresenter dayplanPresenter;
+    private final DayplanController dayplanController;
+    private final BusinessDetailsController businessDetailsController;
 
-    public DayplanView(UserService userService, DayplanPresenter dayplanPresenter, DayplanController dayplanController, BusinessDetailsPresenter businessDetailsPresenter, BusinessDetailsController businessDetailsController) {
+    public DayplanView(UserService userService, DayplanPresenter dayplanPresenter, DayplanController dayplanController, BusinessDetailsController businessDetailsController) {
         this.userService = userService;
         this.dayplanPresenter = dayplanPresenter;
         this.dayplanController = dayplanController;
-        this.businessDetailsPresenter = businessDetailsPresenter;
         this.businessDetailsController = businessDetailsController;
         this.userService.addPropertyChangeListener(this);
         setLayout(new BorderLayout());
@@ -61,7 +59,6 @@ public class DayplanView extends JPanel implements PropertyChangeListener {
         JPanel leftButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton returnButton = new JButton("Return");
         JButton editUserButton = new JButton("Edit Account");
-        JButton previousDayplanButton = new JButton("Previous Dayplan");
 
         returnButton.addActionListener(e -> dayplanPresenter.navigateToDayplanInput());
         editUserButton.addActionListener(e -> dayplanPresenter.navigateToEditUser());
@@ -83,6 +80,8 @@ public class DayplanView extends JPanel implements PropertyChangeListener {
         repaint();
     }
 
+
+    @Override
     public void updateBusinessButtons(ArrayList<Business> updatedBusinesses) {
         removeAll();
         initializeUI();

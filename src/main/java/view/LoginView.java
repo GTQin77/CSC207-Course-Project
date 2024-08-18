@@ -29,11 +29,8 @@ import java.beans.PropertyChangeListener;
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "log in";
-    private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
     private final SignupViewModel signupViewModel;
-    private final LoginController loginController;
-    private final DayplanInputViewModel dayplanInputViewModel;
 
 
     /**
@@ -53,13 +50,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     /**
      * A window with a title and a JButton.
      */
-    public LoginView(LoginViewModel loginViewModel, ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginController loginController, DayplanInputViewModel dayplanInputViewModel) {
-        this.loginViewModel = loginViewModel;
+    public LoginView(LoginViewModel loginViewModel, ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginController loginController) {
         this.viewManagerModel = viewManagerModel;
         this.signupViewModel = signupViewModel;
-        this.loginController = loginController;
-        this.dayplanInputViewModel = dayplanInputViewModel;
-        this.loginViewModel.addPropertyChangeListener(this);
+        loginViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);

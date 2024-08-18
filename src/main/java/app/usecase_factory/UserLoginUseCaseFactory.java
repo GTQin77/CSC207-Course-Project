@@ -1,4 +1,4 @@
-package app;
+package app.usecase_factory;
 
 import data_access.UserLoginDataAccessObject;
 import entity.CommonUserFactory;
@@ -31,7 +31,7 @@ public class UserLoginUseCaseFactory {
 
         try {
             LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, dayplanInputViewModel, userService);
-            return new LoginView(loginViewModel, viewManagerModel, signupViewModel, loginController, dayplanInputViewModel);
+            return new LoginView(loginViewModel, viewManagerModel, signupViewModel, loginController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }

@@ -1,6 +1,5 @@
 package interface_adapter.EditInfo;
 
-import interface_adapter.EditInfo.EditInfoState;
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
