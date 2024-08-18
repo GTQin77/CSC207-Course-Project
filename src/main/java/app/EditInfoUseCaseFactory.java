@@ -42,16 +42,13 @@ public class EditInfoUseCaseFactory {
     }
 
     private static EditInfoController createEditInfoUseCase(ViewManagerModel viewManagerModel, EditInfoViewModel editInfoViewModel, UserService userService) throws IOException {
-        // UserService at this point stores previous unedited old User object
-        // DAO must take in old User, new Username, new Password, new Location
         EditInfoDataAccessObject editInfoDAO = new EditInfoDataAccessObject();
 
         editInfoDAO.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
-        // Notice how we pass this method's parameters to the Presenter.
         EditInfoOutputBoundary editInfoOutputBoundary = new EditInfoPresenter(viewManagerModel, editInfoViewModel);
 
         EditInfoInputBoundary editInfoInteractor = new EditInfoInteractor(
-                editInfoDAO, editInfoOutputBoundary, userService.getCurrentUser()); // Need to input an actual user object here
+                editInfoDAO, editInfoOutputBoundary, userService.getCurrentUser());
 
         return new EditInfoController(userService, editInfoInteractor);
     }
