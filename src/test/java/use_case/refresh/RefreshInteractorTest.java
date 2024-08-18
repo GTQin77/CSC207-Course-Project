@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import data_access.DayPlanDataAccessInterface;
 import entity.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,22 +63,7 @@ public class RefreshInteractorTest {
         location2.add(34.0522);
         location2.add(118.2437);
 
-        Business business1 = new Business("Eaton Centre", location1, 10.0, "123-456-7890", "$$", 4.5f, "Type1");
-        Business business2 = new Business("McDonald's", location2, 15.0, "098-765-4321", "$$$", 3.8f, "Type2");
-
-        ArrayList<Business> businesses = new ArrayList<>();
-        businesses.add(business1);
-        businesses.add(business2);
-
-        Dayplan dayplan = new Dayplan();
-        dayplan.setUser(user);
-        dayplan.setPlan(businesses);
-        dayplan.setCity("Toronto");
-        dayplan.setNumMeals(2);
-        dayplan.setnumActivities(3);
-        dayplan.setDescription("Test Description");
-        dayplan.setVibe("Cozy relaxing day with friends");
-        dayplan.setBusinessIDs(new ArrayList<>(businesses.size()));
+        Dayplan dayplan = getDayplan(location1, location2, user);
 
         RefreshInputData refreshInputData = mock(RefreshInputData.class);
         when(refreshInputData.getDayplan()).thenReturn(dayplan);
@@ -89,7 +75,7 @@ public class RefreshInteractorTest {
         Map.Entry<Business, String> newBusinessEntry2 = new AbstractMap.SimpleEntry<>(newBusiness2, "ID2");
 
         when(refreshBusinessFactory.generateNewBusiness(dayplan, "Type1")).thenAnswer(invocation -> {
-            dayplan.getBusinessIDs().add(0, "ID1");
+            dayplan.getBusinessIDs().addFirst("ID1");
             return newBusinessEntry1;
         });
 
@@ -109,5 +95,25 @@ public class RefreshInteractorTest {
         assertEquals(newBusiness2, result.getPlan().get(1));
         assertEquals("ID1", result.getBusinessIDs().get(0));
         assertEquals("ID2", result.getBusinessIDs().get(1));
+    }
+
+    private static @NotNull Dayplan getDayplan(ArrayList<Double> location1, ArrayList<Double> location2, User user) {
+        Business business1 = new Business("Eaton Centre", location1, 10.0, "123-456-7890", "$$", 4.5f, "Type1");
+        Business business2 = new Business("McDonald's", location2, 15.0, "098-765-4321", "$$$", 3.8f, "Type2");
+
+        ArrayList<Business> businesses = new ArrayList<>();
+        businesses.add(business1);
+        businesses.add(business2);
+
+        Dayplan dayplan = new Dayplan();
+        dayplan.setUser(user);
+        dayplan.setPlan(businesses);
+        dayplan.setCity("Toronto");
+        dayplan.setNumMeals(2);
+        dayplan.setnumActivities(3);
+        dayplan.setDescription("Test Description");
+        dayplan.setVibe("Cozy relaxing day with friends");
+        dayplan.setBusinessIDs(new ArrayList<>(businesses.size()));
+        return dayplan;
     }
 }
