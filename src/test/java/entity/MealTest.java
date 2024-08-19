@@ -8,12 +8,11 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MealTest extends BusinessTest{
+class MealTest {
     private Meal meal;
     private ArrayList<Double> location;
 
     @BeforeEach
-    @Override
     void setUp() {
         location = new ArrayList<>();
         location.add(43.6532);
@@ -22,7 +21,6 @@ class MealTest extends BusinessTest{
     }
 
     @Test
-    @Override
     void getType(){
         assertEquals("meal", meal.getType());
     }

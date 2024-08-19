@@ -4,13 +4,11 @@ import api.OpenAI;
 import api.YelpFusion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 class CommonRefreshBusinessFactoryTest {
 
@@ -41,10 +39,33 @@ class CommonRefreshBusinessFactoryTest {
         dayplan = commonDayplanFactory.create(testUser, location, "Toronto", 1, 0, "Fun");
         String businessName = dayplan.getBusinessNames().getFirst();
     }
-//
-//    @Test
-//    void testRefreshBusiness() {
-//        Business newBusiness = commonRefreshBusinessFactory.generateNewBusiness(dayplan, "Meal");
-//        assertNotEquals(businessName, newBusiness.getName());
-//    }
+
+    @Test
+    void testRefreshBusiness() {
+        Map.Entry<Business, String> newBusiness= commonRefreshBusinessFactory.generateNewBusiness(dayplan, "Meal");
+        assertNotEquals(businessName, newBusiness.getValue());
+    }
+
+
+    @Test
+    void setOpenApi() {
+        openAI = new OpenAI();
+        commonRefreshBusinessFactory.setOpenApi(openAI);
+        assertNotNull(commonRefreshBusinessFactory.getOpenApi());
+    }
+
+    @Test
+    void setYelpApi() {
+        yelpFusion = new YelpFusion();
+        commonRefreshBusinessFactory.setYelpApi(yelpFusion);
+        assertNotNull(commonRefreshBusinessFactory.getYelpApi());
+    }
+
+
+    @Test
+    void isMeal() {
+        String str = "meal";
+        assertTrue(commonRefreshBusinessFactory.isMeal(str));
+
+    }
 }

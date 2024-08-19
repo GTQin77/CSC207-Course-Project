@@ -30,7 +30,7 @@ public class EditInfoUseCaseFactory {
         return null;
     }
 
-    private static EditInfoController createEditInfoUseCase(ViewManagerModel viewManagerModel, EditInfoViewModel editInfoViewModel, UserService userService) throws IOException {
+    protected static EditInfoController createEditInfoUseCase(ViewManagerModel viewManagerModel, EditInfoViewModel editInfoViewModel, UserService userService) throws IOException {
         EditInfoDataAccessObject editInfoDAO = new EditInfoDataAccessObject();
 
         editInfoDAO.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
