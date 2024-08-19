@@ -155,8 +155,8 @@ class DayplanTest {
     void dayplanToString() {
         String expected = """
                 Active, Inspiring, Motivational
-                test business one, Location: [40.7128, -74.006], Distance: 11.0, Contact: 223-334-5566, Price: $, Ratings: 3.9
-                test business two, Location: [40.7128, -74.006], Distance: 13.0, Contact: 443-334-5566, Price: $$$, Ratings: 4.7
+                test business one, Location: [22.3344, -22.3344], Distance: 11.0, Contact: 223-334-5566, Price: $, Ratings: 3.9
+                test business two, Location: [22.3344, -22.3344], Distance: 13.0, Contact: 443-334-5566, Price: $$$, Ratings: 4.7
                 """;
         assertEquals(expected, dayplan.dayplanToString());
     }
