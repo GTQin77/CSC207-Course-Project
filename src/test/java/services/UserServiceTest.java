@@ -70,7 +70,7 @@ class UserServiceTest {
     }
 
     @Test
-    void setCurrentLocation() {
+    void getAndSetCurrentLocation() {
         String location = "11.11,22.22";
         userService.setCurrentLocation(location);
         assertNotNull(userService.getCurrentLocation());
@@ -79,7 +79,7 @@ class UserServiceTest {
     }
 
     @Test
-    void setCurrentUser() {
+    void getAndSetCurrentUser() {
         User newUser = new User("testUserId", "password", new ArrayList<>());
         userService.setCurrentUser(newUser);
         assertEquals(newUser, userService.getCurrentUser());

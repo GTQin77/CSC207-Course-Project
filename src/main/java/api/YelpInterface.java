@@ -9,5 +9,4 @@ import java.util.ArrayList;
 public interface YelpInterface {
     ArrayList<String> getBusinessIDs(String category, String city, Integer i);
     ArrayList<Object> getBusiness(String businessID);
-    JSONArray getBusinessReviews(String businessID);
 }
