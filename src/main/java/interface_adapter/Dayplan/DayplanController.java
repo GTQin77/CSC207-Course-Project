@@ -7,7 +7,6 @@ import services.UserService;
 import use_case.refresh.RefreshInputData;
 import view.DayplanView;
 import view.IDayplanView;
-import view.ViewManager;
 
 import java.util.ArrayList;
 
@@ -25,13 +24,9 @@ public class DayplanController {
         this.refreshService = refreshService;
     }
 
-    public void loadBusinesses() {
-        Dayplan dayplan = userService.getDayplan();
-        ArrayList<Business> businesses = dayplan.getPlan();
-        viewModel.setBusinesses(businesses);
-
-    }
-
+    /**
+     * Handles the refresh operation for the dayplan.
+     */
     public void handleRefresh() {
         Dayplan dayplan = userService.getDayplan();
         RefreshInputData refreshInputData = new RefreshInputData(dayplan);
@@ -41,6 +36,11 @@ public class DayplanController {
         view.updateBusinessButtons(updatedBusinesses);
     }
 
+    /**
+     * Sets the view associated with this controller.
+     *
+     * @param view the day plan view to be associated with this controller.
+     */
     public void setView(DayplanView view) {
         this.view = view;
     }

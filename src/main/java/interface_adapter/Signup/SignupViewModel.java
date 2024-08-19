@@ -35,10 +35,18 @@ public class SignupViewModel extends ViewModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
+    /**
+     * Fires a property change event to notify observers that the state has changed.
+     */
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
 
+    /**
+     * Adds a PropertyChangeListener to this ViewModel. Listeners are notified of changes to the ViewModel's properties.
+     *
+     * @param listener The PropertyChangeListener to add.
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }

@@ -2,6 +2,9 @@ package use_case.refresh;
 
 import entity.Dayplan;
 
+/**
+ * Output data for refreshing day plan.
+ */
 public class RefreshOutputData {
 
     private final Dayplan dayplan;

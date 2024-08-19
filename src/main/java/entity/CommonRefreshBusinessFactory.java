@@ -36,7 +36,7 @@ public class CommonRefreshBusinessFactory implements RefreshBusinessFactory {
      * Generates a new business meant to replace a pre-existing business in a given dayplan.
      *
      * @param dayplan a user's pre-existing dayplan that we want to generate a new business for.
-     * @param type    the type of a business(Activity or Meal)
+     * @param type    the business type (Activity or Meal)
      * @return a new Business object.
      */
     @Override
@@ -69,27 +69,3 @@ public class CommonRefreshBusinessFactory implements RefreshBusinessFactory {
     }
 
 }
-
-//    public Business generateNewBusiness(Dayplan dayplan, String type) {
-//        User user = dayplan.getUser();
-//        String city = dayplan.getCity();
-//        String description = dayplan.getDescription();
-//        ArrayList<String> prevBusinessIDs = dayplan.getBusinessIDs();
-//
-//        boolean isMeal = this.isMeal(type);
-//
-//        String category = this.openApi.getCategory(description, isMeal);
-//
-//        ArrayList<String> newBusinessIDs = this.yelpApi.getBusinessIDs(category, city, 20);
-//
-//        int i = 0;
-//        while (prevBusinessIDs.contains(newBusinessIDs.get(i))){       // NOTE: add a case to handle if all id's are same?
-//            i = i + 1;
-//        }
-//
-//        return this.businessFactory.createBusiness(newBusinessIDs.get(i), user.getLocation());
-//    }
-
-
-
-

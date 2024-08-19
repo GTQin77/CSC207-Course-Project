@@ -11,6 +11,10 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service class for managing user-specific operations, including maintaining user data,
+ * current locations, and dayplan.
+ */
 public class UserService {
     private User currentUser;
     private ArrayList<String> currentLocation;
@@ -28,6 +32,11 @@ public class UserService {
         support = new PropertyChangeSupport(this);
     }
 
+    /**
+     * Loads initial user data. Mock user for setting up UI.
+     *
+     * @return A newly created user with initial settings.
+     */
     private User loadInitialUser() {
         ArrayList<Double> mockLocation = new ArrayList<>();
         mockLocation.add(43.6598);
@@ -40,10 +49,14 @@ public class UserService {
         if (!userSignupDAO.userExists("naleraoei4ujrnakahfejf87340")) {
             userSignupDAO.saveUser(user);
         }
-
         return user;
     }
 
+    /**
+     * Loads an initial day plan. Mock dayplan for setting up UI.
+     *
+     * @return A newly created day plan with initial settings.
+     */
     private Dayplan loadInitialDayplan() {
         dayplan = new Dayplan();
         ArrayList<Double> location = new ArrayList<>();
@@ -69,7 +82,6 @@ public class UserService {
         dayplan.setNumMeals(1);
         dayplan.setVibe("Active, Inspiring, Motivational");
         dayplan.setCity("Toronto");
-        dayplanDAO.saveDayPlan(dayplan);
         return dayplan;
     }
 

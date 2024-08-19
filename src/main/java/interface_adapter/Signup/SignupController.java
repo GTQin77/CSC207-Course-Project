@@ -18,13 +18,8 @@ import java.util.Objects;
  */
 public class SignupController {
 
-//    private User user;
     private ArrayList<String> location;
     private UserService userService;
-
-//    public User getUser() {return user;}
-//
-//    public void setUser(User user) {this.user = user;}
 
     public ArrayList<String> getLocation() {return location;}
     public void setLocation(ArrayList<String> location) {this.location = location;}

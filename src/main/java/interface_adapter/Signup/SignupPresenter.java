@@ -31,6 +31,12 @@ public class SignupPresenter implements UserSignupOutputBoundary {
         this.loginViewModel = loginViewModel;
     }
 
+    /**
+     * Prepares and updates the view in response to a successful signup operation.
+     *
+     * @param response The output data from the signup operation containing user and timestamp data.
+     * @param formatted A string pattern used for formatting the timestamp.
+     */
     @Override
     public void prepareSuccessView(UserSignupOutputData response, String formatted) {
         LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
@@ -45,6 +51,11 @@ public class SignupPresenter implements UserSignupOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Prepares and updates the signup view to reflect a failed signup operation.
+     *
+     * @param error The error message describing the reason for the signup failure.
+     */
     @Override
     public void prepareFailView(String error) {
         SignupState signupState = signupViewModel.getState();

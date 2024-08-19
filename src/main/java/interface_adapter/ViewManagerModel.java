@@ -27,10 +27,18 @@ public class ViewManagerModel {
 
     }
 
+    /**
+     * Fires a property change event to notify observers that the state has changed.
+     */
     public void firePropertyChanged() {
         support.firePropertyChange("view", null, this.activeViewName);
     }
 
+    /**
+     * Adds a PropertyChangeListener to this ViewModel. Listeners are notified of changes to the ViewModel's properties.
+     *
+     * @param listener The PropertyChangeListener to add.
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
