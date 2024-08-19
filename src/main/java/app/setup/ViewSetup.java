@@ -19,12 +19,24 @@ public class ViewSetup {
     private final UserService userService;
     private final RefreshService refreshService;
 
+    /**
+     * Constructs a new ViewSetup instance with necessary services and models for view management.
+     *
+     * @param viewManagerModel The central model for managing views across the application.
+     * @param userService The service for user-related operation.
+     * @param refreshService The service for refreshing dayplan.
+     */
     public ViewSetup(ViewManagerModel viewManagerModel, UserService userService, RefreshService refreshService) {
         this.viewManagerModel = viewManagerModel;
         this.userService = userService;
         this.refreshService = refreshService;
     }
 
+
+    /**
+     * Sets up and configures all views used in the application.
+     * @param views The main panel container where all views will be added for display.
+     */
     public void setupViews(JPanel views) {
         // Setup ViewModels
         LoginViewModel loginViewModel = new LoginViewModel();

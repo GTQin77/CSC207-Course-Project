@@ -70,6 +70,13 @@ public class YelpFusion extends ApiHandler implements YelpInterface {
         return parseBusinessDetails(response);
     }
 
+    /**
+     * Parses the detailed business information from a JSON response.
+     *
+     * @param response The JSON response string containing the business details.
+     * @return An ArrayList containing parsed business details.
+     * @throws JSONException If parsing the JSON fails.
+     */
     private ArrayList<Object> parseBusinessDetails(String response) {
         try {
             JSONObject responseBody = new JSONObject(response);
@@ -87,6 +94,13 @@ public class YelpFusion extends ApiHandler implements YelpInterface {
         }
     }
 
+    /**
+     * Extracts geographic coordinates from a JSON object.
+     *
+     * @param coordinates A JSONObject containing latitude and longitude fields.
+     * @return An ArrayList containing latitude and longitude as Doubles.
+     * @throws JSONException If parsing the coordinates from the JSON object fails.
+     */
     private ArrayList<Double> parseCoordinates(JSONObject coordinates) throws JSONException {
         ArrayList<Double> locationBusiness = new ArrayList<>();
         locationBusiness.add(coordinates.getDouble("latitude"));

@@ -4,7 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+/**
+ * A class that extends ApiHandler to handle API requests specific to the OpenAI API.
+ */
 public class OpenAI extends ApiHandler implements OpenInterface {
     private static final String URL = "https://api.openai.com/v1/chat/completions";
     private static final String API_TOKEN = System.getenv("API_TOKEN_2");
@@ -55,7 +57,13 @@ public class OpenAI extends ApiHandler implements OpenInterface {
         return parseResponse(response);
     }
 
-
+    /**
+     * Parses the JSON response from the OpenAI API to extract the desired text content.
+     *
+     * @param response The JSON string response from the API.
+     * @return Extracted text content from the JSON response.
+     * @throws RuntimeException if there are issues in parsing the response or if the response is unsuccessful.
+     */
     private String parseResponse(String response) {
         try {
             JSONObject responseBody = new JSONObject(response);
@@ -69,6 +77,15 @@ public class OpenAI extends ApiHandler implements OpenInterface {
         }
     }
 
+    /**
+     * Constructs a JSON object for an API request based on a user message and a model.
+     * This JSON object includes details like the role, content, and the model specifications.
+     *
+     * @param userMessage The user's message or prompt for the API.
+     * @param model The model of GPT to use for generating responses.
+     * @param isMeal Boolean flag to determine if the prompt relates to meals.
+     * @return A JSONObject representing the body of the API request.
+     */
     private static JSONObject getObject(String userMessage, String model, boolean isMeal) {
         JSONArray messages = new JSONArray();
         JSONObject message = new JSONObject();
@@ -83,6 +100,13 @@ public class OpenAI extends ApiHandler implements OpenInterface {
         return callBody;
     }
 
+    /**
+     * Generates a structured prompt for the OpenAI API based on user input and context.
+     *
+     * @param businessesNames String containing business names for the day's plan.
+     * @param model The model of GPT specified for use.
+     * @return A JSONObject containing the structured prompt for API requests.
+     */
     private static JSONObject getJsonObject(String businessesNames, String model) {
         JSONArray messages = new JSONArray();
         JSONObject message = new JSONObject();
@@ -98,6 +122,13 @@ public class OpenAI extends ApiHandler implements OpenInterface {
         return callBody;
     }
 
+    /**
+     * Helper method to generate a formatted prompt for the OpenAI API based on the user's input.
+     *
+     * @param userMessage Description provided by the user.
+     * @param isMeal Boolean indicating if the category is related to meals.
+     * @return A formatted prompt for the API.
+     */
     private static String generatePrompt(String userMessage, boolean isMeal) {
         String categoryOptions = isMeal ?
                 "\"african, tradamerican, arabian, bbq, bistros, breakfast_brunch, buffets, burgers, cafes, " +
