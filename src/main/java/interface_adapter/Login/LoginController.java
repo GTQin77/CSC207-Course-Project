@@ -8,7 +8,7 @@ import use_case.user_login.UserLoginInputData;
 /**
  * Controls the user login process.
  * <p>
- * This implementation referenced the Pualgries' Clean Architecture code for LoginController on
+ * This implementation referenced the Pualgries' Clean Architecture code for SignUpController on
  * <a href="https://github.com/paulgries/LoginCleanArchitecture">github.com</a>.
  * </p>
  * This class interacts with the user login interactor to handle login requests
