@@ -11,7 +11,7 @@ public class OpenAI extends ApiHandler implements OpenInterface {
     private static final String URL = "https://api.openai.com/v1/chat/completions";
     private static final String API_TOKEN = System.getenv("API_TOKEN_2");
 
-    private String getBaseUrl() {
+    protected String getBaseUrl() {
         return URL;
     }
 
@@ -64,7 +64,7 @@ public class OpenAI extends ApiHandler implements OpenInterface {
      * @return Extracted text content from the JSON response.
      * @throws RuntimeException if there are issues in parsing the response or if the response is unsuccessful.
      */
-    private String parseResponse(String response) {
+    protected String parseResponse(String response) {
         try {
             JSONObject responseBody = new JSONObject(response);
             JSONArray choices = responseBody.getJSONArray("choices");
