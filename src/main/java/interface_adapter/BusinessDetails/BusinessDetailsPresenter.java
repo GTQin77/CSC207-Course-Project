@@ -18,25 +18,28 @@ public class BusinessDetailsPresenter {
         this.userService = userService;
     }
 
+    /**
+     * Navigates to the business details view, updating the current active view in the application.
+     */
     public void navigateToBusinessDetails() {
         viewManagerModel.setActiveView("BusinessDetails");
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Navigates to the edit user information view.
+     */
     public void navigateToEditUserInfo() {
         userService.setPrevView("BusinessDetails");
         viewManagerModel.setActiveView("EditUserInfo");
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Navigates to the dayplan view.
+     */
     public void nagivateToDayplan() {
         viewManagerModel.setActiveView("DayplanView");
-        viewManagerModel.firePropertyChanged();
-    }
-
-    public void navigateToPreviousDayplan() {
-        userService.setPrevView("BusinessDetails");
-        viewManagerModel.setActiveView("PastDayplan");
         viewManagerModel.firePropertyChanged();
     }
 

@@ -18,7 +18,12 @@ public class DayplanInputController {
     }
 
     /**
+     * Executes the operation to create a dayplan based on user input.
      *
+     * @param city The city of the user.
+     * @param numMeals The number of meals planned for the day.
+     * @param numActivities The number of activities planned for the day.
+     * @param description A description of what the user want the day to be like.
      */
     public void execute(String city, int numMeals, int numActivities, String description){
         User user = userService.getCurrentUser();

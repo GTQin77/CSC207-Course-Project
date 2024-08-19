@@ -15,6 +15,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+/**
+ * The view for displaying and interacting with a day plan.
+ */
 public class DayplanView extends JPanel implements PropertyChangeListener, IDayplanView {
     public final String viewName = "DayplanView";
     private final UserService userService;
@@ -32,11 +35,19 @@ public class DayplanView extends JPanel implements PropertyChangeListener, IDayp
         initializeUI();
     }
 
+    /**
+     * Initializes the user interface components of the day plan view.
+     */
     private void initializeUI() {
         updateUIComponents(userService.getDayplan());
     }
 
 
+    /**
+     * Updates the user interface components based on the current day plan.
+     *
+     * @param dayplan The day plan to use for updating UI components.
+     */
     private void updateUIComponents(Dayplan dayplan) {
         removeAll();
 
@@ -81,6 +92,11 @@ public class DayplanView extends JPanel implements PropertyChangeListener, IDayp
     }
 
 
+    /**
+     * Updates the buttons associated with businesses whenever the underlying business list is changed.
+     *
+     * @param updatedBusinesses The new list of businesses to display.
+     */
     @Override
     public void updateBusinessButtons(ArrayList<Business> updatedBusinesses) {
         removeAll();
@@ -89,6 +105,11 @@ public class DayplanView extends JPanel implements PropertyChangeListener, IDayp
         repaint();
     }
 
+    /**
+     * Responds to property changes in the associated models, particularly changes in the day plan.
+     *
+     * @param evt The property change event which may trigger UI updates.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("dayplan".equals(evt.getPropertyName())) {

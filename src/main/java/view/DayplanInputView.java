@@ -15,6 +15,10 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * The view for user input of day plan details including city, number of meals,
+ * number of activities, and a description.
+ */
 public class DayplanInputView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "DayplanInput";
 

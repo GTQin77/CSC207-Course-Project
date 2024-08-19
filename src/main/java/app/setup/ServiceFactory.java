@@ -12,6 +12,12 @@ public class ServiceFactory {
     private final UserSignupDataAccessInterface userDAO;
     private final DayPlanDataAccessInterface dayplanDAO;
 
+    /**
+     * Constructs a new instance of ServiceFactory with specific data access interfaces.
+     *
+     * @param userDAO the data access interface for user data.
+     * @param dayplanDAO the data access interface for dayplan data.
+     */
     public ServiceFactory(UserSignupDataAccessInterface userDAO, DayPlanDataAccessInterface dayplanDAO) {
         this.userDAO = userDAO;
         this.dayplanDAO = dayplanDAO;
@@ -26,6 +32,13 @@ public class ServiceFactory {
         return getRefreshService(dayplanDAO, dayplanFactory);
     }
 
+    /**
+     * Constructs a {@link RefreshService} using specified data access objects and a business factory.
+     *
+     * @param dayplanDAO the data access interface for dayplan data.
+     * @param dayplanFactory the factory used for creating day plan entities.
+     * @return an instance of {@link RefreshService}.
+     */
     private RefreshService getRefreshService(DayPlanDataAccessInterface dayplanDAO, DayplanFactory dayplanFactory) {
         OpenInterface openApi = new OpenAI();
         YelpInterface yelpApi = new YelpFusion();
