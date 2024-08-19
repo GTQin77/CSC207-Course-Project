@@ -90,7 +90,7 @@ public class RefreshInteractorTest {
         Map.Entry<Business, String> newBusinessEntry2 = new AbstractMap.SimpleEntry<>(newBusiness2, "ID2");
 
         when(refreshBusinessFactory.generateNewBusiness(dayplan, "Type1")).thenAnswer(invocation -> {
-            dayplan.getBusinessIDs().add(0, "ID1");
+            dayplan.getBusinessIDs().addFirst("ID1");
             return newBusinessEntry1;
         });
 

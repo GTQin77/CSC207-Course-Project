@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * LoginViewModel for the Signup use case.
+ * LoginViewModel for the Login use case.
  * <p>
  * This implementation referenced the Pualgries' Clean Architecture code for LoginViewModel on
  * <a href="https://github.com/paulgries/LoginCleanArchitecture">github.com</a>.
