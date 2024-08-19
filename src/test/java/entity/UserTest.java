@@ -60,4 +60,11 @@ class UserTest {
         user.setDayPlans(newDayplans);
         assertEquals(newDayplans, user.getDayPlans());
     }
+
+    @Test
+    void setPassword() {
+        String passWord = "lol";
+        user.setPassword(passWord);
+        assertEquals(passWord, user.getPassword());
+    }
 }
