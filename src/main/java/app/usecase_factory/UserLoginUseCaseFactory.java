@@ -43,14 +43,9 @@ public class UserLoginUseCaseFactory {
 
     public static LoginView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel, SignupViewModel signupViewModel, UserService userService) {
 
-        try {
-            LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, dayplanInputViewModel, userService);
-            return new LoginView(loginViewModel, viewManagerModel, signupViewModel, loginController);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Could not open user data file.");
-        }
+        LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, dayplanInputViewModel, userService);
+        return new LoginView(loginViewModel, viewManagerModel, signupViewModel, loginController);
 
-        return null;
     }
 
     /**
@@ -65,7 +60,7 @@ public class UserLoginUseCaseFactory {
      * @throws IOException if there is an error accessing the user data file
      */
 
-    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel, UserService userService) throws IOException {
+    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, DayplanInputViewModel dayplanInputViewModel, UserService userService) {
         UserLoginDataAccessObject userDataAccessObject = new UserLoginDataAccessObject();
         userDataAccessObject.setcsvFileandPath("./src/main/resources/UserDatabase.csv");
 
