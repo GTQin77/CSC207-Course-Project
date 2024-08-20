@@ -136,7 +136,6 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
             // Create new temporary database file
             File tempFile = new File("./src/main/resources/TempDatabase.csv");
             // If successfully created...
-            if (tempFile.createNewFile()) {
                 System.out.println("File created: " + tempFile.getName());
                 // For every line in old database, write to new database...
                 // UNLESS row[0] is username.
@@ -152,13 +151,9 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
 
                 // Files.move(tempPath, tempPath.resolveSibling(this.getcsvFile().getName()));
 
-            }
-//            else {
-//                System.out.println("File already exists.");
-//            }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
