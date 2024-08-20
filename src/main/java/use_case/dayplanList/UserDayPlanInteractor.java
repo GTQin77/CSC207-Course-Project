@@ -4,7 +4,6 @@ import api.OpenAI;
 import api.YelpFusion;
 import data_access.DayPlanDataAccessInterface;
 import entity.*;
-// NOTE TO SELF: Should import a DayplanFactory interface instead, no time :(
 
 import java.util.ArrayList;
 
@@ -39,17 +38,14 @@ public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
      */
     @Override
     public Dayplan execute(UserDayPlanInputData input) {
-        // 1. Process Input Data
         ArrayList<Double> location = new ArrayList<Double>();
         for (int i = 0; i < input.getLocation().size(); i++){
             Double coord = Double.valueOf(input.getLocation().get(i));
             location.add(coord);
         }
-        // 2. Initialize API objects and set our attributes to them
         OpenAI openAI = new OpenAI();
         YelpFusion yelpFusion = new YelpFusion();
 
-        // 3. Initialize our DayplanFactory trait using the API objects we made previously
         CommonDayplanFactory commonDayplanFactory = new CommonDayplanFactory();
         BusinessFactory businessFactory = new YelpBusinessFactory(yelpFusion);
         commonDayplanFactory.setOpenApi(openAI);
@@ -60,9 +56,7 @@ public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
         Dayplan dayplan = commonDayplanFactory.create(input.getUser(), location, input.getCity(), input.getNumMeals(),
                 input.getNumActivities(), input.getDescription());
 
-        // 5. Write new Dayplan to database using DAO
         this.dayPlanDataAccessObject.saveDayPlan(dayplan);
-        // 6. Prepare Output Data
         UserDayPlanOutputData outputData = new UserDayPlanOutputData(dayplan);
         this.dayplanPresenter.prepareDayplanView(outputData);
         return dayplan;

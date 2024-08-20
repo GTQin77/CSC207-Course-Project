@@ -49,7 +49,6 @@ public class RefreshInteractorTest {
 
     @Test
     public void testExecute() {
-        // Arrange
         ArrayList<Double> userLocation = new ArrayList<>();
         userLocation.add(40.7128);
         userLocation.add(-74.0060);
@@ -64,8 +63,8 @@ public class RefreshInteractorTest {
         location2.add(34.0522);
         location2.add(118.2437);
 
-        Business business1 = new Business("Eaton Centre", location1, 10.0, "123-456-7890", "$$", 4.5f, "Activity");
-        Business business2 = new Business("McDonald's", location2, 15.0, "098-765-4321", "$$$", 3.8f, "Meal");
+        Business business1 = new Business("Eaton Centre", location1, 10.0, "123-456-7890", "$$", 4.5f, "activity");
+        Business business2 = new Business("McDonald's", location2, 15.0, "098-765-4321", "$$$", 3.8f, "meal");
 
         ArrayList<Business> businesses = new ArrayList<>();
         businesses.add(business1);
@@ -84,15 +83,20 @@ public class RefreshInteractorTest {
         RefreshInputData refreshInputData = mock(RefreshInputData.class);
         when(refreshInputData.getDayplan()).thenReturn(dayplan);
 
-        Business newBusiness1 = new Business("Eaton Centre", location1, 10.0, "123-456-7890", "$$$", 4.5f, "Activity");
-        Business newBusiness2 = new Business("McDonald's", location2, 15.0, "198-765-4321", "$", 3.8f, "Meal");
+        Business newBusiness1 = new Business("Eaton Centre", location1, 10.0, "123-456-7890", "$$$", 4.5f, "activity");
+        Business newBusiness2 = new Business("McDonald's", location2, 15.0, "198-765-4321", "$", 3.8f, "meal");
 
         Map.Entry<Business, String> newBusinessEntry1 = new AbstractMap.SimpleEntry<>(newBusiness1, "ID1");
         Map.Entry<Business, String> newBusinessEntry2 = new AbstractMap.SimpleEntry<>(newBusiness2, "ID2");
 
-        when(refreshBusinessFactory.generateNewBusiness(dayplan, "Activity")).thenAnswer(invocation -> {
+        when(refreshBusinessFactory.generateNewBusiness(dayplan, "activity")).thenAnswer(invocation -> {
             dayplan.getBusinessIDs().addFirst("ID1");
             return newBusinessEntry1;
+        });
+
+        when(refreshBusinessFactory.generateNewBusiness(dayplan, "meal")).thenAnswer(invocation -> {
+            dayplan.getBusinessIDs().add(1, "ID2");
+            return newBusinessEntry2;
         });
 
 
