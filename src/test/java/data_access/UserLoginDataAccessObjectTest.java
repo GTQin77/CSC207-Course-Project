@@ -34,7 +34,6 @@ public class UserLoginDataAccessObjectTest {
             oldFile.delete();
             tempFile.renameTo(oldFile);
 
-            // Files.move(tempPath, tempPath.resolveSibling("src/test/test_resources/test_userDatabase.csv"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

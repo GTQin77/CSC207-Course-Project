@@ -43,6 +43,7 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
 
         try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
             String line = br.readLine();
+            line = br.readLine();
             while (line != null) {
                 String[] row = line.split(value);
                 if (username.equals(row[0])){
@@ -77,7 +78,7 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
         catch (IOException e){
             throw new RuntimeException(e);
         }
-        }
+    }
 
 
     /**
