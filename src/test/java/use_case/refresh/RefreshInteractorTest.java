@@ -15,6 +15,7 @@ import java.util.AbstractMap;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class RefreshInteractorTest {
@@ -94,10 +95,6 @@ public class RefreshInteractorTest {
             return newBusinessEntry1;
         });
 
-        when(refreshBusinessFactory.generateNewBusiness(dayplan, "Meal")).thenAnswer(invocation -> {
-            dayplan.getBusinessIDs().add(1, "ID2");
-            return newBusinessEntry2;
-        });
 
         Dayplan result = refreshInteractor.execute(refreshInputData);
 

@@ -39,22 +39,15 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
      * @param dayplan a Dayplan object that we want to save to a csv with an associated User.
      */
     public void saveDayPlan(Dayplan dayplan){
-        // Same structure as existsByName, using try/catch block
-        // Use FileWriter class
-        // Try block automatically closes FileWriter class
         try (FileWriter fw = new FileWriter(this.getcsvFile(), true)) {
-            // Switching to new line
             fw.write("\n");
-            // Processing Dayplan.location into a String
 
             String stringLocation = UserSignupDataAccessObject.listToString(dayplan.getLocation());
             String finalLocation = "\"" + stringLocation.substring(1, stringLocation.length() - 2) + "\"";
 
 
-            // Writing preliminary Dayplan attributes to csv
             fw.write(dayplan.getUser().getUserName() + ";" + finalLocation + ";" + dayplan.getVibe() + ";");
-            // Iterate through Businesses in Dayplan and write them to csv
-            // Each new Business goes in individual cell
+
             Business business = dayplan.getPlan().getFirst();
             fw.write(this.businessToString(business));
             for (int i = 1; i < dayplan.getPlan().size(); i++){
@@ -64,7 +57,6 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
             System.out.println("Dayplan saved successfully!");
         }
 
-        // "Catch" block to accompany "Try" block
         catch (IOException e){
             throw new RuntimeException(e);
         }
@@ -75,9 +67,9 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
      * @param business Business object, example of Liskov Substitution Principle
      * @return String version of a Business, with attributes separated by commas
      */
-    public String businessToString(Business business){
-        return business.getName() + "," + business.getLocation().getFirst() + "," + business.getLocation().getLast()
-                + "," + business.getDistance() + "," + business.getContactNum() + "," + business.getPrice() + ","
-                + business.getRatings();
+    public String businessToString(Business business) {
+        return String.join(",", business.getName(), business.getLocation().getFirst().toString(), business.getLocation().getLast().toString(),
+                String.valueOf(business.getDistance()), business.getContactNum(), business.getPrice(), String.valueOf(business.getRatings()));
     }
+
 }

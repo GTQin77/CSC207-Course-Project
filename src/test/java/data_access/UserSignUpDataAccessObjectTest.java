@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doThrow;
 
 public class UserSignUpDataAccessObjectTest {
 
@@ -46,6 +47,17 @@ public class UserSignUpDataAccessObjectTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    @Test
+    void testGetAndSetUser() {
+        ArrayList<Double> location = new ArrayList<Double>();
+        location.add(1.23);
+        location.add(4.56);
+        User testUser = new User("martha", "caldwell", location);
+        signupDAO.setUser(testUser);
+        assertEquals(testUser, signupDAO.getUser());
     }
 
     @Test
@@ -99,6 +111,7 @@ public class UserSignUpDataAccessObjectTest {
         }
         assertEquals(expected, lastLine);
     }
+
 
     @Test
     void userExists(){

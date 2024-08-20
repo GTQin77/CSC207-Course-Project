@@ -34,7 +34,6 @@ public class UserLoginDataAccessObjectTest {
             oldFile.delete();
             tempFile.renameTo(oldFile);
 
-            // Files.move(tempPath, tempPath.resolveSibling("src/test/test_resources/test_userDatabase.csv"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -75,6 +74,29 @@ public class UserLoginDataAccessObjectTest {
         String actualOutput = outContent.toString("UTF-8");
         assertEquals(expectedOutput, actualOutput);
 
+    }
+
+    @Test
+    void getUser() {
+        ArrayList<Double> location = new ArrayList<Double>();
+        location.add(1.23);
+        location.add(4.56);
+        User testUser = new User("martha", "caldwell", location);
+        signupDAO.saveUser(testUser);
+        loginDAO.findUser("martha", "caldwell");
+        assertNotNull(loginDAO.getUser("martha", "caldwell"));
+    }
+
+    @Test
+    void testIOExceptionInFindUser() {
+        loginDAO.setcsvFileandPath("non_existent_directory/non_existent_file.csv");
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            loginDAO.findUser("username", "password");
+        });
+
+        assertTrue(exception.getCause() instanceof IOException);
+        assertEquals("java.io.FileNotFoundException", exception.getCause().getClass().getName());
     }
 
 }

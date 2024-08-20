@@ -38,33 +38,22 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
      */
     @Override
     public boolean userExists(String username) {
-        // Create variable used to track where to split values in single line
 
         String value = ";";
-        // Access user.userID attribute
 
-        // "Try" block is necessary for BufferedReader objects
         try (BufferedReader br = new BufferedReader(new FileReader(this.getcsvFile()))) {
             String line = br.readLine();
-            // Mutate line to refer to 2nd row... where actual values begin(skipping past row names)
             line = br.readLine();
-            // While loop that keeps reading file until it's empty
             while (line != null) {
-                // Create an array of Strings that stores each value separated by comma as a new object in array
                 String[] row = line.split(value);
-                // Early return if the userID we put in is equal to the userID in the row
                 if (username.equals(row[0])){
-                    // Need to close the BufferedReader object
-                    // Normally, the "Try" block will do this for you, but not in case of early return
                     br.close();
-                    // Do not save the user to database, return false
                     return true;
                 }
                 line = br.readLine();
             }
         }
 
-        // "Catch" block is necessary with any try block
         catch (IOException e){
             throw new RuntimeException(e);
         }
@@ -80,19 +69,16 @@ public class UserSignupDataAccessObject implements UserSignupDataAccessInterface
      */
     @Override
     public void saveUser(User user){
-        // Same structure as existsByName, using try/catch block
-        // Here, we use FileWriter class
         try (FileWriter fw = new FileWriter(this.getcsvFile(), true)) {
             fw.write("\n");
             fw.write(this.userToString(user));
             System.out.println("User saved successfully!");
             }
 
-        // "Catch" block to accompany "Try" block
         catch (IOException e){
             throw new RuntimeException(e);
         }
-        }
+    }
 
 
     /**
