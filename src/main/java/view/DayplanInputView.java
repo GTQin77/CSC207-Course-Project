@@ -60,6 +60,18 @@ public class DayplanInputView extends JPanel implements ActionListener, Property
 
         OK.addActionListener(evt -> {
             try {
+                String city = cityInputField.getText().trim();
+                if (city.isEmpty()) {
+                    JOptionPane.showMessageDialog(DayplanInputView.this, "City cannot be empty.");
+                    return;
+                }
+
+                String description = descriptionInputField.getText().trim();
+                if (description.isEmpty()) {
+                    JOptionPane.showMessageDialog(DayplanInputView.this, "Description cannot be empty.");
+                    return;
+                }
+
                 int numMeals = Integer.parseInt(numMealsInputField.getText().trim());
                 int numActivities = Integer.parseInt(numActivitiesInputField.getText().trim());
 
