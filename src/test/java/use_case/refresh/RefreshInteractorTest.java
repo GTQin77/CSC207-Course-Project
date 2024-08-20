@@ -11,6 +11,7 @@ import org.mockito.*;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class RefreshInteractorTest {
 
@@ -72,8 +73,8 @@ public class RefreshInteractorTest {
         Business newBusiness1 = new Business("NewBusiness1", location1, 10.0, "123-456-7890", "$$", 4.5f, "Type1");
         Business newBusiness2 = new Business("NewBusiness2", location2, 15.0, "098-765-4321", "$$$", 3.8f, "Type2");
 
-        when(refreshBusinessFactory.generateNewBusiness(dayplan, "Type1")).thenReturn(newBusiness1);
-        when(refreshBusinessFactory.generateNewBusiness(dayplan, "Type2")).thenReturn(newBusiness2);
+        when(refreshBusinessFactory.generateNewBusiness(dayplan, "Type1")).thenReturn((Map.Entry<Business, String>) newBusiness1);
+        when(refreshBusinessFactory.generateNewBusiness(dayplan, "Type2")).thenReturn((Map.Entry<Business, String>) newBusiness2);
 
         // Execute the method
         Dayplan result = refreshInteractor.execute(refreshInputData);

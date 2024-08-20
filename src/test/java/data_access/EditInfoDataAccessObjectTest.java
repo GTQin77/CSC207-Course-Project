@@ -47,8 +47,8 @@ public class EditInfoDataAccessObjectTest {
     }
 
 
-    @AfterAll
-    static void tearDown() {
+    @AfterEach
+    void tearDown() {
         try {
             File tempUserDB = new File("src/test/test_resources/tempTestUserDB.csv");
             tempUserDB.delete();
@@ -57,21 +57,6 @@ public class EditInfoDataAccessObjectTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-//        File tempFile = new File("src/test/test_resources/tempDB.csv");
-//        try (FileWriter fw = new FileWriter(tempFile, true)){
-//            fw.write("userName,password,location\n");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        try {
-//            File oldFile = new File("src/test/test_resources/test_userDatabase.csv");
-//            oldFile.delete();
-//            tempFile.renameTo(oldFile);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-
     }
 
 
@@ -114,15 +99,76 @@ public class EditInfoDataAccessObjectTest {
         location.add(1.23);
         location.add(4.56);
         User testUser = new User("martha", "caldwell", location);
+        // Writing to UserDB case
+        // Change ALL attributes...
         editDAO.setCurrUserAndChanges(testUser, "madeline", "cookie", "3.14,1.59");
         editDAO.setcsvPathAndcsvFile("src/test/test_resources/test_userDatabase.csv");
-        String[] row = {"martha", "caldwell", "1.23,4.59"};
+        String[] row1 = {"martha", "caldwell", "1.23,4.59"};
         String expected = "madeline;cookie;3.14,1.59";
-        assertEquals(expected, editDAO.rewriteRow("madeline", "cookie", "3.14, 1.59", row));
+        assertEquals(expected, editDAO.rewriteRow("madeline", "cookie", "3.14, 1.59", row1));
+
+        // Writing to DayplanDB case
         editDAO.setcsvPathAndcsvFile("src/test/test_resources/test_database.csv");
-        String[] row2 = {"kevin", "insert dayplan details here"};
-        expected = "craig;3.14,1.59";
-        assertEquals(expected, editDAO.rewriteRow("craig", "cookie", "3.14, 1.59", row2));
+        String[] row2 = {"martha", "insert dayplan details here"};
+        editDAO.setCurrUserAndChanges(testUser, "martha", "cookie", "3.14,1.59");
+        // Not changing username case
+        expected = "martha;3.14,1.59";
+        assertEquals(expected, editDAO.rewriteRow("martha", "cookie", "3.14, 1.59", row2));
+        // Changing username case
+        String[] row3 = {"kevin", "insert dayplan details here"};
+        expected = "kevin;5.55,1.59";
+        editDAO.setCurrUserAndChanges(testUser, "kevin", "cookie", "5.55,1.59");
+        assertEquals(expected, editDAO.rewriteRow("kevin", "cookie", "5.55, 1.59", row3));
+
+
+    }
+
+
+    @Test
+    void editUsername(){
+        editDAO.setcsvPathAndcsvFile("src/test/test_resources/helloUserDatabase.csv");
+        signupDAO.setcsvPathAndcsvFile("src/test/test_resources/helloUserDatabase.csv");
+
+
+        try (FileWriter fw = new FileWriter(editDAO.getcsvFile(), true)) {
+            // Write a mock user to the userDB
+            fw.write("martha;caldwell;1.23,4.56");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        editDAO.setcsvPathAndcsvFile("src/test/test_resources/helloDayplan.csv");
+        try (FileWriter fw = new FileWriter(editDAO.getcsvFile(), true)) {
+            fw.write("martha;1.23,4.56;Silly, Goofy, Nasty;Business1, Location1, Distance1, Phone1, Price1, Rating1~Business2, Location2, Distance2, Phone2, Price2, Rating2");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // CREATING USER
+        ArrayList<Double> location = new ArrayList<Double>();
+        location.add(1.23);
+        location.add(4.56);
+        User testUser = new User("martha", "caldwell", location);
+        signupDAO.setUser(testUser);
+        //////////
+        // TESTING TRUE CASE
+        editDAO.setCurrUserAndChanges(testUser, "dying", "smith", "3.33,3.33");
+        assertTrue(editDAO.editUsername("dying", "smith", "3.33,3.33", "src/test/test_resources/helloUserDatabase.csv", "src/test/test_resources/helloDayplan.csv"));
+
+        // TESTING FALSE CASE
+        editDAO.setCurrUserAndChanges(testUser, "newuser", "smith", "3.33,3.33");
+
+        assertFalse(editDAO.editUsername("martha", "smith", "3.33,3.33", "src/test/test_resources/helloUserDatabase.csv", "src/test/test_resources/helloDayplan.csv"));
+
+
+
+        try {
+            File tempUserDB = new File("src/test/test_resources/helloUserDatabase.csv");
+            tempUserDB.delete();
+            File tempDayplanDB = new File("src/test/test_resources/helloDayplan.csv");
+            tempDayplanDB.delete();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -136,6 +182,8 @@ public class EditInfoDataAccessObjectTest {
         location.add(1.23);
         location.add(4.56);
         User testUser = new User("martha", "caldwell", location);
+
+        signupDAO.saveUser(testUser);
         //////////
 
         // CREATING TEMP DB
@@ -213,27 +261,6 @@ public class EditInfoDataAccessObjectTest {
 
     }
 
-    @Test
-    void editUsername(){
-        // Should take every instance of KEVIN within both test_database and test_userDatabase.
-        // Should change every KEVIN to JESS.
-        // No temporary files other than the 2 in prev. test cases should be created.
-        //
-        editDAO.setcsvPathAndcsvFile("src/test/test_resources/test_userDatabase.csv");
-        signupDAO.setcsvPathAndcsvFile("src/test/test_resources/test_userDatabase.csv");
-
-        // CREATING USER
-        ArrayList<Double> location = new ArrayList<Double>();
-        location.add(1.23);
-        location.add(4.56);
-        User testUser = new User("kevin", "caldwell", location);
-        //////////
-
-
-        editDAO.setCurrUserAndChanges(testUser, "jess", "smith", "3.33,3.33");
-        editDAO.editUsername("jess", "smith", "3.33,3.33", "src/test/test_resources/test_userDatabase.csv", "src/test/test_resources/test_database.csv");
-        assertFalse(editDAO.editUsername("jess", "smith", "3.33,3.33", "src/test/test_resources/test_userDatabase.csv", "src/test/test_resources/test_database.csv"));
-    }
 
     @Test
     void editPasswordOrLocation(){
@@ -243,9 +270,9 @@ public class EditInfoDataAccessObjectTest {
 
         // CREATING USER
         ArrayList<Double> location = new ArrayList<Double>();
-        location.add(3.33);
-        location.add(3.33);
-        User testUser = new User("jess", "smith", location);
+        location.add(1.23);
+        location.add(4.56);
+        User testUser = new User("jess", "caldwell", location);
         //////////
 
         editDAO.setCurrUserAndChanges(testUser, "jess", "coco", "9.99,9.99");
