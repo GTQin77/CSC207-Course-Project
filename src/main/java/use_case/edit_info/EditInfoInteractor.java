@@ -94,9 +94,7 @@ public class EditInfoInteractor implements EditInfoInputBoundary{
         newUserInfo.add(input.getUserName());
         newUserInfo.add(input.getPassword());
         newUserInfo.add(input.getLocation());
-//        if (input.getUserName().isEmpty()){newUserInfo.set(0, user.getUserName());}    // setting current username to old username
-//        if (input.getPassword().isEmpty()){newUserInfo.set(1, user.getUserName());}
-//        if (input.getLocation().isEmpty()){newUserInfo.set(2, input.removeLocationSpaces(user.getLocation().toString()));}
+
         return newUserInfo;
     }
 
