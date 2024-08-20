@@ -15,30 +15,39 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-public class DayplanView extends JPanel implements PropertyChangeListener {
+/**
+ * The view for displaying and interacting with a day plan.
+ */
+public class DayplanView extends JPanel implements PropertyChangeListener, IDayplanView {
     public final String viewName = "DayplanView";
-    private UserService userService;
-    private DayplanPresenter dayplanPresenter;
-    private DayplanController dayplanController;
-    private BusinessDetailsPresenter businessDetailsPresenter;
-    private BusinessDetailsController businessDetailsController;
+    private final UserService userService;
+    private final DayplanPresenter dayplanPresenter;
+    private final DayplanController dayplanController;
+    private final BusinessDetailsController businessDetailsController;
 
-    public DayplanView(UserService userService, DayplanPresenter dayplanPresenter, DayplanController dayplanController, BusinessDetailsPresenter businessDetailsPresenter, BusinessDetailsController businessDetailsController) {
+    public DayplanView(UserService userService, DayplanPresenter dayplanPresenter, DayplanController dayplanController, BusinessDetailsController businessDetailsController) {
         this.userService = userService;
         this.dayplanPresenter = dayplanPresenter;
         this.dayplanController = dayplanController;
-        this.businessDetailsPresenter = businessDetailsPresenter;
         this.businessDetailsController = businessDetailsController;
         this.userService.addPropertyChangeListener(this);
         setLayout(new BorderLayout());
         initializeUI();
     }
 
+    /**
+     * Initializes the user interface components of the day plan view.
+     */
     private void initializeUI() {
         updateUIComponents(userService.getDayplan());
     }
 
 
+    /**
+     * Updates the user interface components based on the current day plan.
+     *
+     * @param dayplan The day plan to use for updating UI components.
+     */
     private void updateUIComponents(Dayplan dayplan) {
         removeAll();
 
@@ -61,7 +70,6 @@ public class DayplanView extends JPanel implements PropertyChangeListener {
         JPanel leftButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton returnButton = new JButton("Return");
         JButton editUserButton = new JButton("Edit Account");
-        JButton previousDayplanButton = new JButton("Previous Dayplan");
 
         returnButton.addActionListener(e -> dayplanPresenter.navigateToDayplanInput());
         editUserButton.addActionListener(e -> dayplanPresenter.navigateToEditUser());
@@ -83,6 +91,13 @@ public class DayplanView extends JPanel implements PropertyChangeListener {
         repaint();
     }
 
+
+    /**
+     * Updates the buttons associated with businesses whenever the underlying business list is changed.
+     *
+     * @param updatedBusinesses The new list of businesses to display.
+     */
+    @Override
     public void updateBusinessButtons(ArrayList<Business> updatedBusinesses) {
         removeAll();
         initializeUI();
@@ -90,6 +105,11 @@ public class DayplanView extends JPanel implements PropertyChangeListener {
         repaint();
     }
 
+    /**
+     * Responds to property changes in the associated models, particularly changes in the day plan.
+     *
+     * @param evt The property change event which may trigger UI updates.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("dayplan".equals(evt.getPropertyName())) {

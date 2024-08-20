@@ -17,7 +17,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
-
+/**
+ * The view for editing user information. This view collects user inputs such as username,
+ * password, and location, and handles actions to submit or cancel the update process.
+ */
 public class EditInfoView extends JPanel implements PropertyChangeListener, ActionListener{
     public final String viewName = "EditUserInfo";
     private final EditInfoViewModel editInfoViewModel;
@@ -49,6 +52,7 @@ public class EditInfoView extends JPanel implements PropertyChangeListener, Acti
         this.editInfoController = controller;
         this.editInfoViewModel = editInfoViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.userService = userService;
 
         editInfoViewModel.addPropertyChangeListener(this);
 
@@ -82,7 +86,7 @@ public class EditInfoView extends JPanel implements PropertyChangeListener, Acti
                                 editInfoController.execute(usernameInputField.getText(),
                                         String.valueOf(passwordInputField.getPassword()),
                                         String.valueOf(repeatPasswordInputField.getPassword()),
-                                        locationInputField.getText(), userService);
+                                        locationInputField.getText());
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(EditInfoView.this, e.getMessage());
                             }

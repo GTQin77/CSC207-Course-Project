@@ -1,4 +1,4 @@
-package app;
+package app.usecase_factory;
 
 import data_access.UserSignupDataAccessObject;
 import entity.CommonUserFactory;
@@ -29,17 +29,12 @@ public class UserSignupUseCaseFactory {
 
     public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, UserService userService) {
 
-        try {
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userService);
-            return new SignupView(signupController, signupViewModel, viewManagerModel, loginViewModel);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Could not open user data file.");
-        }
+        SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userService);
+        return new SignupView(signupController, signupViewModel, viewManagerModel, loginViewModel);
 
-        return null;
     }
 
-    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, UserService userService) throws IOException {
+    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, UserService userService) {
         UserSignupDataAccessObject userDataAccessObject = new UserSignupDataAccessObject();
         userDataAccessObject.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
         UserSignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);

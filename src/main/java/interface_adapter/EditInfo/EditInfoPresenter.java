@@ -1,19 +1,14 @@
 package interface_adapter.EditInfo;
 
-import interface_adapter.Login.LoginState;
-import interface_adapter.Login.LoginViewModel;
-import interface_adapter.Signup.SignupState;
-import interface_adapter.Signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.edit_info.EditInfoOutputBoundary;
 import use_case.edit_info.EditInfoOutputData;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 
 public class EditInfoPresenter implements EditInfoOutputBoundary {
     private final EditInfoViewModel editInfoViewModel;
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
     public EditInfoPresenter(ViewManagerModel viewManagerModel,
                            EditInfoViewModel editInfoViewModel) {
@@ -22,6 +17,11 @@ public class EditInfoPresenter implements EditInfoOutputBoundary {
     }
 
 
+    /**
+     * Prepares the view for a successful edit operation.
+     *
+     * @param output The data from the successful edit, containing the updated user information.
+     */
     @Override
     public void prepareSuccessView(EditInfoOutputData output) {
         EditInfoState editInfoState = editInfoViewModel.getState();
@@ -34,6 +34,11 @@ public class EditInfoPresenter implements EditInfoOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Prepares the view for a failed edit operation.
+     *
+     * @param errorMessage The error message describing why the edit failed.
+     */
     @Override
     public void prepareFailView(String errorMessage) {
         EditInfoState editInfoState = editInfoViewModel.getState();

@@ -78,6 +78,10 @@ public class BusinessDetailsViewModel extends ViewModel {
         this.type = type;
     }
 
+    /**
+     * Updates the properties of this ViewModel based on a Business object.
+     * @param business The business object containing the data to update.
+     */
     public void updateBusinessDetails(Business business) {
         setName(business.getName());
         setLocation(String.format("%.2f, %.2f", business.getLocation().get(0), business.getLocation().get(1)));
@@ -89,11 +93,19 @@ public class BusinessDetailsViewModel extends ViewModel {
         firePropertyChanged();
     }
 
+    /**
+     * Fires a property change event indicating that the model has been updated.
+     */
     @Override
     public void firePropertyChanged() {
         support.firePropertyChange("modelUpdated", null, this);
     }
 
+    /**
+     * Registers a PropertyChangeListener to be notified of changes to this model.
+     *
+     * @param listener the PropertyChangeListener to add.
+     */
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);

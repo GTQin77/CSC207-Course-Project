@@ -1,22 +1,15 @@
 package api;
 
 import java.util.ArrayList;
-import okhttp3.*;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.io.IOException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.ArrayList;
 
 public class YelpFusion extends ApiHandler implements YelpInterface {
     private static final String URL = "https://api.yelp.com/v3";
     private static final String API_TOKEN = System.getenv("API_TOKEN");
 
-    @Override
     protected String getBaseUrl() {
         return URL;
     }
@@ -77,6 +70,13 @@ public class YelpFusion extends ApiHandler implements YelpInterface {
         return parseBusinessDetails(response);
     }
 
+    /**
+     * Parses the detailed business information from a JSON response.
+     *
+     * @param response The JSON response string containing the business details.
+     * @return An ArrayList containing parsed business details.
+     * @throws JSONException If parsing the JSON fails.
+     */
     private ArrayList<Object> parseBusinessDetails(String response) {
         try {
             JSONObject responseBody = new JSONObject(response);
@@ -94,35 +94,17 @@ public class YelpFusion extends ApiHandler implements YelpInterface {
         }
     }
 
+    /**
+     * Extracts geographic coordinates from a JSON object.
+     *
+     * @param coordinates A JSONObject containing latitude and longitude fields.
+     * @return An ArrayList containing latitude and longitude as Doubles.
+     * @throws JSONException If parsing the coordinates from the JSON object fails.
+     */
     private ArrayList<Double> parseCoordinates(JSONObject coordinates) throws JSONException {
         ArrayList<Double> locationBusiness = new ArrayList<>();
         locationBusiness.add(coordinates.getDouble("latitude"));
         locationBusiness.add(coordinates.getDouble("longitude"));
         return locationBusiness;
     }
-
-
-    /**
-     * Get three reviews of a business corresponding to a specific businessID.
-     * <p>
-     * This implementation closely follows the grade-api in Tutorial 3 on
-     * <a href="https://github.com/Yasamanro/grade-api">github.com</a>.
-     * </p>
-     * @param businessID ID of the business.
-     * @return three reviews of the business.
-     * @throws RuntimeException If API call failed or failed to extract reviews.
-     */
-    @Override
-    public JSONArray getBusinessReviews(String businessID) {
-        String url = String.format("%s/businesses/%s/reviews", getBaseUrl(), businessID);
-        String response = executeApiRequest(url);
-
-        try {
-            JSONObject responseBody = new JSONObject(response);
-            return responseBody.getJSONArray("reviews");
-        } catch (JSONException e) {
-            throw new RuntimeException("Failed to extract reviews", e);
-        }
-    }
 }
-

@@ -1,5 +1,6 @@
 package app;
 
+import app.usecase_factory.EditInfoUseCaseFactory;
 import interface_adapter.EditInfo.EditInfoViewModel;
 import interface_adapter.ViewManagerModel;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +9,10 @@ import org.mockito.Mockito;
 import services.UserService;
 import view.EditInfoView;
 
+
 import static org.junit.jupiter.api.Assertions.*;
+
+
 
 class EditInfoUseCaseFactoryTest {
     private ViewManagerModel viewManagerModel;

@@ -1,27 +1,25 @@
 package view;
 
-import entity.Business;
 import interface_adapter.BusinessDetails.BusinessDetailsPresenter;
 import interface_adapter.BusinessDetails.BusinessDetailsViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 
-import javax.swing.*;
-import java.awt.*;
-
+/**
+ * View component for displaying detailed information about a business.
+ */
 public class BusinessDetailsView extends JPanel implements BusinessDetailsViewInterface {
     public final String viewName = "BusinessDetails";
-    private JLabel nameLabel;
-    private JLabel locationLabel;
-    private JLabel distanceLabel;
-    private JLabel contactNumLabel;
-    private JLabel priceLabel;
-    private JLabel ratingsLabel;
-    private JButton returnButton;
-    private JButton editUserButton;
-    private JButton previousDayplanButton;
-    private BusinessDetailsPresenter presenter;
+    private final JLabel nameLabel;
+    private final JLabel locationLabel;
+    private final JLabel distanceLabel;
+    private final JLabel contactNumLabel;
+    private final JLabel priceLabel;
+    private final JLabel ratingsLabel;
+    private final JButton returnButton;
+    private final JButton editUserButton;
+    private final BusinessDetailsPresenter presenter;
 
     public BusinessDetailsView(BusinessDetailsPresenter presenter) {
         this.presenter = presenter;
@@ -71,6 +69,11 @@ public class BusinessDetailsView extends JPanel implements BusinessDetailsViewIn
         add(buttonPanel, BorderLayout.NORTH);
     }
 
+    /**
+     * Updates the view to display detailed information about a business.
+     *
+     * @param viewModel The view model containing the business details to be displayed.
+     */
     @Override
     public void displayDetails(BusinessDetailsViewModel viewModel) {
         nameLabel.setText(viewModel.getName());

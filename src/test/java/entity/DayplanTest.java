@@ -155,8 +155,8 @@ class DayplanTest {
     void dayplanToString() {
         String expected = """
                 Active, Inspiring, Motivational
-                Test Business 1, Location: [40.7128, -74.006], Distance: 10.0, Contact: 123-456-7890, Price: $$, Ratings: 4.5
-                Test Activity, Location: [40.7128, -74.006], Distance: 5.0, Contact: 987-654-3210, Price: $, Ratings: 4.0
+                test business one, Location: [22.3344, -22.3344], Distance: 11.0, Contact: 223-334-5566, Price: $, Ratings: 3.9
+                test business two, Location: [22.3344, -22.3344], Distance: 13.0, Contact: 443-334-5566, Price: $$$, Ratings: 4.7
                 """;
         assertEquals(expected, dayplan.dayplanToString());
     }
@@ -175,7 +175,7 @@ class DayplanTest {
     void getBusinessNames() {
         ArrayList<String> expected = new ArrayList<>();
         expected.add("test business one");
-        expected.add("test business one");
+        expected.add("test business two");
         assertEquals(expected, dayplan.getBusinessNames());
     }
 }

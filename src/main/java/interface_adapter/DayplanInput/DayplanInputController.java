@@ -2,8 +2,6 @@ package interface_adapter.DayplanInput;
 
 import entity.Dayplan;
 import entity.User;
-import interface_adapter.Login.LoginController;
-import interface_adapter.Signup.SignupController;
 import services.UserService;
 import use_case.dayplanList.UserDayPlanInputBoundary;
 import use_case.dayplanList.UserDayPlanInputData;
@@ -11,7 +9,7 @@ import use_case.dayplanList.UserDayPlanInputData;
 import java.util.ArrayList;
 
 public class DayplanInputController {
-    private UserService userService;
+    private final UserService userService;
     final UserDayPlanInputBoundary userDayPlanInteractor;
 
     public DayplanInputController(UserService userService, UserDayPlanInputBoundary userDayPlanInteractor) {
@@ -20,7 +18,12 @@ public class DayplanInputController {
     }
 
     /**
+     * Executes the operation to create a dayplan based on user input.
      *
+     * @param city The city of the user.
+     * @param numMeals The number of meals planned for the day.
+     * @param numActivities The number of activities planned for the day.
+     * @param description A description of what the user want the day to be like.
      */
     public void execute(String city, int numMeals, int numActivities, String description){
         User user = userService.getCurrentUser();

@@ -1,4 +1,4 @@
-package app;
+package app.usecase_factory;
 
 import data_access.DayPlanDataAccessObject;
 import entity.CommonDayplanFactory;
@@ -14,10 +14,6 @@ import use_case.dayplanList.UserDayPlanInputBoundary;
 import use_case.dayplanList.UserDayPlanInteractor;
 import use_case.dayplanList.UserDayPlanOutputBoundary;
 import view.DayplanInputView;
-import view.LoginView;
-
-import javax.swing.*;
-import java.io.IOException;
 
 public class DayplanInputUseCaseFactory {
     private DayplanInputUseCaseFactory() {}

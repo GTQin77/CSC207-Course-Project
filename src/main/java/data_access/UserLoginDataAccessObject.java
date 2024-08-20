@@ -6,7 +6,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ * The {@code UserLoginDataAccessObject} class is responsible for handling
+ * data access related to user login information. It implements the
+ * {@link UserLoginDataAccessInterface}, providing methods to manage the
+ * file and path information where the user data is stored, as well as
+ * retrieving the user information.
+ */
 
 public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
     private String csvPath;
@@ -92,6 +98,7 @@ public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
         return location;
     }
 
-    }
+
+}
 
 
