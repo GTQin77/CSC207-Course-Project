@@ -12,10 +12,10 @@ class EditInfoOutputDataTest {
 
     @Test
     void testGetUser() {
-        User testUser = new User("username", "password", new ArrayList<>(Arrays.asList(40.7128, -74.0060)));
+        User testUser = new User("username", "password", new ArrayList<>(Arrays.asList(22.2222, 11.1111)));
         EditInfoOutputData outputData = new EditInfoOutputData(testUser, "Test message", false);
 
-        assertEquals(testUser, outputData.getUser(), "The getUser method should return the correct user object.");
+        assertEquals(testUser, outputData.getUser());
     }
 
     @Test
@@ -23,7 +23,7 @@ class EditInfoOutputDataTest {
         String testMessage = "Test message";
         EditInfoOutputData outputData = new EditInfoOutputData(null, testMessage, false);
 
-        assertEquals(testMessage, outputData.getMessage(), "The getMessage method should return the correct message.");
+        assertEquals(testMessage, outputData.getMessage());
     }
 
     @Test
@@ -31,7 +31,7 @@ class EditInfoOutputDataTest {
         boolean testFailureStatus = true;
         EditInfoOutputData outputData = new EditInfoOutputData(null, "Error occurred", testFailureStatus);
 
-        assertEquals(testFailureStatus, outputData.getUseCaseFailed(), "The getUseCaseFailed method should return the correct failure status.");
+        assertEquals(testFailureStatus, outputData.getUseCaseFailed());
     }
 
 }
