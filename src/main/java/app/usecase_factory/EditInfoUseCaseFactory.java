@@ -21,16 +21,12 @@ public class EditInfoUseCaseFactory {
 
     public static EditInfoView create(ViewManagerModel viewManagerModel, EditInfoViewModel editInfoViewModel, UserService userService) {
 
-        try {
-            EditInfoController editInfoController = createEditInfoUseCase(viewManagerModel, editInfoViewModel, userService);
-            return new EditInfoView(editInfoController, editInfoViewModel, viewManagerModel, userService);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error.");
-        }
-        return null;
+        EditInfoController editInfoController = createEditInfoUseCase(viewManagerModel, editInfoViewModel, userService);
+        return new EditInfoView(editInfoController, editInfoViewModel, viewManagerModel, userService);
+
     }
 
-    protected static EditInfoController createEditInfoUseCase(ViewManagerModel viewManagerModel, EditInfoViewModel editInfoViewModel, UserService userService) throws IOException {
+    protected static EditInfoController createEditInfoUseCase(ViewManagerModel viewManagerModel, EditInfoViewModel editInfoViewModel, UserService userService) {
         EditInfoDataAccessObject editInfoDAO = new EditInfoDataAccessObject();
 
         editInfoDAO.setcsvPathAndcsvFile("./src/main/resources/UserDatabase.csv");
