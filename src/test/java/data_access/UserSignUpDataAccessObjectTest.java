@@ -48,6 +48,17 @@ public class UserSignUpDataAccessObjectTest {
         }
     }
 
+
+    @Test
+    void testGetAndSetUser() {
+        ArrayList<Double> location = new ArrayList<Double>();
+        location.add(1.23);
+        location.add(4.56);
+        User testUser = new User("martha", "caldwell", location);
+        signupDAO.setUser(testUser);
+        assertEquals(testUser, signupDAO.getUser());
+    }
+
     @Test
     void setcsvPathAndcsvFile() {
         String expectedPathOther = "src/test/test_resources/test_userDatabase.csv";

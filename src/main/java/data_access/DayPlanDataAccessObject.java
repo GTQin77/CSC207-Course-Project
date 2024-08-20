@@ -75,9 +75,9 @@ public class DayPlanDataAccessObject implements DayPlanDataAccessInterface{
      * @param business Business object, example of Liskov Substitution Principle
      * @return String version of a Business, with attributes separated by commas
      */
-    public String businessToString(Business business){
-        return business.getName() + "," + business.getLocation().getFirst() + "," + business.getLocation().getLast()
-                + "," + business.getDistance() + "," + business.getContactNum() + "," + business.getPrice() + ","
-                + business.getRatings();
+    public String businessToString(Business business) {
+        return String.join(",", business.getName(), business.getLocation().getFirst().toString(), business.getLocation().getLast().toString(),
+                String.valueOf(business.getDistance()), business.getContactNum(), business.getPrice(), String.valueOf(business.getRatings()));
     }
+
 }
