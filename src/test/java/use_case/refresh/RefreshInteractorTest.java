@@ -101,7 +101,7 @@ public class RefreshInteractorTest {
 
         Dayplan result = refreshInteractor.execute(refreshInputData);
 
-        // Asserting results
+        // Asserting the results
         verify(dayPlanDataAccessObject).saveDayPlan(dayplan);
 
         assertNotNull(result);
