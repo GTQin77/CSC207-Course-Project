@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doThrow;
 
 public class UserSignUpDataAccessObjectTest {
 
@@ -110,6 +111,7 @@ public class UserSignUpDataAccessObjectTest {
         }
         assertEquals(expected, lastLine);
     }
+
 
     @Test
     void userExists(){
