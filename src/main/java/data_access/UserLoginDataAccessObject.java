@@ -98,6 +98,7 @@ public class UserLoginDataAccessObject implements UserLoginDataAccessInterface {
         return location;
     }
 
-    }
+
+}
 
 
