@@ -104,8 +104,6 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
     public void HandleFile(String newUsername, String newPassword, String newLocation) {
         try {
             File tempFile = new File("./src/main/resources/TempDatabase.csv");
-            if (tempFile.createNewFile()) {
-                System.out.println("File created: " + tempFile.getName());
                 this.updateDatabase(newUsername, newPassword, newLocation, tempFile);
 
                 File oldFile = this.getcsvFile();
@@ -113,12 +111,9 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
                 tempFile.renameTo(oldFile);
 
 
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
