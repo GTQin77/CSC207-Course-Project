@@ -34,7 +34,7 @@ public class UserDayPlanInteractor implements UserDayPlanInputBoundary{
      * Interactor method that creates a dayplan, creates all API objects, and factories necessary for flow.
      *
      * @param input UserDayPlanInputData.
-     * @return
+     * @return a dayplan with the given input data.
      */
     @Override
     public Dayplan execute(UserDayPlanInputData input) {
