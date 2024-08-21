@@ -142,12 +142,12 @@ public class EditInfoDataAccessObject implements EditInfoDataAccessInterface{
                 while (line != null) {
                     String[] row = line.split(";");
 
-                    System.out.println(Arrays.toString(row));
+//                    System.out.println(Arrays.toString(row));
 
                     if (currUsername.equals(row[0])){
                         line = rewriteRow(newUsername, newPassword, newLocation, row);
 
-                        System.out.println(line);
+//                        System.out.println(line);
 
                     }
                     fw.write(line + "\n");
